@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<CCDWerteSystemKonfiguration version="1.0">
-	<Konfiguration standardGrad="Schwarz" aktiverGrad="Rot" xmlInput="CcdWerteSystem.xml" xsltInput="CcdWerteSystem.xslt" />
-</CCDWerteSystemKonfiguration>
