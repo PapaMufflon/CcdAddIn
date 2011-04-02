@@ -10,15 +10,18 @@ namespace CcdAddIn.UI.ViewModels
 
         public CcdLevelsViewModel()
         {
-            _principles.Add("Open Closed Principle (OCP)");
-            _principles.Add("Tell don't ask");
-            _principles.Add("Law of Demeter (LoD)");
+            _principles.Add("Don't Repeat Yourself (DRY)");
+            _principles.Add("Keep It Simple, Stupid (KISS)");
+            _principles.Add("Vorsicht vor Optimierungen");
+            _principles.Add("Favor Composition over Inheritance (FCoI)");
 
-            _practices.Add("Continuous Integration (CI)");
-            _practices.Add("Statische Codeanalyse");
-            _practices.Add("Inversion of Control Container");
-            _practices.Add("Erfahrung weitergeben");
-            _practices.Add("Messen von Fehlern");
+            _practices.Add("Pfadfinderregel");
+            _practices.Add("Root Cause Analysis");
+            _practices.Add("Versionskontrolle");
+            _practices.Add("Einfache Refaktorisierungen");
+            _practices.Add("Täglich reflektieren");
+
+            _currentLevel = CcdLevel.Red;
         }
 
         public CcdLevel CurrentLevel

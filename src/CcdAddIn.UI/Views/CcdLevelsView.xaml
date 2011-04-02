@@ -1,6 +1,6 @@
 ﻿<UserControl x:Class="CcdAddIn.UI.Views.CcdLevelsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Views="clr-namespace:CcdAddIn.UI.Views">
     <UserControl.Resources>
         <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
             <Style.Triggers>
@@ -24,6 +24,7 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Padding" Value="0,4"/>
         </Style>
+    	<Views:CcdLevelToColorConverter x:Key="CcdLevelToColorConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -33,14 +34,18 @@
         <ListView x:Name="principlesListView"
                   ItemsSource="{Binding Principles}"
                   Padding="10,10,30,10"
-                  Background="#FF57AC2B"
+                  Background="{Binding CurrentLevel,
+                                       Converter={StaticResource CcdLevelToColorConverter},
+                                       ConverterParameter=Principles}"
                   ItemContainerStyle="{StaticResource alternatingListViewItemStyle}"
                   AlternationCount="2"/>
         <ListView x:Name="practicesListView"
                   ItemsSource="{Binding Practices}"
                   Grid.Row="1"
                   Padding="10,10,30,10"
-                  Background="#FF128E2E"
+                  Background="{Binding CurrentLevel,
+                                       Converter={StaticResource CcdLevelToColorConverter},
+                                       ConverterParameter=Practices}"
                   ItemContainerStyle="{StaticResource alternatingListViewItemStyle}"
                   AlternationCount="2"/>
     </Grid>

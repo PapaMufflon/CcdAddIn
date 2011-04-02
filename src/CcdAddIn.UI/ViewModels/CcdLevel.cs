@@ -3,6 +3,11 @@
     public enum CcdLevel
     {
         Black,
-        Red
+        Red,
+        Orange,
+        Yellow,
+        Green,
+        Blue,
+        White
     }
 }

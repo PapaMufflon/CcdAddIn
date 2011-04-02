@@ -44,8 +44,8 @@ namespace CcdAddIn.UI.Spec
         [Given(@"I am at the black level")]
         public void GivenIAmAtTheBlackLevel()
         {
-            var application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
-            _mainWindow = application.GetWindow("MainWindow");
+            _application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
+            _mainWindow = _application.GetWindow("MainWindow");
         }
 
         [When(@"I browse to the next one")]
@@ -59,7 +59,7 @@ namespace CcdAddIn.UI.Spec
         public void ThenIShouldSeeTheRedLevel()
         {
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            Assert.That(firstPrinciple.Text, Is.StringContaining("don't repeat yourself"));
+            Assert.That(firstPrinciple.Text, Is.StringContaining("Don't Repeat Yourself"));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CcdAddIn.UI
 
         protected override DependencyObject CreateShell()
         {
-            Container.RegisterInstance("CcdLevelsView", Container.Resolve<CcdLevelsView>());
+            Container.RegisterType<object, CcdLevelsView>("CcdLevelsView");
 
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("HeaderRegion", typeof(HeaderView));
