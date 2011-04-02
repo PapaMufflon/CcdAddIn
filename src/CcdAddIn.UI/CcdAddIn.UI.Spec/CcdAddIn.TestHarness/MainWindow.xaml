@@ -1,7 +1,4 @@
 ﻿<Window x:Class="CcdAddIn.TestHarness.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="clr-namespace:CcdAddIn.UI.Views;assembly=CcdAddIn.UI"
-        Title="MainWindow" Height="350" Width="525">
-    <ui:Shell />
-</Window>
+        Title="MainWindow" Height="312" Width="400"/>

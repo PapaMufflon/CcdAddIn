@@ -40,6 +40,8 @@
     <Reference Include="Machine.Fakes.Adapters.RhinoMocks">
       <HintPath>..\..\packages\Machine.Fakes.RhinoMocks.0.2.1.0\lib\Machine.Fakes.Adapters.RhinoMocks.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
     <Reference Include="Rhino.Mocks">
       <HintPath>..\..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -52,7 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BeginWithFirstRealLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

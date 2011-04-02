@@ -17,21 +17,21 @@ namespace CcdAddIn.UI.Spec
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.5.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Browsing CCD levels")]
-    public partial class BrowsingCCDLevelsFeature
+    [NUnit.Framework.DescriptionAttribute("Begin with first real level")]
+    public partial class BeginWithFirstRealLevelFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "BrowseLevel.feature"
+#line 1 "BeginWithFirstRealLevel.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Browsing CCD levels", "In order to know the different CCD levels\nAs a clean code developer\nI want to bro" +
-                    "wse through each of the CCD levels", GenerationTargetLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Begin with first real level", "In order to begin the path of enlightenment\nAs a clean code developer\nI want to m" +
+                    "aster the black level", GenerationTargetLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -54,18 +54,35 @@ namespace CcdAddIn.UI.Spec
         }
         
         [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Correct start")]
+        public virtual void CorrectStart()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Correct start", ((string[])(null)));
+#line 6
+this.ScenarioSetup(scenarioInfo);
+#line 7
+  testRunner.Given("I start the addin for the first time");
+#line 8
+  testRunner.When("I read the main text");
+#line 9
+  testRunner.Then("it should be a warm welcome message");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Browse to red level")]
         public virtual void BrowseToRedLevel()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse to red level", ((string[])(null)));
-#line 6
+#line 11
 this.ScenarioSetup(scenarioInfo);
-#line 7
- testRunner.Given("I am at the black level");
-#line 8
- testRunner.When("I browse to the next one");
-#line 9
- testRunner.Then("I should see the red level");
+#line 12
+  testRunner.Given("I am at the black level");
+#line 13
+  testRunner.When("I browse to the next one");
+#line 14
+  testRunner.Then("I should see the red level");
 #line hidden
             testRunner.CollectScenarioErrors();
         }

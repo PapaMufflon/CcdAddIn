@@ -49,18 +49,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BrowseLevel.feature.cs">
+    <Compile Include="BeginWithFirstRealLevel.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BrowseLevel.feature</DependentUpon>
+      <DependentUpon>BeginWithFirstRealLevel.feature</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BeginWithFirstRealLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BrowseLevel.feature">
+    <None Include="BeginWithFirstRealLevel.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>BrowseLevel.feature.cs</LastGenOutput>
+      <LastGenOutput>BeginWithFirstRealLevel.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
