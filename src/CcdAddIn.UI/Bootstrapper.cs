@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using CcdAddIn.UI.Communication;
+using CcdAddIn.UI.ViewModels;
 using CcdAddIn.UI.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
@@ -13,23 +14,25 @@ namespace CcdAddIn.UI
     {
         public Shell Shell { get;  private set; }
 
-        private ChangeLevelEvent _changeLevelEvent;
-
         protected override DependencyObject CreateShell()
         {
-            //Container.RegisterInstance("CcdLevelsView", Container.Resolve<CcdLevelsView>());
+            Container.RegisterInstance("CcdLevelsView", Container.Resolve<CcdLevelsView>());
 
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("HeaderRegion", typeof(HeaderView));
             regionManager.RegisterViewWithRegion("MainRegion", typeof(StartView));
 
             var eventAggregator = Container.Resolve<IEventAggregator>();
-            _changeLevelEvent = eventAggregator.GetEvent<ChangeLevelEvent>();
-            _changeLevelEvent.Subscribe(x =>
-                regionManager.RequestNavigate("MainRegion", new Uri("CcdLevelsView", UriKind.Relative)));
+            eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(NavigateToCcdLevelsView);
             
             Shell = new Shell();
             return Shell;
+        }
+
+        private void NavigateToCcdLevelsView(CcdLevel ccdLevel)
+        {
+            var regionManager = Container.Resolve<IRegionManager>();
+            regionManager.RequestNavigate("MainRegion", new Uri("CcdLevelsView", UriKind.Relative));
         }
     }
 }

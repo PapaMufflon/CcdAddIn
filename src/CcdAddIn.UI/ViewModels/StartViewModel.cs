@@ -7,7 +7,7 @@ namespace CcdAddIn.UI.ViewModels
 {
     public class StartViewModel
     {
-        private ChangeLevelEvent _changeLevelEvent;
+        private readonly ChangeLevelEvent _changeLevelEvent;
 
         public StartViewModel(IEventAggregator eventAggregator)
         {

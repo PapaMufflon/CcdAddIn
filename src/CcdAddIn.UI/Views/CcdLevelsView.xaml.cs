@@ -4,10 +4,11 @@ namespace CcdAddIn.UI.Views
 {
     public partial class CcdLevelsView
     {
-        public CcdLevelsView()
+        public CcdLevelsView(CcdLevelsViewModel vm)
         {
-            DataContext = new CcdLevelsViewModel();
             InitializeComponent();
+
+            Loaded += (s, e) => DataContext = vm;
         }
     }
 }
