@@ -56,6 +56,11 @@
     </Compile>
     <Compile Include="BeginWithFirstRealLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Retrospective.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Retrospective.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="BeginWithFirstRealLevel.feature">
@@ -63,6 +68,10 @@
       <LastGenOutput>BeginWithFirstRealLevel.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Retrospective.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Retrospective.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
