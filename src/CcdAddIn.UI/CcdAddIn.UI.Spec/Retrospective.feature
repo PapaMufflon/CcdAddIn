@@ -14,6 +14,12 @@ Scenario: No suggestion to go to the next level
   When I accept that
   Then I should stay at the current level
 
+Scenario: Finish a retrospective
+  Given I am at a non-black level
+  And I make a retrospective
+  When I finish the retrospective
+  Then I should not be able to evaluate the principles and practices
+
 Scenario: Keep the current level
   Given I am at a non-black level
   And I finish my retrospective with a suggestion to advance to the next level

@@ -71,17 +71,34 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Browse to red level")]
-        public virtual void BrowseToRedLevel()
+        [NUnit.Framework.DescriptionAttribute("No retrospective at black level")]
+        public virtual void NoRetrospectiveAtBlackLevel()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse to red level", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("No retrospective at black level", ((string[])(null)));
 #line 11
 this.ScenarioSetup(scenarioInfo);
 #line 12
   testRunner.Given("I am at the black level");
 #line 13
-  testRunner.When("I browse to the next one");
+  testRunner.When("I search for a retro-button");
 #line 14
+  testRunner.Then("I should not find one");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Browse to red level")]
+        public virtual void BrowseToRedLevel()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse to red level", ((string[])(null)));
+#line 16
+this.ScenarioSetup(scenarioInfo);
+#line 17
+  testRunner.Given("I am at the black level");
+#line 18
+  testRunner.When("I browse to the next one");
+#line 19
   testRunner.Then("I should see the red level");
 #line hidden
             testRunner.CollectScenarioErrors();

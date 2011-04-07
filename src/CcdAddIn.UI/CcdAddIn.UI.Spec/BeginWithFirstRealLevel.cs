@@ -14,11 +14,13 @@ namespace CcdAddIn.UI.Spec
         private Window _mainWindow;
         private string _mainText;
         private Application _application;
+        private Button _retroButton;
 
         [AfterScenario(null)]
         public void AfterScenario()
         {
-            _application.Dispose();
+            if (_application != null)
+                _application.Dispose();
         }
 
         [Given(@"I start the addin for the first time")]
@@ -46,6 +48,18 @@ namespace CcdAddIn.UI.Spec
         {
             _application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
             _mainWindow = _application.GetWindow("MainWindow");
+        }
+
+        [When(@"I search for a retro-button")]
+        public void WhenISearchForARetro_Button()
+        {
+            _retroButton = _mainWindow.Get<Button>("retrospectiveButton");
+        }
+
+        [Then(@"I should not find one")]
+        public void ThenIShouldNotFindOne()
+        {
+            Assert.That(_retroButton.Visible, Is.False);
         }
 
         [When(@"I browse to the next one")]

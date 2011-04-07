@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
@@ -18,7 +20,7 @@ namespace CcdAddIn.UI.ViewModels
         {
             get
             {
-                return new DelegateCommand(() => _changeLevelEvent.Publish(CcdLevel.Red));
+                return new DelegateCommand(() => _changeLevelEvent.Publish(Level.Red));
             }
         }
     }

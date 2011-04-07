@@ -1,4 +1,5 @@
-﻿using CcdAddIn.UI.Communication;
+﻿using CcdAddIn.UI.CleanCodeDeveloper;
+using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.ViewModels;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -16,7 +17,7 @@ namespace CcdAddIn.UI.Test
 
             changeLevelEvent.Subscribe(x =>
             {
-                if (x == CcdLevel.Red) _raised = true;
+                if (x == Level.Red) _raised = true;
             });
             
             The<IEventAggregator>()
@@ -26,35 +27,26 @@ namespace CcdAddIn.UI.Test
 
         Because of = () => Subject.GoToRedLevelCommand.Execute(null);
 
-        It a_change_to_red_level_event_is_raised = () => _raised.ShouldBeTrue();
+        It should_raise_a_change_to_red_level_event = () => _raised.ShouldBeTrue();
     }
 
-    //public class Given_the_current_level_is_black_when_looking_at_the_principles_and_practices : WithSubject<CcdLevelsViewModel>
-    //{
-    //    Establish context = () => Subject.CurrentLevel.ShouldEqual(CcdLevel.Black);
+    public class Given_the_initial_level_is_black_when_wanting_to_do_a_retrospective : WithSubject<HeaderViewModel>
+    {
+        private Establish context = () =>
+        {
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
+                .Return(new ChangeLevelEvent());
 
-    //    Because of = () => { };
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
+                .Return(new RetrospectiveInProgressEvent());
 
-    //    It there_should_be_no_principles = () => Subject.Principles.Count.ShouldEqual(0);
-    //    It there_should_be_no_practices = () => Subject.Practices.Count.ShouldEqual(0);
-    //}
+            Subject = new HeaderViewModel(The<IEventAggregator>());
+        };
 
-    //public class Given_ : WithSubject<CcdLevelsViewModel>
-    //{
-    //    Establish context = () => Subject.CurrentLevel.ShouldEqual(CcdLevel.Black);
+        Because of = () => { };
 
-    //    Because of = () => { };
-
-    //    It there_should_be_no_principles = () => Subject.Principles.Count.ShouldEqual(0);
-    //    It there_should_be_no_practices = () => Subject.Practices.Count.ShouldEqual(0);
-    //}
-
-    //public class Given_the_first_level_is_black_when_browsing_forwards : WithSubject<CcdLevelViewModel>
-    //{
-    //    Establish context = () => Subject.CurrentLevel.ShouldEqual(CcdLevel.Black);
-
-    //    Because of = () => Subject.BrowseForward();
-
-    //    It the_next_one_should_be_red = () => Subject.CurrentLevel.ShouldEqual(CcdLevel.Red);
-    //}
+        It should_not_be_available = () => Subject.RetrospectiveAvailable.ShouldBeFalse();
+    }
 }

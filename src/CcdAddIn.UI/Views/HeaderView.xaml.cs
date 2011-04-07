@@ -1,27 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using CcdAddIn.UI.ViewModels;
 
 namespace CcdAddIn.UI.Views
 {
-    /// <summary>
-    /// Interaction logic for HeaderView.xaml
-    /// </summary>
-    public partial class HeaderView : UserControl
+    public partial class HeaderView
     {
-        public HeaderView()
+        public HeaderView(HeaderViewModel vm)
         {
             InitializeComponent();
+
+            Loaded += (s, e) => DataContext = vm;
         }
     }
 }

@@ -8,6 +8,11 @@ Scenario: Correct start
   When I read the main text
   Then it should be a warm welcome message
 
+Scenario: No retrospective at black level
+  Given I am at the black level
+  When I search for a retro-button
+  Then I should not find one
+
 Scenario: Browse to red level
   Given I am at the black level
   When I browse to the next one

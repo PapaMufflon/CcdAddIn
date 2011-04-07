@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.ViewModels;
 using CcdAddIn.UI.Views;
@@ -29,7 +30,7 @@ namespace CcdAddIn.UI
             return Shell;
         }
 
-        private void NavigateToCcdLevelsView(CcdLevel ccdLevel)
+        private void NavigateToCcdLevelsView(Level ccdLevel)
         {
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RequestNavigate("MainRegion", new Uri("CcdLevelsView", UriKind.Relative));

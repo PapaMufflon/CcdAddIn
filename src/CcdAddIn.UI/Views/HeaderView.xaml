@@ -9,9 +9,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Assets/ResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+        	<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <DockPanel>
+        <Button x:Name="retrospectiveButton"
+                Content="Retro"
+                Command="{Binding BeginRetrospectiveCommand}"
+                Visibility="{Binding RetrospectiveAvailable, Converter={StaticResource BooleanToVisibilityConverter}}"
+                DockPanel.Dock="Right"/>
         <Label Content="Clean Code Developer" FontSize="24" FontWeight="Bold"/>
-    </Grid>
+    </DockPanel>
 </UserControl>

@@ -1,42 +1,68 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
+using CcdAddIn.UI.CleanCodeDeveloper;
+using CcdAddIn.UI.Communication;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 
 namespace CcdAddIn.UI.ViewModels
 {
-    public class CcdLevelsViewModel
+    public class CcdLevelsViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private CcdLevel _currentLevel;
-        private List<string> _principles = new List<string>();
-        private List<string> _practices = new List<string>();
+        private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
 
-        public CcdLevelsViewModel()
+        public CcdLevelsViewModel(IEventAggregator eventAggregator)
         {
-            _principles.Add("Don't Repeat Yourself (DRY)");
-            _principles.Add("Keep It Simple, Stupid (KISS)");
-            _principles.Add("Vorsicht vor Optimierungen");
-            _principles.Add("Favor Composition over Inheritance (FCoI)");
+            _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
+            _retrospectiveInProgressEvent.Subscribe(x => EvaluationVisible = x);
 
-            _practices.Add("Pfadfinderregel");
-            _practices.Add("Root Cause Analysis");
-            _practices.Add("Versionskontrolle");
-            _practices.Add("Einfache Refaktorisierungen");
-            _practices.Add("Täglich reflektieren");
-
-            _currentLevel = CcdLevel.Red;
+            _currentLevel = new CcdLevel(Level.Red);
         }
 
-        public CcdLevel CurrentLevel
+        public Level CurrentLevel
         {
-            get { return _currentLevel; }
+            get { return _currentLevel.Level; }
         }
 
-        public List<string> Principles
+        public List<Item> Principles
         {
-            get { return _principles; }
+            get { return _currentLevel.Principles; }
         }
 
-        public List<string> Practices
+        public List<Item> Practices
         {
-            get { return _practices; }
+            get { return _currentLevel.Practices; }
+        }
+
+        private bool _evaluationVisible;
+
+        public bool EvaluationVisible
+        {
+            get { return _evaluationVisible; }
+            private set
+            {
+                _evaluationVisible = value;
+                OnPropertyChanged("EvaluationVisible");
+            }
+        }
+
+        public ICommand RetrospectiveDoneCommand
+        {
+            get
+            {
+                return new DelegateCommand(() => _retrospectiveInProgressEvent.Publish(false));
+            }
+        }
+
+        private void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
     }
 }
