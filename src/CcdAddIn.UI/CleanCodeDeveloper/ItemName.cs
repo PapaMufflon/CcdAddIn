@@ -23,23 +23,23 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
             switch (itemName)
             {
                 case ItemName.DoNotRepeatYourself:
-                    return "Don't Repeat Yourself (DRY)";
+                    return Resources.Resource.DoNotRepeatYourself;
                 case ItemName.KeepItSimpleStupid:
-                    return "Keep It Simple, Stupid (KISS)";
+                    return Resources.Resource.KeepItSimpleStupid;
                 case ItemName.VorsichtVorOptimierungen:
-                    return "Vorsicht vor Optimierungen";
+                    return Resources.Resource.BewareOptimizations;
                 case ItemName.FavorCompositionOverInheritance:
-                    return "Favor Composition over Inheritance (FCoI)";
+                    return Resources.Resource.FavorCompositionOverInheritance;
                 case ItemName.Pfadfinderregel:
-                    return "Pfadfinderregel";
+                    return Resources.Resource.BoyscoutRule;
                 case ItemName.RootCauseAnalysis:
-                    return "Root Cause Analysis";
+                    return Resources.Resource.RootCauseAnalysis;
                 case ItemName.Versionskontrolle:
-                    return "Versionskontrolle";
+                    return Resources.Resource.VersionControl;
                 case ItemName.EinfacheRefaktorisierungen:
-                    return "Einfache Refaktorisierungen";
+                    return Resources.Resource.SimpleRefactorizations;
                 case ItemName.TäglichReflektieren:
-                    return "Täglich reflektieren";
+                    return Resources.Resource.DailyReflection;
                 default:
                     throw new ArgumentOutOfRangeException("itemName");
             }

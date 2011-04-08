@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Resources="clr-namespace:CcdAddIn.UI.Resources"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -14,10 +15,10 @@
     </UserControl.Resources>
     <DockPanel>
         <Button x:Name="retrospectiveButton"
-                Content="Retro"
+                Content="{x:Static Resources:Resource.Retro}"
                 Command="{Binding BeginRetrospectiveCommand}"
                 Visibility="{Binding RetrospectiveAvailable, Converter={StaticResource BooleanToVisibilityConverter}}"
                 DockPanel.Dock="Right"/>
-        <Label Content="Clean Code Developer" FontSize="24" FontWeight="Bold"/>
+        <Label Content="{x:Static Resources:Resource.CleanCodeDeveloper}" FontSize="24" FontWeight="Bold"/>
     </DockPanel>
 </UserControl>

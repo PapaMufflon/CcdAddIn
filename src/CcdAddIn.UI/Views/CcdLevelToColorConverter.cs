@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 using CcdAddIn.UI.CleanCodeDeveloper;
-using CcdAddIn.UI.ViewModels;
 
 namespace CcdAddIn.UI.Views
 {
