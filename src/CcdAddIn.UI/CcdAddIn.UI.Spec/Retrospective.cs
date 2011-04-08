@@ -51,12 +51,13 @@ namespace CcdAddIn.UI.Spec
         public void GivenIFinishMyRetrospectiveWithNoSuggestionToAdvanceToTheNextLevel()
         {
             _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
         }
 
         [When(@"I accept that")]
         public void WhenIAcceptThat()
         {
-            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+            _mainWindow.Get<Button>("takeAdviceButton").Click();
         }
 
         [Then(@"I should stay at the current level")]

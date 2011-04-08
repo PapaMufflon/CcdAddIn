@@ -57,6 +57,7 @@
     <Compile Include="BeginWithFirstRealLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Retrospective.cs" />
+    <Compile Include="TakeAdvice.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

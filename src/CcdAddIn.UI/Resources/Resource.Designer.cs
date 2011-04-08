@@ -187,6 +187,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ratschlag annehmen.
+        /// </summary>
+        public static string TakeAdvice {
+            get {
+                return ResourceManager.GetString("TakeAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Versionskontrolle.
         /// </summary>
         public static string VersionControl {

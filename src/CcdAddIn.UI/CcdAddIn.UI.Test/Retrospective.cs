@@ -130,19 +130,26 @@ namespace CcdAddIn.UI.Test
 
         public class Given_a_retrospective_in_progress_When_finishing_the_retrospective : WithSubject<CcdLevelsViewModel>
         {
-            private static RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+            private static bool _raised;
 
             private Establish context = () =>
             {
-                _retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
+                var retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
 
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
-                    .Return(_retrospectiveInProgressEvent);
+                    .Return(retrospectiveInProgressEvent);
+
+                var showAdviceEvent = new ShowAdviceEvent();
+                showAdviceEvent.Subscribe(x => _raised = true);
+
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<ShowAdviceEvent>())
+                    .Return(showAdviceEvent);
 
                 Subject = new CcdLevelsViewModel(The<IEventAggregator>());
 
-                _retrospectiveInProgressEvent.Publish(true);
+                retrospectiveInProgressEvent.Publish(true);
             };
 
             private Because of = () =>
@@ -151,6 +158,7 @@ namespace CcdAddIn.UI.Test
             };
 
             private It should_stop_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeFalse();
+            private It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
         }
 
         public class Given_a_clean_code_developer_level_When_comparing_the_items_with_the_itemNames : WithFakes
@@ -176,25 +184,6 @@ namespace CcdAddIn.UI.Test
                     _itemNames[key].ShouldContainOnly(_items[key].Select(x => x.Name));
                 }
             };
-        }
-
-        public class Given_a_first_start_When_asking_to_advance_to_the_next_level : WithSubject<RalfWestphal>
-        {
-            private static bool _shouldAdvance;
-
-            private Establish context = () =>
-            {
-                var retrospectives = new List<CcdLevel>
-                {
-                    new CcdLevel(Level.Red)
-                };
-
-                Subject = new RalfWestphal(retrospectives);
-            };
-
-            private Because of = () => _shouldAdvance = Subject.ShouldAdvance();
-
-            private It should_be_false = () => _shouldAdvance.ShouldBeFalse();
         }
     }
 }

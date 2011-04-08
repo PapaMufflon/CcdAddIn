@@ -165,4 +165,7 @@
   <data name="WarmWelcomeMessage" xml:space="preserve">
     <value>Warm welcome message. Du bist super, Du schaffst das! Nächster Schritt: roter Grad.</value>
   </data>
+  <data name="TakeAdvice" xml:space="preserve">
+    <value>Ratschlag annehmen</value>
+  </data>
 </root>
