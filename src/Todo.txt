@@ -1,3 +1,2 @@
 logger
-const string for regions
-ressources for localizable strings
+const string for regions & views

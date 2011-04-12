@@ -160,6 +160,24 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nicht schlecht, benötigst aber noch mehr Übung..
+        /// </summary>
+        public static string NegativeAdvice {
+            get {
+                return ResourceManager.GetString("NegativeAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super gemacht, bist bereit für den nächsten Grad!.
+        /// </summary>
+        public static string PositiveAdvice {
+            get {
+                return ResourceManager.GetString("PositiveAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retro.
         /// </summary>
         public static string Retro {

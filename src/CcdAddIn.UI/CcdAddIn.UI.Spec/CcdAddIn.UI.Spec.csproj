@@ -76,6 +76,12 @@
       <LastGenOutput>Retrospective.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CcdAddIn.UI.csproj">
+      <Project>{45F291E7-962A-4529-B30B-19642C865BAE}</Project>
+      <Name>CcdAddIn.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

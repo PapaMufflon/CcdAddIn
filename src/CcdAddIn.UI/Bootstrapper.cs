@@ -15,9 +15,13 @@ namespace CcdAddIn.UI
     {
         public Shell Shell { get;  private set; }
 
+        private const string AdviceView = "AdviceView";
+        private const string CcdLevelsView = "CcdLevelsView";
+
         protected override DependencyObject CreateShell()
         {
-            Container.RegisterType<object, CcdLevelsView>("CcdLevelsView");
+            Container.RegisterType<object, CcdLevelsView>(CcdLevelsView);
+            Container.RegisterType<object, AdviceView>(AdviceView);
 
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("HeaderRegion", typeof(HeaderView));
@@ -25,6 +29,8 @@ namespace CcdAddIn.UI
 
             var eventAggregator = Container.Resolve<IEventAggregator>();
             eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(NavigateToCcdLevelsView);
+            eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
+            eventAggregator.GetEvent<RetrospectiveInProgressEvent>().Subscribe(NavigateBackToCcdLevelsView);
             
             Shell = new Shell();
             return Shell;
@@ -33,7 +39,22 @@ namespace CcdAddIn.UI
         private void NavigateToCcdLevelsView(Level ccdLevel)
         {
             var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RequestNavigate("MainRegion", new Uri("CcdLevelsView", UriKind.Relative));
+            regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
+        }
+
+        private void NavigateBackToCcdLevelsView(bool retrospectiveInProgress)
+        {
+            if (!retrospectiveInProgress)
+            {
+                var regionManager = Container.Resolve<IRegionManager>();
+                regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
+            }
+        }
+
+        private void NavigateToShowAdviceView(object obj)
+        {
+            var regionManager = Container.Resolve<IRegionManager>();
+            regionManager.RequestNavigate("MainRegion", new Uri(AdviceView, UriKind.Relative));
         }
     }
 }

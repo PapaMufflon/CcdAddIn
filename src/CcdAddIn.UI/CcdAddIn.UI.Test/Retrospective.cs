@@ -16,7 +16,7 @@ namespace CcdAddIn.UI.Test
         {
             private static ChangeLevelEvent _changeLevelEvent;
 
-            private Establish context = () =>
+            Establish context = () =>
             {
                 _changeLevelEvent = new ChangeLevelEvent();
 
@@ -31,16 +31,16 @@ namespace CcdAddIn.UI.Test
                 Subject = new HeaderViewModel(The<IEventAggregator>());
             };
 
-            private Because of = () => _changeLevelEvent.Publish(Level.Red);
+            Because of = () => _changeLevelEvent.Publish(Level.Red);
 
-            private It should_be_possible = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
+            It should_be_possible = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
         public class Given_a_non_black_level_When_clicking_on_retrospective : WithSubject<HeaderViewModel>
         {
             private static bool _raised;
 
-            private Establish context = () =>
+            Establish context = () =>
             {
                 var beginRetrospectiveEvent = new RetrospectiveInProgressEvent();
 
@@ -57,16 +57,16 @@ namespace CcdAddIn.UI.Test
                 Subject = new HeaderViewModel(The<IEventAggregator>());
             };
 
-            private Because of = () => Subject.BeginRetrospectiveCommand.Execute(null);
+            Because of = () => Subject.BeginRetrospectiveCommand.Execute(null);
 
-            private It should_raise_a_begin_retrospective_event = () => _raised.ShouldBeTrue();
+            It should_raise_a_begin_retrospective_event = () => _raised.ShouldBeTrue();
         }
 
         public class Given_a_retrospective_in_progress_When_the_retrospective_is_finished : WithSubject<HeaderViewModel>
         {
             private static RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
 
-            private Establish context = () =>
+            Establish context = () =>
             {
                 _retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
 
@@ -81,7 +81,7 @@ namespace CcdAddIn.UI.Test
                 Subject = new HeaderViewModel(The<IEventAggregator>());
             };
 
-            private Because of = () =>
+            Because of = () =>
             {
                 Subject.BeginRetrospectiveCommand.Execute(null);
                 Subject.BeginRetrospectiveCommand.CanExecute(null).ShouldBeFalse();
@@ -89,12 +89,12 @@ namespace CcdAddIn.UI.Test
                 _retrospectiveInProgressEvent.Publish(false);
             };
 
-            private It should_enable_the_begin_retrospective_command_again = () => Subject.BeginRetrospectiveCommand.CanExecute(null).ShouldBeTrue();
+            It should_enable_the_begin_retrospective_command_again = () => Subject.BeginRetrospectiveCommand.CanExecute(null).ShouldBeTrue();
         }
 
         public class Given_a_non_black_level_When_not_doing_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
-            private Establish context = () =>
+            Establish context = () =>
             {
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
@@ -103,16 +103,16 @@ namespace CcdAddIn.UI.Test
                 Subject = new CcdLevelsViewModel(The<IEventAggregator>());
             };
 
-            private Because of = () => { };
+            Because of = () => { };
 
-            private It should_not_show_the_evaluation_controls = () => Subject.EvaluationVisible.ShouldBeFalse();
+            It should_not_show_the_evaluation_controls = () => Subject.EvaluationVisible.ShouldBeFalse();
         }
 
         public class Given_a_non_black_level_When_wanting_to_do_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
             private static RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
 
-            private Establish context = () =>
+            Establish context = () =>
             {
                 _retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
 
@@ -123,16 +123,16 @@ namespace CcdAddIn.UI.Test
                 Subject = new CcdLevelsViewModel(The<IEventAggregator>());
             };
 
-            private Because of = () => _retrospectiveInProgressEvent.Publish(true);
+            Because of = () => _retrospectiveInProgressEvent.Publish(true);
 
-            private It should_switch_to_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeTrue();
+            It should_switch_to_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeTrue();
         }
 
         public class Given_a_retrospective_in_progress_When_finishing_the_retrospective : WithSubject<CcdLevelsViewModel>
         {
             private static bool _raised;
 
-            private Establish context = () =>
+            Establish context = () =>
             {
                 var retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
 
@@ -152,13 +152,10 @@ namespace CcdAddIn.UI.Test
                 retrospectiveInProgressEvent.Publish(true);
             };
 
-            private Because of = () =>
-            {
-                Subject.RetrospectiveDoneCommand.Execute(null);
-            };
+            Because of = () => Subject.RetrospectiveDoneCommand.Execute(null);
 
-            private It should_stop_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeFalse();
-            private It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
+            It should_stop_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeFalse();
+            It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
         }
 
         public class Given_a_clean_code_developer_level_When_comparing_the_items_with_the_itemNames : WithFakes
@@ -166,7 +163,7 @@ namespace CcdAddIn.UI.Test
             private static Dictionary<Level, List<Item>> _items = new Dictionary<Level, List<Item>>();
             private static Dictionary<Level, List<ItemName>> _itemNames = new Dictionary<Level, List<ItemName>>();
 
-            private Establish context = () =>
+            Establish context = () =>
             {
                 foreach (Level level in Enum.GetValues(typeof(Level)))
                 {
@@ -175,9 +172,9 @@ namespace CcdAddIn.UI.Test
                 }
             };
 
-            private Because of = () => { };
+            Because of = () => { };
 
-            private It should_have_the_same_items = () =>
+            It should_have_the_same_items = () =>
             {
                 foreach (var key in _items.Keys)
                 {

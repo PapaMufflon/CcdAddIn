@@ -83,6 +83,8 @@
     <Compile Include="CleanCodeDeveloper\ItemName.cs" />
     <Compile Include="CleanCodeDeveloper\ItemType.cs" />
     <Compile Include="Communication\ShowAdviceEvent.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CleanCodeDeveloper\Level.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
@@ -92,6 +94,7 @@
     </Compile>
     <Compile Include="ViewModels\CcdLevelsViewModel.cs" />
     <Compile Include="ViewModels\HeaderViewModel.cs" />
+    <Compile Include="ViewModels\AdviceViewModel.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />
     <Compile Include="Views\AdviceView.xaml.cs">
       <DependentUpon>AdviceView.xaml</DependentUpon>

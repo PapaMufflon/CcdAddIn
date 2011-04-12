@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
@@ -14,12 +13,19 @@ namespace CcdAddIn.UI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private CcdLevel _currentLevel;
+        private ShowAdviceEvent _showAdviceEvent;
         private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
 
         public CcdLevelsViewModel(IEventAggregator eventAggregator)
         {
+            _showAdviceEvent = eventAggregator.GetEvent<ShowAdviceEvent>();
+
             _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
-            _retrospectiveInProgressEvent.Subscribe(x => EvaluationVisible = x);
+            _retrospectiveInProgressEvent.Subscribe(x =>
+            {
+                if (x)
+                    EvaluationVisible = true;
+            });
 
             _currentLevel = new CcdLevel(Level.Red);
         }
@@ -55,7 +61,11 @@ namespace CcdAddIn.UI.ViewModels
         {
             get
             {
-                return new DelegateCommand(() => _retrospectiveInProgressEvent.Publish(false));
+                return new DelegateCommand(() =>
+                {
+                    _showAdviceEvent.Publish(null);
+                    EvaluationVisible = false;
+                });
             }
         }
 

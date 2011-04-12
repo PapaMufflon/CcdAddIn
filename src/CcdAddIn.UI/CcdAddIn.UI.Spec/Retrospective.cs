@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using CcdAddIn.UI.Resources;
+using NUnit.Framework;
 using TechTalk.SpecFlow;
 using White.Core;
 using White.Core.UIItems;
@@ -29,7 +30,7 @@ namespace CcdAddIn.UI.Spec
             _mainWindow.Get<Button>("goToRedLevelButton").Click();
 
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            Assert.That(firstPrinciple.Text, Is.StringContaining("Don't Repeat Yourself"));
+            Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.DoNotRepeatYourself));
         }
 
         [When(@"I click on retrospective")]
@@ -64,7 +65,7 @@ namespace CcdAddIn.UI.Spec
         public void ThenIShouldStayAtTheCurrentLevel()
         {
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            Assert.That(firstPrinciple.Text, Is.StringContaining("Don't Repeat Yourself"));
+            Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.DoNotRepeatYourself));
         }
 
         [Given(@"I make a retrospective")]
@@ -82,10 +83,20 @@ namespace CcdAddIn.UI.Spec
         [Then(@"I should not be able to evaluate the principles and practices")]
         public void ThenIShouldNotBeAbleToEvaluateThePrinciplesAndPractices()
         {
-            var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            var slider = firstPrinciple.GetElement(SearchCriteria.ByControlType(typeof(Slider)));
+            var listBox = _mainWindow.Get<ListBox>("principlesListView");
+            Assert.IsNull(listBox);
+        }
 
-            Assert.That(slider.Current.IsOffscreen, Is.True);
+        [Given(@"I finish my retrospective with a suggestion to advance to the next level")]
+        public void GivenIFinishMyRetrospectiveWithASuggestionToAdvanceToTheNextLevel()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"I decline to advance")]
+        public void WhenIDeclineToAdvance()
+        {
+            ScenarioContext.Current.Pending();
         }
     }
 }

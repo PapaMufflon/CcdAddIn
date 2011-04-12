@@ -168,4 +168,10 @@
   <data name="TakeAdvice" xml:space="preserve">
     <value>Ratschlag annehmen</value>
   </data>
+  <data name="NegativeAdvice" xml:space="preserve">
+    <value>Nicht schlecht, benötigst aber noch mehr Übung.</value>
+  </data>
+  <data name="PositiveAdvice" xml:space="preserve">
+    <value>Super gemacht, bist bereit für den nächsten Grad!</value>
+  </data>
 </root>
