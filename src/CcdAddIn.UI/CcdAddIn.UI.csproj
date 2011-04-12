@@ -83,6 +83,8 @@
     <Compile Include="CleanCodeDeveloper\ItemName.cs" />
     <Compile Include="CleanCodeDeveloper\ItemType.cs" />
     <Compile Include="Communication\ShowAdviceEvent.cs" />
+    <Compile Include="Data\FileService.cs" />
+    <Compile Include="Data\IFileService.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

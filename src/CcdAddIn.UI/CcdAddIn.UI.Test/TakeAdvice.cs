@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.Data;
@@ -40,6 +41,10 @@ namespace CcdAddIn.UI.Test
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
                 .Return(retrospectiveInProgressEvent);
+
+            The<IRepository>()
+                .WhenToldTo(x => x.GetRetrospectives())
+                .Return(new List<CcdLevel>());
         };
 
         Because of = () => Subject.TakeAdviceCommand.Execute(null);

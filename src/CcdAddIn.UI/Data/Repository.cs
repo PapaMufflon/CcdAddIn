@@ -5,9 +5,14 @@ namespace CcdAddIn.UI.Data
 {
     public class Repository : IRepository
     {
+        public Repository(IFileService fileService)
+        {
+            fileService.CreateNewFile("repository");
+        }
+
         public List<CcdLevel> GetRetrospectives()
         {
-            return null;
+            return new List<CcdLevel>();
         }
     }
 }

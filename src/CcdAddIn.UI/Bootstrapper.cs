@@ -2,7 +2,7 @@
 using System.Windows;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
-using CcdAddIn.UI.ViewModels;
+using CcdAddIn.UI.Data;
 using CcdAddIn.UI.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
@@ -20,6 +20,9 @@ namespace CcdAddIn.UI
 
         protected override DependencyObject CreateShell()
         {
+            Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IFileService, FileService>();
+
             Container.RegisterType<object, CcdLevelsView>(CcdLevelsView);
             Container.RegisterType<object, AdviceView>(AdviceView);
 
