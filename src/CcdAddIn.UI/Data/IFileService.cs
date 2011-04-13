@@ -2,6 +2,6 @@
 {
     public interface IFileService
     {
-        void CreateNewFile(string fileName);
+        string OpenAsString(string fileName);
     }
 }

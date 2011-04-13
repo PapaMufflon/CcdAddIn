@@ -1,10 +1,12 @@
-﻿namespace CcdAddIn.UI.Data
+﻿using System;
+
+namespace CcdAddIn.UI.Data
 {
     class FileService : IFileService
     {
-        public void CreateNewFile(string fileName)
+        public string OpenAsString(string fileName)
         {
-            System.IO.File.Create(fileName);
+            return "<foo/>"; throw new NotImplementedException();
         }
     }
 }

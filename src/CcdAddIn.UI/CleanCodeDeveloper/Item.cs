@@ -13,5 +13,28 @@
         }
 
         public string NameAsString { get { return Name.ToCorrectString(); } }
+
+        public override bool Equals(object obj)
+        {
+            var that = obj as Item;
+
+            if (that == null)
+                return false;
+
+            return this.Name == that.Name &&
+                   this.ItemType == that.ItemType &&
+                   this.EvaluationValue == that.EvaluationValue;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int result = Name.GetHashCode();
+                result = (result * 397) ^ ItemType.GetHashCode();
+                result = (result * 397) ^ EvaluationValue;
+                return result;
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CcdAddIn.UI.CleanCodeDeveloper;
 
 namespace CcdAddIn.UI.Data
