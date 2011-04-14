@@ -7,12 +7,19 @@ Scenario: Make a retrospective
   Given I am at a non-black level
   When I click on retrospective
   Then I should be able to evaluate the principles and practices
+  And the retrospective-button should be invisible
+
+Scenario: See a feedback
+  Given I am at a non-black level
+  When I finish my retrospective
+  Then I should see an advice reflecting my performance
 
 Scenario: No suggestion to go to the next level
   Given I am at a non-black level
   And I finish my retrospective with no suggestion to advance to the next level
   When I accept that
   Then I should stay at the current level
+  And the retrospective-button should be visible again
 
 Scenario: Finish a retrospective
   Given I am at a non-black level

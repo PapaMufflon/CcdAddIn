@@ -48,6 +48,25 @@ namespace CcdAddIn.UI.Spec
             Assert.That(slider.Current.IsOffscreen, Is.False);
         }
 
+        [Then(@"the retrospective-button should be invisible")]
+        public void ThenTheRetrospective_ButtonShouldBeInvisible()
+        {
+            Assert.That(_mainWindow.Get<Button>("retrospectiveButton").IsOffScreen, Is.True);
+        }
+
+        [When(@"I finish my retrospective")]
+        public void WhenIFinishMyRetrospective()
+        {
+            _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+        }
+
+        [Then(@"I should see an advice reflecting my performance")]
+        public void ThenIShouldSeeAnAdviceReflectingMyPerformance()
+        {
+            Assert.That(_mainWindow.Get<Label>("adviceDocument").Text, Is.StringContaining(Resource.NegativeAdvice));
+        }
+
         [Given(@"I finish my retrospective with no suggestion to advance to the next level")]
         public void GivenIFinishMyRetrospectiveWithNoSuggestionToAdvanceToTheNextLevel()
         {
@@ -85,6 +104,12 @@ namespace CcdAddIn.UI.Spec
         {
             var listBox = _mainWindow.Get<ListBox>("principlesListView");
             Assert.IsNull(listBox);
+        }
+
+        [Then(@"the retrospective-button should be visible again")]
+        public void ThenTheRetrospective_ButtonShouldBeVisibleAgain()
+        {
+            Assert.That(_mainWindow.Get<Button>("retrospectiveButton").IsOffScreen, Is.False);
         }
 
         [Given(@"I finish my retrospective with a suggestion to advance to the next level")]
