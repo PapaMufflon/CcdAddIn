@@ -30,7 +30,7 @@ Scenario: Finish a retrospective
 Scenario: Keep the current level
   Given I am at a non-black level
   And I finish my retrospective with a suggestion to advance to the next level
-  When I decline to advance
+  When I deny to advance
   Then I should stay at the current level
 
 Scenario: Advance to the next level

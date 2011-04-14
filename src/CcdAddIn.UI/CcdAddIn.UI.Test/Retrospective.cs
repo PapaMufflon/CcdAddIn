@@ -84,12 +84,11 @@ namespace CcdAddIn.UI.Test
             Because of = () =>
             {
                 Subject.BeginRetrospectiveCommand.Execute(null);
-                Subject.BeginRetrospectiveCommand.CanExecute(null).ShouldBeFalse();
 
                 _retrospectiveInProgressEvent.Publish(false);
             };
 
-            It should_enable_the_begin_retrospective_command_again = () => Subject.BeginRetrospectiveCommand.CanExecute(null).ShouldBeTrue();
+            It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
         public class Given_a_non_black_level_When_not_doing_a_retrospective : WithSubject<CcdLevelsViewModel>

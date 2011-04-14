@@ -141,7 +141,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 32
   testRunner.And("I finish my retrospective with a suggestion to advance to the next level");
 #line 33
-  testRunner.When("I decline to advance");
+  testRunner.When("I deny to advance");
 #line 34
   testRunner.Then("I should stay at the current level");
 #line hidden

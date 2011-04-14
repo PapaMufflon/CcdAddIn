@@ -118,8 +118,8 @@ namespace CcdAddIn.UI.Spec
             ScenarioContext.Current.Pending();
         }
 
-        [When(@"I decline to advance")]
-        public void WhenIDeclineToAdvance()
+        [When(@"I deny to advance")]
+        public void WhenIDenyToAdvance()
         {
             ScenarioContext.Current.Pending();
         }
