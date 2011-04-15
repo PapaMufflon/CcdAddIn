@@ -41,8 +41,6 @@ namespace CcdAddIn.UI.Test
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
                 .Return(new RetrospectiveInProgressEvent());
-
-            Subject = new HeaderViewModel(The<IEventAggregator>());
         };
 
         Because of = () => { };

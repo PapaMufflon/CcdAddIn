@@ -6,7 +6,12 @@ namespace CcdAddIn.UI.Data
     {
         public string OpenAsString(string fileName)
         {
-            return "<foo/>"; throw new NotImplementedException();
+            return "<foo/>";
+        }
+
+        public void WriteTo(string content, string fileName)
+        {
+            
         }
     }
 }

@@ -9,26 +9,39 @@ namespace CcdAddIn.UI.Data
 {
     public class Repository : IRepository
     {
-        private XDocument _document;
+        public List<CcdLevel> Retrospectives { get; set; }
+
+        private const string FileName = "repository";
+
+        private readonly IFileService _fileService;
 
         public Repository(IFileService fileService)
         {
-            var content = fileService.OpenAsString("repository");
+            _fileService = fileService;
 
-            _document = XDocument.Load(new StringReader(content));
+            var content = _fileService.OpenAsString(FileName);
+            var document = XDocument.Load(new StringReader(content));
 
-            if (_document == null)
+            if (document == null)
                 throw new InvalidOperationException("Wrong content in repository.");
+
+            ReadOutRetrospectives(document);
         }
 
-        public List<CcdLevel> GetRetrospectives()
+        public void SaveChanges()
         {
-            var retrospectives = new List<CcdLevel>();
+            var repository = new XDocument(new XElement("Repository", new XElement("History")));
+            _fileService.WriteTo(repository.ToString(), FileName);
+        }
 
-            if (_document.Root.Element("History") == null)
-                return retrospectives;
+        private void ReadOutRetrospectives(XDocument document)
+        {
+            Retrospectives = new List<CcdLevel>();
 
-            foreach (var retrospectiveElement in _document.Root.Element("History").Descendants("Retrospective"))
+            if (document.Root.Element("History") == null)
+                return;
+
+            foreach (var retrospectiveElement in document.Root.Element("History").Descendants("Retrospective"))
             {
                 Level level;
 
@@ -61,10 +74,8 @@ namespace CcdAddIn.UI.Data
                     principle.EvaluationValue = int.Parse(principleElement.Attribute("Value").Value);
                 }
 
-                retrospectives.Add(ccdLevel);
+                Retrospectives.Add(ccdLevel);
             }
-
-            return retrospectives;
         }
     }
 }

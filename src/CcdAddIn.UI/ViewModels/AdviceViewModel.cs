@@ -17,7 +17,7 @@ namespace CcdAddIn.UI.ViewModels
         {
             _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
 
-            var shouldAdvance = RalfWestphal.ShouldAdvance(repository.GetRetrospectives());
+            var shouldAdvance = RalfWestphal.ShouldAdvance(repository.Retrospectives);
 
             _advice = shouldAdvance ? Resources.Resource.PositiveAdvice : Resources.Resource.NegativeAdvice;
             _canAdvance = shouldAdvance;

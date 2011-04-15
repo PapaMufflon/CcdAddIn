@@ -27,8 +27,6 @@ namespace CcdAddIn.UI.Test
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
                     .Return(new RetrospectiveInProgressEvent());
-
-                Subject = new HeaderViewModel(The<IEventAggregator>());
             };
 
             Because of = () => _changeLevelEvent.Publish(Level.Red);
@@ -53,8 +51,6 @@ namespace CcdAddIn.UI.Test
                     .Return(new ChangeLevelEvent());
 
                 beginRetrospectiveEvent.Subscribe(x => _raised = true);
-
-                Subject = new HeaderViewModel(The<IEventAggregator>());
             };
 
             Because of = () => Subject.BeginRetrospectiveCommand.Execute(null);
@@ -77,8 +73,6 @@ namespace CcdAddIn.UI.Test
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
                     .Return(new ChangeLevelEvent());
-
-                Subject = new HeaderViewModel(The<IEventAggregator>());
             };
 
             Because of = () =>
@@ -98,8 +92,6 @@ namespace CcdAddIn.UI.Test
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
                     .Return(new RetrospectiveInProgressEvent());
-
-                Subject = new CcdLevelsViewModel(The<IEventAggregator>());
             };
 
             Because of = () => { };
@@ -118,8 +110,6 @@ namespace CcdAddIn.UI.Test
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
                     .Return(_retrospectiveInProgressEvent);
-
-                Subject = new CcdLevelsViewModel(The<IEventAggregator>());
             };
 
             Because of = () => _retrospectiveInProgressEvent.Publish(true);
@@ -145,10 +135,6 @@ namespace CcdAddIn.UI.Test
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<ShowAdviceEvent>())
                     .Return(showAdviceEvent);
-
-                Subject = new CcdLevelsViewModel(The<IEventAggregator>());
-
-                retrospectiveInProgressEvent.Publish(true);
             };
 
             Because of = () => Subject.RetrospectiveDoneCommand.Execute(null);

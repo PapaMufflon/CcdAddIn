@@ -42,9 +42,7 @@ namespace CcdAddIn.UI.Test
                 .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
                 .Return(retrospectiveInProgressEvent);
 
-            The<IRepository>()
-                .WhenToldTo(x => x.GetRetrospectives())
-                .Return(new List<CcdLevel>());
+            The<IRepository>().Retrospectives = new List<CcdLevel>();
         };
 
         Because of = () => Subject.TakeAdviceCommand.Execute(null);
@@ -100,9 +98,7 @@ namespace CcdAddIn.UI.Test
                 retrospectives.Add(level);
             }
 
-            The<IRepository>()
-                .WhenToldTo(x => x.GetRetrospectives())
-                .Return(retrospectives);
+            The<IRepository>().Retrospectives = retrospectives;
         };
 
         Because of = () => { };
@@ -130,9 +126,7 @@ namespace CcdAddIn.UI.Test
                 retrospectives.Add(level);
             }
 
-            The<IRepository>()
-                .WhenToldTo(x => x.GetRetrospectives())
-                .Return(retrospectives);
+            The<IRepository>().Retrospectives = retrospectives;
         };
 
         Because of = () => { };
