@@ -30,7 +30,31 @@ namespace CcdAddIn.UI.Data
 
         public void SaveChanges()
         {
-            var repository = new XDocument(new XElement("Repository", new XElement("History")));
+            var history = new XElement("History");
+
+            foreach (var retrospective in Retrospectives)
+            {
+                var retrospectiveElement = new XElement("Retrospective",
+                                                        new XAttribute("Level", retrospective.Level));
+
+                foreach (var principle in retrospective.Principles)
+                {
+                    retrospectiveElement.Add(new XElement("Item",
+                                                          new XAttribute("Name", principle.Name),
+                                                          new XAttribute("Value", principle.EvaluationValue)));
+                }
+
+                foreach (var practice in retrospective.Practices)
+                {
+                    retrospectiveElement.Add(new XElement("Item",
+                                                          new XAttribute("Name", practice.Name),
+                                                          new XAttribute("Value", practice.EvaluationValue)));
+                }
+
+                history.Add(retrospectiveElement);
+            }
+
+            var repository = new XDocument(new XElement("Repository", history));
             _fileService.WriteTo(repository.ToString(), FileName);
         }
 

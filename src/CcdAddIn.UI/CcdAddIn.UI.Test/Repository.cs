@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Data;
 using Machine.Fakes;
 using Machine.Specifications;
+using Rhino.Mocks;
 
 namespace CcdAddIn.UI.Test
 {
-    public class Given_a_file_with_wrong_content_When_creating_the_repository : WithSubject<Repository>
+    public class Given_a_file_with_wrong_content_When_creating_the_repository
     {
-        Establish context = () =>
-        {
-            The<IFileService>()
-                .WhenToldTo(x => x.OpenAsString("repository"))
-                .Return("wrong content");
-        };
+        Establish context = () => { };
 
         Because of = () => { };
 
-        private static List<CcdLevel> _foo;
-        It should_throw_an_exception = () => Catch.Exception(() => _foo = Subject.Retrospectives).ShouldNotBeNull();
+        private It should_throw_an_exception = () =>
+        {
+            var fileService = MockRepository.GenerateStub<IFileService>();
+            fileService.Stub(x => x.OpenAsString("repository")).Return("wrong content");
+
+            Catch.Exception(() => new Repository(fileService)).ShouldNotBeNull();
+        };
     }
 
     public class Given_a_file_without_history_When_querying_the_repository : WithSubject<Repository>
@@ -213,8 +214,9 @@ namespace CcdAddIn.UI.Test
                                    "<Item Name=\"TäglichReflektieren\" Value=\"60\"/>" +
                                    "</Retrospective></History></Repository>";
 
+            var xmlFormat = (XDocument.Load(new StringReader(oneRetrospective))).ToString();
             The<IFileService>()
-                .WasToldTo(x => x.WriteTo(oneRetrospective, "repository"));
+                .WasToldTo(x => x.WriteTo(xmlFormat, "repository"));
         };
     }
 
