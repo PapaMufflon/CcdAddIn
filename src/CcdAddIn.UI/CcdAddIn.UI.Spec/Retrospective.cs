@@ -1,4 +1,5 @@
-﻿using CcdAddIn.UI.Resources;
+﻿using System.IO;
+using CcdAddIn.UI.Resources;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 using White.Core;
@@ -115,13 +116,26 @@ namespace CcdAddIn.UI.Spec
         [Given(@"I finish my retrospective with a suggestion to advance to the next level")]
         public void GivenIFinishMyRetrospectiveWithASuggestionToAdvanceToTheNextLevel()
         {
-            ScenarioContext.Current.Pending();
+            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original");
+            File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original");
+            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+            File.Copy(@"..\..\repository21perfectRetrospectives", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+
+            _application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
+            _mainWindow = _application.GetWindow("MainWindow");
+            _mainWindow.Get<Button>("goToRedLevelButton").Click();
+            _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+
+            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+            File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original");
         }
 
         [When(@"I deny to advance")]
         public void WhenIDenyToAdvance()
         {
-            ScenarioContext.Current.Pending();
+            _mainWindow.Get<Button>("denyAdviceButton").Click();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 
 namespace CcdAddIn.UI.Data
 {
@@ -6,12 +6,15 @@ namespace CcdAddIn.UI.Data
     {
         public string OpenAsString(string fileName)
         {
-            return "<foo/>";
+            if (!File.Exists(fileName))
+                File.Create(fileName);
+
+            return File.ReadAllText(fileName);
         }
 
         public void WriteTo(string content, string fileName)
         {
-            
+            File.WriteAllText(fileName, content);
         }
     }
 }

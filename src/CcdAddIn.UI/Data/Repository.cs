@@ -20,6 +20,10 @@ namespace CcdAddIn.UI.Data
             _fileService = fileService;
 
             var content = _fileService.OpenAsString(FileName);
+
+            if (string.IsNullOrEmpty(content))
+                content = "<Repository/>";
+
             var document = XDocument.Load(new StringReader(content));
 
             if (document == null)
@@ -89,8 +93,8 @@ namespace CcdAddIn.UI.Data
                 foreach (var principle in ccdLevel.Principles)
                 {
                     var principleElement = (from x in retrospectiveElement.Descendants()
-                                           where x.Attribute("Name").Value.Equals(principle.Name.ToString())
-                                           select x).FirstOrDefault();
+                                            where x.Attribute("Name").Value.Equals(principle.Name.ToString())
+                                            select x).FirstOrDefault();
 
                     if (principleElement == null)
                         throw new InvalidOperationException("Wrong content in repository.");

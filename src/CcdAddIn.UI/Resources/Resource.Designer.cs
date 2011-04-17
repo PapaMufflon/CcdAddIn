@@ -115,6 +115,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ratschlag ablehnen.
+        /// </summary>
+        public static string DenyAdvice {
+            get {
+                return ResourceManager.GetString("DenyAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fertig.
         /// </summary>
         public static string Done {

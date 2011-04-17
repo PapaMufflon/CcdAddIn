@@ -13,7 +13,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
         RootCauseAnalysis,
         Versionskontrolle,
         EinfacheRefaktorisierungen,
-        TäglichReflektieren
+        TaeglichReflektieren
     }
 
     public static class ItemNameExtensions
@@ -38,7 +38,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                     return Resources.Resource.VersionControl;
                 case ItemName.EinfacheRefaktorisierungen:
                     return Resources.Resource.SimpleRefactorizations;
-                case ItemName.TäglichReflektieren:
+                case ItemName.TaeglichReflektieren:
                     return Resources.Resource.DailyReflection;
                 default:
                     throw new ArgumentOutOfRangeException("itemName");

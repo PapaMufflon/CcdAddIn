@@ -28,8 +28,7 @@ Scenario: Finish a retrospective
   Then I should not be able to evaluate the principles and practices
 
 Scenario: Keep the current level
-  Given I am at a non-black level
-  And I finish my retrospective with a suggestion to advance to the next level
+  Given I finish my retrospective with a suggestion to advance to the next level
   When I deny to advance
   Then I should stay at the current level
 

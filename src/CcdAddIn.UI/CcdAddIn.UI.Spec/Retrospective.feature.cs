@@ -137,12 +137,10 @@ this.ScenarioSetup(scenarioInfo);
 #line 30
 this.ScenarioSetup(scenarioInfo);
 #line 31
-  testRunner.Given("I am at a non-black level");
+  testRunner.Given("I finish my retrospective with a suggestion to advance to the next level");
 #line 32
-  testRunner.And("I finish my retrospective with a suggestion to advance to the next level");
-#line 33
   testRunner.When("I deny to advance");
-#line 34
+#line 33
   testRunner.Then("I should stay at the current level");
 #line hidden
             testRunner.CollectScenarioErrors();
@@ -153,15 +151,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AdvanceToTheNextLevel()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Advance to the next level", ((string[])(null)));
-#line 36
+#line 35
 this.ScenarioSetup(scenarioInfo);
-#line 37
+#line 36
   testRunner.Given("I am at a non-black level");
-#line 38
+#line 37
   testRunner.And("I finish my retrospective with a suggestion to advance to the next level");
-#line 39
+#line 38
   testRunner.When("I accept to advance to the next level");
-#line 40
+#line 39
   testRunner.Then("I should be at the next level");
 #line hidden
             testRunner.CollectScenarioErrors();
@@ -172,15 +170,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AdvanceToTheNextLevelOnMyOwn()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Advance to the next level on my own", ((string[])(null)));
-#line 42
+#line 41
 this.ScenarioSetup(scenarioInfo);
-#line 43
+#line 42
   testRunner.Given("I am at a non-black level");
-#line 44
+#line 43
   testRunner.And("I finish my retrospective with no suggestion to advance to the next level");
-#line 45
+#line 44
   testRunner.When("I actively wish to advance to the next level");
-#line 46
+#line 45
   testRunner.Then("I should be at the next level");
 #line hidden
             testRunner.CollectScenarioErrors();

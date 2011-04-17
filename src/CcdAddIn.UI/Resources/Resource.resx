@@ -174,4 +174,7 @@
   <data name="PositiveAdvice" xml:space="preserve">
     <value>Super gemacht, bist bereit für den nächsten Grad!</value>
   </data>
+  <data name="DenyAdvice" xml:space="preserve">
+    <value>Ratschlag ablehnen</value>
+  </data>
 </root>

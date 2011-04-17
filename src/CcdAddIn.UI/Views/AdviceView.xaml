@@ -18,9 +18,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label x:Name="adviceDocument" Content="{Binding Advice, Mode=OneWay}"/>
-        <Button x:Name="takeAdviceButton"
-                Grid.Row="1"
-                Content="{x:Static Resources:Resource.TakeAdvice}"
-                Command="{Binding TakeAdviceCommand}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1">
+            <Button x:Name="takeAdviceButton"
+                    Content="{x:Static Resources:Resource.TakeAdvice}"
+                    Command="{Binding TakeAdviceCommand}"/>
+            <Button x:Name="denyAdviceButton"
+                    Content="{x:Static Resources:Resource.DenyAdvice}"
+                    Command="{Binding DenyAdviceCommand}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

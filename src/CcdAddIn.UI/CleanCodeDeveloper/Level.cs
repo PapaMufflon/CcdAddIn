@@ -35,7 +35,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                     items.Add(ItemName.RootCauseAnalysis);
                     items.Add(ItemName.Versionskontrolle);
                     items.Add(ItemName.EinfacheRefaktorisierungen);
-                    items.Add(ItemName.TäglichReflektieren);
+                    items.Add(ItemName.TaeglichReflektieren);
                     break;
                 case Level.Orange:
                     break;
@@ -73,7 +73,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                     items.Add(new Item(ItemName.RootCauseAnalysis, ItemType.Practice));
                     items.Add(new Item(ItemName.Versionskontrolle, ItemType.Practice));
                     items.Add(new Item(ItemName.EinfacheRefaktorisierungen, ItemType.Practice));
-                    items.Add(new Item(ItemName.TäglichReflektieren, ItemType.Practice));
+                    items.Add(new Item(ItemName.TaeglichReflektieren, ItemType.Practice));
                     break;
                 case Level.Orange:
                     break;

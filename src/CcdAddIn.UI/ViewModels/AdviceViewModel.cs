@@ -31,6 +31,14 @@ namespace CcdAddIn.UI.ViewModels
             }
         }
 
+        public ICommand DenyAdviceCommand
+        {
+            get
+            {
+                return new DelegateCommand(() => _retrospectiveInProgressEvent.Publish(false));
+            }
+        }
+
         public string Advice
         {
             get { return _advice; }

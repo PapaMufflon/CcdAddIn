@@ -11,17 +11,12 @@ namespace CcdAddIn.UI.Test
 {
     public class Given_a_file_with_wrong_content_When_creating_the_repository
     {
-        Establish context = () => { };
+        private static IFileService _fileService;
+        Establish context = () => _fileService = MockRepository.GenerateStub<IFileService>();
 
-        Because of = () => { };
+        Because of = () => _fileService.Stub(x => x.OpenAsString("repository")).Return("wrong content");
 
-        private It should_throw_an_exception = () =>
-        {
-            var fileService = MockRepository.GenerateStub<IFileService>();
-            fileService.Stub(x => x.OpenAsString("repository")).Return("wrong content");
-
-            Catch.Exception(() => new Repository(fileService)).ShouldNotBeNull();
-        };
+        It should_throw_an_exception = () => Catch.Exception(() => new Repository(_fileService)).ShouldNotBeNull();
     }
 
     public class Given_a_file_without_history_When_querying_the_repository : WithSubject<Repository>
@@ -69,7 +64,7 @@ namespace CcdAddIn.UI.Test
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"60\"/>" +
                                    "<Item Name=\"Versionskontrolle\" Value=\"60\"/>" +
                                    "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"60\"/>" +
-                                   "<Item Name=\"TäglichReflektieren\" Value=\"60\"/>" +
+                                   "<Item Name=\"TaeglichReflektieren\" Value=\"60\"/>" +
                                    "</Retrospective></History></Repository>";
 
             The<IFileService>()
@@ -108,7 +103,7 @@ namespace CcdAddIn.UI.Test
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"60\"/>" +
                                    "<Item Name=\"Versionskontrolle\" Value=\"60\"/>" +
                                    "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"60\"/>" +
-                                   "<Item Name=\"TäglichReflektieren\" Value=\"60\"/>" +
+                                   "<Item Name=\"TaeglichReflektieren\" Value=\"60\"/>" +
                                    "</Retrospective><Retrospective Level=\"Red\">" +
                                    "<Item Name=\"DoNotRepeatYourself\" Value=\"1\"/>" +
                                    "<Item Name=\"KeepItSimpleStupid\" Value=\"2\"/>" +
@@ -118,7 +113,7 @@ namespace CcdAddIn.UI.Test
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"6\"/>" +
                                    "<Item Name=\"Versionskontrolle\" Value=\"7\"/>" +
                                    "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"8\"/>" +
-                                   "<Item Name=\"TäglichReflektieren\" Value=\"9\"/>" +
+                                   "<Item Name=\"TaeglichReflektieren\" Value=\"9\"/>" +
                                    "</Retrospective></History></Repository>";
 
             The<IFileService>()
@@ -211,7 +206,7 @@ namespace CcdAddIn.UI.Test
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"60\"/>" +
                                    "<Item Name=\"Versionskontrolle\" Value=\"60\"/>" +
                                    "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"60\"/>" +
-                                   "<Item Name=\"TäglichReflektieren\" Value=\"60\"/>" +
+                                   "<Item Name=\"TaeglichReflektieren\" Value=\"60\"/>" +
                                    "</Retrospective></History></Repository>";
 
             var xmlFormat = (XDocument.Load(new StringReader(oneRetrospective))).ToString();
