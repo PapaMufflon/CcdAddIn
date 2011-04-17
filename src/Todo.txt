@@ -1,2 +1,3 @@
 logger
 const string for regions & views
+wtf? first KeepTheCurrentLevel-test, then NoSuggestionToGoToTheNextLevel --> red
