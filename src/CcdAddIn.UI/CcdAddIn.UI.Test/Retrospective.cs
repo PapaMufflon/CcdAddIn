@@ -25,8 +25,12 @@ namespace CcdAddIn.UI.Test
                     .Return(_changeLevelEvent);
 
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
-                    .Return(new RetrospectiveInProgressEvent());
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                    .Return(new BeginRetrospectiveEvent());
+
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
             };
 
             Because of = () => _changeLevelEvent.Publish(Level.Red);
@@ -40,11 +44,15 @@ namespace CcdAddIn.UI.Test
 
             Establish context = () =>
             {
-                var beginRetrospectiveEvent = new RetrospectiveInProgressEvent();
+                var beginRetrospectiveEvent = new BeginRetrospectiveEvent();
 
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                     .Return(beginRetrospectiveEvent);
+
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
 
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
@@ -60,15 +68,18 @@ namespace CcdAddIn.UI.Test
 
         public class Given_a_retrospective_in_progress_When_the_retrospective_is_finished : WithSubject<HeaderViewModel>
         {
-            private static RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+            private static EndRetrospectiveEvent _endRetrospectiveEvent;
 
             Establish context = () =>
             {
-                _retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
-
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
-                    .Return(_retrospectiveInProgressEvent);
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                    .Return(new BeginRetrospectiveEvent());
+
+                _endRetrospectiveEvent = new EndRetrospectiveEvent();
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(_endRetrospectiveEvent);
 
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
@@ -79,7 +90,7 @@ namespace CcdAddIn.UI.Test
             {
                 Subject.BeginRetrospectiveCommand.Execute(null);
 
-                _retrospectiveInProgressEvent.Publish(false);
+                _endRetrospectiveEvent.Publish(false);
             };
 
             It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
@@ -90,8 +101,8 @@ namespace CcdAddIn.UI.Test
             Establish context = () =>
             {
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
-                    .Return(new RetrospectiveInProgressEvent());
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                    .Return(new BeginRetrospectiveEvent());
             };
 
             Because of = () => { };
@@ -101,14 +112,14 @@ namespace CcdAddIn.UI.Test
 
         public class Given_a_non_black_level_When_wanting_to_do_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
-            private static RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+            private static BeginRetrospectiveEvent _retrospectiveInProgressEvent;
 
             Establish context = () =>
             {
-                _retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
+                _retrospectiveInProgressEvent = new BeginRetrospectiveEvent();
 
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                     .Return(_retrospectiveInProgressEvent);
             };
 
@@ -123,10 +134,10 @@ namespace CcdAddIn.UI.Test
 
             Establish context = () =>
             {
-                var retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
+                var retrospectiveInProgressEvent = new BeginRetrospectiveEvent();
 
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                     .Return(retrospectiveInProgressEvent);
 
                 var showAdviceEvent = new ShowAdviceEvent();

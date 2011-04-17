@@ -14,18 +14,14 @@ namespace CcdAddIn.UI.ViewModels
 
         private CcdLevel _currentLevel;
         private ShowAdviceEvent _showAdviceEvent;
-        private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+        private BeginRetrospectiveEvent _beginRetrospectiveEvent;
 
         public CcdLevelsViewModel(IEventAggregator eventAggregator)
         {
             _showAdviceEvent = eventAggregator.GetEvent<ShowAdviceEvent>();
 
-            _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
-            _retrospectiveInProgressEvent.Subscribe(x =>
-            {
-                if (x)
-                    EvaluationVisible = true;
-            });
+            _beginRetrospectiveEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
+            _beginRetrospectiveEvent.Subscribe(x => EvaluationVisible = true);
 
             _currentLevel = new CcdLevel(Level.Red);
         }

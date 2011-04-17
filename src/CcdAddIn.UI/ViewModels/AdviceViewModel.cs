@@ -9,13 +9,13 @@ namespace CcdAddIn.UI.ViewModels
 {
     public class AdviceViewModel
     {
-        private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+        private BeginRetrospectiveEvent _retrospectiveInProgressEvent;
         private string _advice;
         private bool _canAdvance;
 
         public AdviceViewModel(IEventAggregator eventAggregator, IRepository repository)
         {
-            _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
+            _retrospectiveInProgressEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
 
             var shouldAdvance = RalfWestphal.ShouldAdvance(repository.Retrospectives);
 

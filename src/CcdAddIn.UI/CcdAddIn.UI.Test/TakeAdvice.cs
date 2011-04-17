@@ -34,11 +34,11 @@ namespace CcdAddIn.UI.Test
 
         Establish context = () =>
         {
-            var retrospectiveInProgressEvent = new RetrospectiveInProgressEvent();
+            var retrospectiveInProgressEvent = new BeginRetrospectiveEvent();
             retrospectiveInProgressEvent.Subscribe(x => _raised = true);
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                 .Return(retrospectiveInProgressEvent);
 
             The<IRepository>().Retrospectives = new List<CcdLevel>();

@@ -11,16 +11,14 @@ namespace CcdAddIn.UI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+        private BeginRetrospectiveEvent _beginRetrospectiveEvent;
 
         public HeaderViewModel(IEventAggregator eventAggregator)
         {
-            _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
-            _retrospectiveInProgressEvent.Subscribe(x =>
-            {
-                if (!x)
-                    RetrospectiveAvailable = true;
-            });
+            _beginRetrospectiveEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
+
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(x =>
+                RetrospectiveAvailable = true);
 
             eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(newLevel =>
             {
@@ -36,7 +34,7 @@ namespace CcdAddIn.UI.ViewModels
                 return new DelegateCommand(() =>
                 {
                     RetrospectiveAvailable = false;
-                    _retrospectiveInProgressEvent.Publish(true);
+                    _beginRetrospectiveEvent.Publish(true);
                 });
             }
         }

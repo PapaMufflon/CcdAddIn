@@ -137,5 +137,18 @@ namespace CcdAddIn.UI.Spec
         {
             _mainWindow.Get<Button>("denyAdviceButton").Click();
         }
+
+        [When(@"I accept to advance to the next level")]
+        public void WhenIAcceptToAdvanceToTheNextLevel()
+        {
+            _mainWindow.Get<Button>("takeAdviceButton").Click();
+        }
+
+        [Then(@"I should be at the next level")]
+        public void ThenIShouldBeAtTheNextLevel()
+        {
+            var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
+            Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.SingleLevelOfAbstraction));
+        }
     }
 }

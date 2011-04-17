@@ -33,8 +33,7 @@ Scenario: Keep the current level
   Then I should stay at the current level
 
 Scenario: Advance to the next level
-  Given I am at a non-black level
-  And I finish my retrospective with a suggestion to advance to the next level
+  Given I finish my retrospective with a suggestion to advance to the next level
   When I accept to advance to the next level
   Then I should be at the next level
   

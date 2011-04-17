@@ -33,7 +33,7 @@ namespace CcdAddIn.UI
             var eventAggregator = Container.Resolve<IEventAggregator>();
             eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(NavigateToCcdLevelsView);
             eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
-            eventAggregator.GetEvent<RetrospectiveInProgressEvent>().Subscribe(NavigateBackToCcdLevelsView);
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(NavigateBackToCcdLevelsView);
             
             Shell = new Shell();
             return Shell;

@@ -39,8 +39,12 @@ namespace CcdAddIn.UI.Test
                 .Return(new ChangeLevelEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
-                .Return(new RetrospectiveInProgressEvent());
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
+
+            The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
         };
 
         Because of = () => { };
