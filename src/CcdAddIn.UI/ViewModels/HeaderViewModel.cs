@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
@@ -13,13 +11,14 @@ namespace CcdAddIn.UI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
-        private bool _retrospectiveInProgres;
+        private BeginRetrospectiveEvent _beginRetrospectiveEvent;
 
         public HeaderViewModel(IEventAggregator eventAggregator)
         {
-            _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
-            _retrospectiveInProgressEvent.Subscribe(x => _retrospectiveInProgres = x);
+            _beginRetrospectiveEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
+
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(x =>
+                RetrospectiveAvailable = true);
 
             eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(newLevel =>
             {
@@ -34,10 +33,9 @@ namespace CcdAddIn.UI.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
-                    _retrospectiveInProgres = !_retrospectiveInProgres;
-                    _retrospectiveInProgressEvent.Publish(_retrospectiveInProgres);
-                },
-                () => !_retrospectiveInProgres);
+                    RetrospectiveAvailable = false;
+                    _beginRetrospectiveEvent.Publish(true);
+                });
             }
         }
 

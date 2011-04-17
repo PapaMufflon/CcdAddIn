@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
+using System.Windows.Threading;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using Microsoft.Practices.Prism.Commands;
@@ -14,14 +15,29 @@ namespace CcdAddIn.UI.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private CcdLevel _currentLevel;
-        private RetrospectiveInProgressEvent _retrospectiveInProgressEvent;
+        private ShowAdviceEvent _showAdviceEvent;
+        private Dispatcher _dispatcher;
 
         public CcdLevelsViewModel(IEventAggregator eventAggregator)
         {
-            _retrospectiveInProgressEvent = eventAggregator.GetEvent<RetrospectiveInProgressEvent>();
-            _retrospectiveInProgressEvent.Subscribe(x => EvaluationVisible = x);
+            _showAdviceEvent = eventAggregator.GetEvent<ShowAdviceEvent>();
+
+            eventAggregator.GetEvent<BeginRetrospectiveEvent>().Subscribe(x => EvaluationVisible = true);
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(x =>
+            {
+                if (x)
+                {
+                    _currentLevel.Advance();
+                    _dispatcher.Invoke((Action)(() =>
+                    {
+                        OnPropertyChanged("Principles");
+                        OnPropertyChanged("Practices");
+                    }));
+                }
+            });
 
             _currentLevel = new CcdLevel(Level.Red);
+            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public Level CurrentLevel
@@ -40,7 +56,6 @@ namespace CcdAddIn.UI.ViewModels
         }
 
         private bool _evaluationVisible;
-
         public bool EvaluationVisible
         {
             get { return _evaluationVisible; }
@@ -55,7 +70,11 @@ namespace CcdAddIn.UI.ViewModels
         {
             get
             {
-                return new DelegateCommand(() => _retrospectiveInProgressEvent.Publish(false));
+                return new DelegateCommand(() =>
+                {
+                    _showAdviceEvent.Publish(null);
+                    EvaluationVisible = false;
+                });
             }
         }
 

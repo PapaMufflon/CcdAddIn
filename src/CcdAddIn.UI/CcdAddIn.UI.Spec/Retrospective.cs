@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using CcdAddIn.UI.Resources;
+using NUnit.Framework;
 using TechTalk.SpecFlow;
 using White.Core;
 using White.Core.UIItems;
@@ -29,7 +31,7 @@ namespace CcdAddIn.UI.Spec
             _mainWindow.Get<Button>("goToRedLevelButton").Click();
 
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            Assert.That(firstPrinciple.Text, Is.StringContaining("Don't Repeat Yourself"));
+            Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.DoNotRepeatYourself));
         }
 
         [When(@"I click on retrospective")]
@@ -47,23 +49,43 @@ namespace CcdAddIn.UI.Spec
             Assert.That(slider.Current.IsOffscreen, Is.False);
         }
 
+        [Then(@"the retrospective-button should be invisible")]
+        public void ThenTheRetrospective_ButtonShouldBeInvisible()
+        {
+            Assert.That(_mainWindow.Get<Button>("retrospectiveButton").IsOffScreen, Is.True);
+        }
+
+        [When(@"I finish my retrospective")]
+        public void WhenIFinishMyRetrospective()
+        {
+            _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+        }
+
+        [Then(@"I should see an advice reflecting my performance")]
+        public void ThenIShouldSeeAnAdviceReflectingMyPerformance()
+        {
+            Assert.That(_mainWindow.Get<Label>("adviceDocument").Text, Is.StringContaining(Resource.NegativeAdvice));
+        }
+
         [Given(@"I finish my retrospective with no suggestion to advance to the next level")]
         public void GivenIFinishMyRetrospectiveWithNoSuggestionToAdvanceToTheNextLevel()
         {
             _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
         }
 
         [When(@"I accept that")]
         public void WhenIAcceptThat()
         {
-            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+            _mainWindow.Get<Button>("takeAdviceButton").Click();
         }
 
         [Then(@"I should stay at the current level")]
         public void ThenIShouldStayAtTheCurrentLevel()
         {
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            Assert.That(firstPrinciple.Text, Is.StringContaining("Don't Repeat Yourself"));
+            Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.DoNotRepeatYourself));
         }
 
         [Given(@"I make a retrospective")]
@@ -81,10 +103,48 @@ namespace CcdAddIn.UI.Spec
         [Then(@"I should not be able to evaluate the principles and practices")]
         public void ThenIShouldNotBeAbleToEvaluateThePrinciplesAndPractices()
         {
-            var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
-            var slider = firstPrinciple.GetElement(SearchCriteria.ByControlType(typeof(Slider)));
+            var listBox = _mainWindow.Get<ListBox>("principlesListView");
+            Assert.IsNull(listBox);
+        }
 
-            Assert.That(slider.Current.IsOffscreen, Is.True);
+        [Then(@"the retrospective-button should be visible again")]
+        public void ThenTheRetrospective_ButtonShouldBeVisibleAgain()
+        {
+            Assert.That(_mainWindow.Get<Button>("retrospectiveButton").IsOffScreen, Is.False);
+        }
+
+        [Given(@"I finish my retrospective with a suggestion to advance to the next level")]
+        public void GivenIFinishMyRetrospectiveWithASuggestionToAdvanceToTheNextLevel()
+        {
+            File.Delete(@"repository");
+            File.Copy(@"..\..\repository21perfectRetrospectives", "repository");
+
+            _application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
+            _mainWindow = _application.GetWindow("MainWindow");
+            _mainWindow.Get<Button>("goToRedLevelButton").Click();
+            _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+
+            File.Delete("repository");
+        }
+
+        [When(@"I deny to advance")]
+        public void WhenIDenyToAdvance()
+        {
+            _mainWindow.Get<Button>("denyAdviceButton").Click();
+        }
+
+        [When(@"I accept to advance to the next level")]
+        public void WhenIAcceptToAdvanceToTheNextLevel()
+        {
+            _mainWindow.Get<Button>("takeAdviceButton").Click();
+        }
+
+        [Then(@"I should be at the next level")]
+        public void ThenIShouldBeAtTheNextLevel()
+        {
+            var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
+            Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.SingleLevelOfAbstraction));
         }
     }
 }

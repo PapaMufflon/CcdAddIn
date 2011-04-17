@@ -165,4 +165,40 @@
   <data name="WarmWelcomeMessage" xml:space="preserve">
     <value>Warm welcome message. Du bist super, Du schaffst das! Nächster Schritt: roter Grad.</value>
   </data>
+  <data name="TakeAdvice" xml:space="preserve">
+    <value>Ratschlag annehmen</value>
+  </data>
+  <data name="NegativeAdvice" xml:space="preserve">
+    <value>Nicht schlecht, benötigst aber noch mehr Übung.</value>
+  </data>
+  <data name="PositiveAdvice" xml:space="preserve">
+    <value>Super gemacht, bist bereit für den nächsten Grad!</value>
+  </data>
+  <data name="AutomaticIntegrationtests" xml:space="preserve">
+    <value>Automatisierte Integrationstests</value>
+  </data>
+  <data name="DenyAdvice" xml:space="preserve">
+    <value>Ratschlag ablehnen</value>
+  </data>
+  <data name="IssueTracking" xml:space="preserve">
+    <value>Issue Tracking</value>
+  </data>
+  <data name="ReadReadRead" xml:space="preserve">
+    <value>Lesen, Lesen, Lesen</value>
+  </data>
+  <data name="Reviews" xml:space="preserve">
+    <value>Reviews</value>
+  </data>
+  <data name="SeparationOfConcerns" xml:space="preserve">
+    <value>Separation of Concerns (SoC)</value>
+  </data>
+  <data name="SingleLevelOfAbstraction" xml:space="preserve">
+    <value>Single Level of Abstraction (SLA)</value>
+  </data>
+  <data name="SingleResponsibilityPrinciple" xml:space="preserve">
+    <value>Single Responsibility Principle (SRP)</value>
+  </data>
+  <data name="SourceCodeConventions" xml:space="preserve">
+    <value>Source Code Konventionen</value>
+  </data>
 </root>

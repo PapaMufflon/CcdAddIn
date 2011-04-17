@@ -5,3 +5,5 @@
 _ReSharper.*
 *.sln.cach
 src/lib/white/NDoc/*
+src/packages/Machine.Fakes.0.2.2.2/docs/
+src/packages/Machine.Fakes.RhinoMocks.0.2.2.2/docs/

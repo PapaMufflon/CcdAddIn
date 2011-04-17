@@ -32,17 +32,19 @@ namespace CcdAddIn.UI.Test
 
     public class Given_the_initial_level_is_black_when_wanting_to_do_a_retrospective : WithSubject<HeaderViewModel>
     {
-        private Establish context = () =>
+        Establish context = () =>
         {
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
                 .Return(new ChangeLevelEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<RetrospectiveInProgressEvent>())
-                .Return(new RetrospectiveInProgressEvent());
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
 
-            Subject = new HeaderViewModel(The<IEventAggregator>());
+            The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
         };
 
         Because of = () => { };

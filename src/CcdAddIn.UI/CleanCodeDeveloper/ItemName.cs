@@ -13,7 +13,17 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
         RootCauseAnalysis,
         Versionskontrolle,
         EinfacheRefaktorisierungen,
-        TäglichReflektieren
+        TaeglichReflektieren,
+
+        SingleLevelOfAbstraction,
+        SingleResponsibilityPrinciple,
+        SeparationOfConcerns,
+        SourceCodeKonventionen,
+
+        IssueTracking,
+        AutomatisierteIntegrationstests,
+        LesenLesenLesen,
+        Reviews
     }
 
     public static class ItemNameExtensions
@@ -30,6 +40,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                     return Resources.Resource.BewareOptimizations;
                 case ItemName.FavorCompositionOverInheritance:
                     return Resources.Resource.FavorCompositionOverInheritance;
+
                 case ItemName.Pfadfinderregel:
                     return Resources.Resource.BoyscoutRule;
                 case ItemName.RootCauseAnalysis:
@@ -38,8 +49,27 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                     return Resources.Resource.VersionControl;
                 case ItemName.EinfacheRefaktorisierungen:
                     return Resources.Resource.SimpleRefactorizations;
-                case ItemName.TäglichReflektieren:
+                case ItemName.TaeglichReflektieren:
                     return Resources.Resource.DailyReflection;
+
+                case ItemName.SingleLevelOfAbstraction:
+                    return Resources.Resource.SingleLevelOfAbstraction;
+                case ItemName.SingleResponsibilityPrinciple:
+                    return Resources.Resource.SingleResponsibilityPrinciple;
+                case ItemName.SeparationOfConcerns:
+                    return Resources.Resource.SeparationOfConcerns;
+                case ItemName.SourceCodeKonventionen:
+                    return Resources.Resource.SourceCodeConventions;
+
+                case ItemName.IssueTracking:
+                    return Resources.Resource.IssueTracking;
+                case ItemName.AutomatisierteIntegrationstests:
+                    return Resources.Resource.AutomaticIntegrationtests;
+                case ItemName.LesenLesenLesen:
+                    return Resources.Resource.ReadReadRead;
+                case ItemName.Reviews:
+                    return Resources.Resource.Reviews;
+
                 default:
                     throw new ArgumentOutOfRangeException("itemName");
             }

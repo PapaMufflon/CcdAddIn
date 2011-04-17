@@ -70,6 +70,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatisierte Integrationstests.
+        /// </summary>
+        public static string AutomaticIntegrationtests {
+            get {
+                return ResourceManager.GetString("AutomaticIntegrationtests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vorsicht vor Optimierungen.
         /// </summary>
         public static string BewareOptimizations {
@@ -115,6 +124,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ratschlag ablehnen.
+        /// </summary>
+        public static string DenyAdvice {
+            get {
+                return ResourceManager.GetString("DenyAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fertig.
         /// </summary>
         public static string Done {
@@ -151,11 +169,47 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Issue Tracking.
+        /// </summary>
+        public static string IssueTracking {
+            get {
+                return ResourceManager.GetString("IssueTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keep It Simple, Stupid (KISS).
         /// </summary>
         public static string KeepItSimpleStupid {
             get {
                 return ResourceManager.GetString("KeepItSimpleStupid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nicht schlecht, benötigst aber noch mehr Übung..
+        /// </summary>
+        public static string NegativeAdvice {
+            get {
+                return ResourceManager.GetString("NegativeAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super gemacht, bist bereit für den nächsten Grad!.
+        /// </summary>
+        public static string PositiveAdvice {
+            get {
+                return ResourceManager.GetString("PositiveAdvice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lesen, Lesen, Lesen.
+        /// </summary>
+        public static string ReadReadRead {
+            get {
+                return ResourceManager.GetString("ReadReadRead", resourceCulture);
             }
         }
         
@@ -169,6 +223,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reviews.
+        /// </summary>
+        public static string Reviews {
+            get {
+                return ResourceManager.GetString("Reviews", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Root Cause Analysis.
         /// </summary>
         public static string RootCauseAnalysis {
@@ -178,11 +241,56 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Separation of Concerns (SoC).
+        /// </summary>
+        public static string SeparationOfConcerns {
+            get {
+                return ResourceManager.GetString("SeparationOfConcerns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Einfache Refaktorisierungen.
         /// </summary>
         public static string SimpleRefactorizations {
             get {
                 return ResourceManager.GetString("SimpleRefactorizations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single Level of Abstraction (SLA).
+        /// </summary>
+        public static string SingleLevelOfAbstraction {
+            get {
+                return ResourceManager.GetString("SingleLevelOfAbstraction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single Responsibility Principle (SRP).
+        /// </summary>
+        public static string SingleResponsibilityPrinciple {
+            get {
+                return ResourceManager.GetString("SingleResponsibilityPrinciple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source Code Konventionen.
+        /// </summary>
+        public static string SourceCodeConventions {
+            get {
+                return ResourceManager.GetString("SourceCodeConventions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ratschlag annehmen.
+        /// </summary>
+        public static string TakeAdvice {
+            get {
+                return ResourceManager.GetString("TakeAdvice", resourceCulture);
             }
         }
         
