@@ -13,7 +13,7 @@ namespace CcdAddIn.UI
 {
     public class Bootstrapper : UnityBootstrapper
     {
-        public Shell Shell { get;  private set; }
+        public Shell Shell { get; private set; }
 
         private const string AdviceView = "AdviceView";
         private const string CcdLevelsView = "CcdLevelsView";
@@ -34,7 +34,7 @@ namespace CcdAddIn.UI
             eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(NavigateToCcdLevelsView);
             eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
             eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(NavigateBackToCcdLevelsView);
-            
+
             Shell = new Shell();
             return Shell;
         }
@@ -45,13 +45,10 @@ namespace CcdAddIn.UI
             regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
         }
 
-        private void NavigateBackToCcdLevelsView(bool retrospectiveInProgress)
+        private void NavigateBackToCcdLevelsView(bool advanceToNextLevel)
         {
-            if (!retrospectiveInProgress)
-            {
-                var regionManager = Container.Resolve<IRegionManager>();
-                regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
-            }
+            var regionManager = Container.Resolve<IRegionManager>();
+            regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
         }
 
         private void NavigateToShowAdviceView(object obj)

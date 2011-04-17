@@ -116,10 +116,8 @@ namespace CcdAddIn.UI.Spec
         [Given(@"I finish my retrospective with a suggestion to advance to the next level")]
         public void GivenIFinishMyRetrospectiveWithASuggestionToAdvanceToTheNextLevel()
         {
-            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original");
-            File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original");
-            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
-            File.Copy(@"..\..\repository21perfectRetrospectives", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+            File.Delete(@"repository");
+            File.Copy(@"..\..\repository21perfectRetrospectives", "repository");
 
             _application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
             _mainWindow = _application.GetWindow("MainWindow");
@@ -127,9 +125,7 @@ namespace CcdAddIn.UI.Spec
             _mainWindow.Get<Button>("retrospectiveButton").Click();
             _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
 
-            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
-            File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
-            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_original");
+            File.Delete("repository");
         }
 
         [When(@"I deny to advance")]

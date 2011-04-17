@@ -103,6 +103,10 @@ namespace CcdAddIn.UI.Test
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                     .Return(new BeginRetrospectiveEvent());
+
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
             };
 
             Because of = () => { };
@@ -112,18 +116,22 @@ namespace CcdAddIn.UI.Test
 
         public class Given_a_non_black_level_When_wanting_to_do_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
-            private static BeginRetrospectiveEvent _retrospectiveInProgressEvent;
+            private static BeginRetrospectiveEvent _beginRetrospectiveEvent;
 
             Establish context = () =>
             {
-                _retrospectiveInProgressEvent = new BeginRetrospectiveEvent();
+                _beginRetrospectiveEvent = new BeginRetrospectiveEvent();
 
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(_retrospectiveInProgressEvent);
+                    .Return(_beginRetrospectiveEvent);
+
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
             };
 
-            Because of = () => _retrospectiveInProgressEvent.Publish(true);
+            Because of = () => _beginRetrospectiveEvent.Publish(true);
 
             It should_switch_to_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeTrue();
         }
@@ -134,11 +142,13 @@ namespace CcdAddIn.UI.Test
 
             Establish context = () =>
             {
-                var retrospectiveInProgressEvent = new BeginRetrospectiveEvent();
-
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(retrospectiveInProgressEvent);
+                    .Return(new BeginRetrospectiveEvent());
+
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                    .Return(new EndRetrospectiveEvent());
 
                 var showAdviceEvent = new ShowAdviceEvent();
                 showAdviceEvent.Subscribe(x => _raised = true);

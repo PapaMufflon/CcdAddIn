@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Threading;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using Microsoft.Practices.Prism.Commands;
@@ -14,16 +16,28 @@ namespace CcdAddIn.UI.ViewModels
 
         private CcdLevel _currentLevel;
         private ShowAdviceEvent _showAdviceEvent;
-        private BeginRetrospectiveEvent _beginRetrospectiveEvent;
+        private Dispatcher _dispatcher;
 
         public CcdLevelsViewModel(IEventAggregator eventAggregator)
         {
             _showAdviceEvent = eventAggregator.GetEvent<ShowAdviceEvent>();
 
-            _beginRetrospectiveEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
-            _beginRetrospectiveEvent.Subscribe(x => EvaluationVisible = true);
+            eventAggregator.GetEvent<BeginRetrospectiveEvent>().Subscribe(x => EvaluationVisible = true);
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(x =>
+            {
+                if (x)
+                {
+                    _currentLevel.Advance();
+                    _dispatcher.Invoke((Action)(() =>
+                    {
+                        OnPropertyChanged("Principles");
+                        OnPropertyChanged("Practices");
+                    }));
+                }
+            });
 
             _currentLevel = new CcdLevel(Level.Red);
+            _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public Level CurrentLevel
@@ -42,7 +56,6 @@ namespace CcdAddIn.UI.ViewModels
         }
 
         private bool _evaluationVisible;
-
         public bool EvaluationVisible
         {
             get { return _evaluationVisible; }

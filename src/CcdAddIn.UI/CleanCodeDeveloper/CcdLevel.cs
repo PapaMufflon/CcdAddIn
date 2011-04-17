@@ -13,9 +13,24 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
         {
             Level = level;
 
-            var items = ItemFactory.GetItemsFor(level);
+            LoadPrinciplesAndPractices();
+        }
+
+        private void LoadPrinciplesAndPractices()
+        {
+            var items = ItemFactory.GetItemsFor(Level);
             Principles = (from i in items where i.ItemType == ItemType.Principle select i).ToList();
             Practices = (from i in items where i.ItemType == ItemType.Practice select i).ToList();
+        }
+
+        public void Advance()
+        {
+            if (Level != Level.White)
+                Level++;
+            else
+                Level = Level.Red;
+
+            LoadPrinciplesAndPractices();
         }
 
         public override bool Equals(object obj)

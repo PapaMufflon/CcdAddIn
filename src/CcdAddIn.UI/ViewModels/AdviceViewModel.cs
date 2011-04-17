@@ -9,13 +9,13 @@ namespace CcdAddIn.UI.ViewModels
 {
     public class AdviceViewModel
     {
-        private BeginRetrospectiveEvent _retrospectiveInProgressEvent;
+        private EndRetrospectiveEvent _endRetrospectiveEvent;
         private string _advice;
         private bool _canAdvance;
 
         public AdviceViewModel(IEventAggregator eventAggregator, IRepository repository)
         {
-            _retrospectiveInProgressEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
+            _endRetrospectiveEvent = eventAggregator.GetEvent<EndRetrospectiveEvent>();
 
             var shouldAdvance = RalfWestphal.ShouldAdvance(repository.Retrospectives);
 
@@ -27,7 +27,7 @@ namespace CcdAddIn.UI.ViewModels
         {
             get
             {
-                return new DelegateCommand(() => _retrospectiveInProgressEvent.Publish(false));
+                return new DelegateCommand(() => _endRetrospectiveEvent.Publish(_canAdvance));
             }
         }
 
@@ -35,7 +35,7 @@ namespace CcdAddIn.UI.ViewModels
         {
             get
             {
-                return new DelegateCommand(() => _retrospectiveInProgressEvent.Publish(false));
+                return new DelegateCommand(() => _endRetrospectiveEvent.Publish(!_canAdvance));
             }
         }
 
