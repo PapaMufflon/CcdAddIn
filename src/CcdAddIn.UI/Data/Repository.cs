@@ -24,7 +24,6 @@ namespace CcdAddIn.UI.Data
             _fileService = fileService;
 
             var content = _fileService.OpenAsString(FileName);
-            _logger.Trace("Read {0} from repository", content);
 
             if (string.IsNullOrEmpty(content))
                 content = "<Repository/>";

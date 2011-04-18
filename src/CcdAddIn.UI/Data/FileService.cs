@@ -12,9 +12,12 @@ namespace CcdAddIn.UI.Data
             _logger.Trace("Open file {0}", fileName);
 
             if (!File.Exists(fileName))
-                File.Create(fileName);
+                (File.Create(fileName)).Close();
 
-            return File.ReadAllText(fileName);
+            var content = File.ReadAllText(fileName);
+            _logger.Trace("Read {0}", content);
+
+            return content;
         }
 
         public void WriteTo(string content, string fileName)
