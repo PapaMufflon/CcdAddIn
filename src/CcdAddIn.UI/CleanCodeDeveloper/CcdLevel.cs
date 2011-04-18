@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NLog;
 
 namespace CcdAddIn.UI.CleanCodeDeveloper
 {
@@ -8,9 +9,13 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
         public Level Level { get; private set; }
         public List<Item> Principles { get; private set; }
         public List<Item> Practices { get; private set; }
-        
+
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         public CcdLevel(Level level)
         {
+            _logger.Trace("Creating new CcdLevel with level {0}", level);
+
             Level = level;
 
             LoadPrinciplesAndPractices();
@@ -21,6 +26,8 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
             var items = ItemFactory.GetItemsFor(Level);
             Principles = (from i in items where i.ItemType == ItemType.Principle select i).ToList();
             Practices = (from i in items where i.ItemType == ItemType.Practice select i).ToList();
+
+            _logger.Trace("Loaded {0} principles and {1} practices", Principles.Count, Practices.Count);
         }
 
         public void Advance()
@@ -30,6 +37,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
             else
                 Level = Level.Red;
 
+            _logger.Trace("Advanced to new level ({0})", Level);
             LoadPrinciplesAndPractices();
         }
 

@@ -3,13 +3,18 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 using CcdAddIn.UI.CleanCodeDeveloper;
+using NLog;
 
 namespace CcdAddIn.UI.Views
 {
     class CcdLevelToColorConverter : IValueConverter
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            _logger.Trace("Converting {0}", value);
+
             switch ((Level)value)
             {
                 case Level.Black:
@@ -36,6 +41,7 @@ namespace CcdAddIn.UI.Views
                     throw new ArgumentOutOfRangeException("value");
             }
 
+            _logger.Warn("Can't find a suitable color for value {0}", value);
             throw new ArgumentException(value + " is not a valid level.");
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using CcdAddIn.UI.CleanCodeDeveloper;
@@ -16,7 +17,7 @@ namespace CcdAddIn.UI.Test
 
         Because of = () => _fileService.Stub(x => x.OpenAsString("repository")).Return("wrong content");
 
-        It should_throw_an_exception = () => Catch.Exception(() => new Repository(_fileService)).ShouldNotBeNull();
+        It should_throw_an_exception = () => Catch.Exception(() => new Repository(_fileService)).ShouldBeOfType(typeof(InvalidOperationException));
     }
 
     public class Given_a_file_without_history_When_querying_the_repository : WithSubject<Repository>

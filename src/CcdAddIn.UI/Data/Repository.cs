@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using CcdAddIn.UI.CleanCodeDeveloper;
+using NLog;
 
 namespace CcdAddIn.UI.Data
 {
@@ -13,29 +14,38 @@ namespace CcdAddIn.UI.Data
 
         private const string FileName = "repository";
 
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IFileService _fileService;
 
         public Repository(IFileService fileService)
         {
+            _logger.Trace("Creating repository");
             _fileService = fileService;
 
             var content = _fileService.OpenAsString(FileName);
+            _logger.Trace("Read {0} from repository", content);
 
             if (string.IsNullOrEmpty(content))
                 content = "<Repository/>";
 
-            var document = XDocument.Load(new StringReader(content));
-
-            if (document == null)
-                throw new InvalidOperationException("Wrong content in repository.");
-
-            ReadOutRetrospectives(document);
+            try
+            {
+                var document = XDocument.Load(new StringReader(content));
+                ReadOutRetrospectives(document);
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal("Unable to load repository");
+                throw new InvalidOperationException("Wrong content in repository.", e);
+            }
         }
 
         public void SaveChanges()
         {
             var history = new XElement("History");
 
+            _logger.Trace("Creating retrospectives");
             foreach (var retrospective in Retrospectives)
             {
                 var retrospectiveElement = new XElement("Retrospective",
@@ -46,6 +56,10 @@ namespace CcdAddIn.UI.Data
                     retrospectiveElement.Add(new XElement("Item",
                                                           new XAttribute("Name", principle.Name),
                                                           new XAttribute("Value", principle.EvaluationValue)));
+                    _logger.Trace("Converted principle {0} with value {1} to xml: {2}",
+                                  principle.Name,
+                                  principle.EvaluationValue,
+                                  retrospectiveElement.LastNode.ToString());
                 }
 
                 foreach (var practice in retrospective.Practices)
@@ -53,13 +67,20 @@ namespace CcdAddIn.UI.Data
                     retrospectiveElement.Add(new XElement("Item",
                                                           new XAttribute("Name", practice.Name),
                                                           new XAttribute("Value", practice.EvaluationValue)));
+                    _logger.Trace("Converted practice {0} with value {1} to xml: {2}",
+                                  practice.Name,
+                                  practice.EvaluationValue,
+                                  retrospectiveElement.LastNode.ToString());
                 }
 
                 history.Add(retrospectiveElement);
             }
 
             var repository = new XDocument(new XElement("Repository", history));
-            _fileService.WriteTo(repository.ToString(), FileName);
+            var repositoryAsXml = repository.ToString();
+
+            _logger.Trace("Writing {0} as repository to {1}", repositoryAsXml, FileName);
+            _fileService.WriteTo(repositoryAsXml, FileName);
         }
 
         private void ReadOutRetrospectives(XDocument document)
@@ -67,14 +88,23 @@ namespace CcdAddIn.UI.Data
             Retrospectives = new List<CcdLevel>();
 
             if (document.Root.Element("History") == null)
+            {
+                _logger.Info("Repository does not have a History-element. Assuming a first start.");
                 return;
+            }
 
             foreach (var retrospectiveElement in document.Root.Element("History").Descendants("Retrospective"))
             {
+                _logger.Trace("Parsing {0}", retrospectiveElement.ToString());
                 Level level;
 
-                if (!Enum.TryParse(retrospectiveElement.Attribute("Level").Value, out level))
+                var levelValue = retrospectiveElement.Attribute("Level").Value;
+
+                if (!Enum.TryParse(levelValue, out level))
+                {
+                    _logger.Error("Cannot parse level: {0}", levelValue);
                     throw new InvalidOperationException("Wrong content in repository.");
+                }
 
                 var ccdLevel = new CcdLevel(level);
 
@@ -85,8 +115,12 @@ namespace CcdAddIn.UI.Data
                                            select x).FirstOrDefault();
 
                     if (practiceElement == null)
+                    {
+                        _logger.Error("Cannot find practice {0}", practice.Name);
                         throw new InvalidOperationException("Wrong content in repository.");
+                    }
 
+                    _logger.Info("Found practice {0}, parsing value from {1}", practice.Name, practiceElement.ToString());
                     practice.EvaluationValue = int.Parse(practiceElement.Attribute("Value").Value);
                 }
 
@@ -97,11 +131,16 @@ namespace CcdAddIn.UI.Data
                                             select x).FirstOrDefault();
 
                     if (principleElement == null)
+                    {
+                        _logger.Error("Cannot find principle {0}", principle.Name);
                         throw new InvalidOperationException("Wrong content in repository.");
+                    }
 
+                    _logger.Info("Found principle {0}, parsing value from {1}", principle.Name, principleElement.ToString());
                     principle.EvaluationValue = int.Parse(principleElement.Attribute("Value").Value);
                 }
 
+                _logger.Trace("Found all elements, adding retrospective");
                 Retrospectives.Add(ccdLevel);
             }
         }

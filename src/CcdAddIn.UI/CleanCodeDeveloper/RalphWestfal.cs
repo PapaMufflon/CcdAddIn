@@ -1,14 +1,21 @@
 ﻿using System.Collections.Generic;
+using NLog;
 
 namespace CcdAddIn.UI.CleanCodeDeveloper
 {
     public class RalfWestphal
     {
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+
         public static bool ShouldAdvance(List<CcdLevel> retrospectives)
         {
             var advice = true;
 
-            if (retrospectives.Count < 21) return false;
+            if (retrospectives.Count < 21)
+            {
+                _logger.Trace("There are {0} retrospectives - too few", retrospectives.Count);
+                return false;
+            }
 
             foreach (var level in retrospectives)
             {
@@ -25,6 +32,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                 }
             }
 
+            _logger.Trace("Ralf Westphal, should I advance? {0}", advice);
             return advice;
         }
     }
