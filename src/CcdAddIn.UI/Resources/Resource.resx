@@ -201,4 +201,79 @@
   <data name="SourceCodeConventions" xml:space="preserve">
     <value>Source Code Konventionen</value>
   </data>
+  <data name="AttendProfessionalEvents" xml:space="preserve">
+    <value>Teilnahme an Fachveranstaltungen</value>
+  </data>
+  <data name="AutomaticUnitTests" xml:space="preserve">
+    <value>Automatisierte Unit Tests</value>
+  </data>
+  <data name="CodeCoverageAnalysis" xml:space="preserve">
+    <value>Code Coverage Analyse</value>
+  </data>
+  <data name="ComplexRefactorizations" xml:space="preserve">
+    <value>Komplexe Refaktorisierungen</value>
+  </data>
+  <data name="ComponentOrientation" xml:space="preserve">
+    <value>Komponentenorientierung</value>
+  </data>
+  <data name="ContinousIntegration" xml:space="preserve">
+    <value>Continuous Integration</value>
+  </data>
+  <data name="ContinuousDelivery" xml:space="preserve">
+    <value>Continuous Delivery</value>
+  </data>
+  <data name="DependencyInversionPrinciple" xml:space="preserve">
+    <value>Dependency Inversion Principle</value>
+  </data>
+  <data name="DesignAndImplementationDoNotOverlap" xml:space="preserve">
+    <value>Entwurf und Implementation überlappen nicht</value>
+  </data>
+  <data name="ImplementationMirrorsDesign" xml:space="preserve">
+    <value>Implementation spiegelt Entwurf</value>
+  </data>
+  <data name="InformationHidingPrinciple" xml:space="preserve">
+    <value>Information Hiding Principle</value>
+  </data>
+  <data name="InterfaceSegregationPrinciple" xml:space="preserve">
+    <value>Interface Segregation Principle (ISP)</value>
+  </data>
+  <data name="InversionOfControlContainer" xml:space="preserve">
+    <value>Inversion of Control Container</value>
+  </data>
+  <data name="IterativeDevelopment" xml:space="preserve">
+    <value>Iterative Entwicklung</value>
+  </data>
+  <data name="LawOfDemeter" xml:space="preserve">
+    <value>Law of Demeter</value>
+  </data>
+  <data name="LiskovSubstitutionPrinciple" xml:space="preserve">
+    <value>Liskov Substitution Principle</value>
+  </data>
+  <data name="MeasureFailure" xml:space="preserve">
+    <value>Messen von Fehlern</value>
+  </data>
+  <data name="Mockups" xml:space="preserve">
+    <value>Mockups (Testattrappen)</value>
+  </data>
+  <data name="OpenClosedPrinciple" xml:space="preserve">
+    <value>Open Closed Principle</value>
+  </data>
+  <data name="PrincipleOfLeastAstonishment" xml:space="preserve">
+    <value>Principle of Least Astonishment</value>
+  </data>
+  <data name="ShareExperience" xml:space="preserve">
+    <value>Erfahrung weitergeben</value>
+  </data>
+  <data name="StaticCodeAnalysis" xml:space="preserve">
+    <value>Statische Codeanalyse (Metriken)</value>
+  </data>
+  <data name="TellDontAsk" xml:space="preserve">
+    <value>Tell, don´t ask</value>
+  </data>
+  <data name="TestFirst" xml:space="preserve">
+    <value>Test first</value>
+  </data>
+  <data name="YouAintGonnaNeedIt" xml:space="preserve">
+    <value>You Ain´t Gonna Need It (YAGNI)</value>
+  </data>
 </root>

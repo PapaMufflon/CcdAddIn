@@ -57,6 +57,12 @@
       <DependentUpon>BeginWithFirstRealLevel.feature</DependentUpon>
     </Compile>
     <Compile Include="BeginWithFirstRealLevel.cs" />
+    <Compile Include="CompleteLevels.cs" />
+    <Compile Include="CompleteLevels.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompleteLevels.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Retrospective.cs" />
     <Compile Include="Retrospective.feature.cs">
@@ -69,6 +75,10 @@
     <None Include="BeginWithFirstRealLevel.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BeginWithFirstRealLevel.feature.cs</LastGenOutput>
+    </None>
+    <None Include="CompleteLevels.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>CompleteLevels.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Retrospective.feature">

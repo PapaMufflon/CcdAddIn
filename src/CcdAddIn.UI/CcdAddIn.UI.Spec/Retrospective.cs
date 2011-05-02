@@ -146,5 +146,11 @@ namespace CcdAddIn.UI.Spec
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
             Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.SingleLevelOfAbstraction));
         }
+
+        [When(@"I actively wish to advance to the next level")]
+        public void WhenIActivelyWishToAdvanceToTheNextLevel()
+        {
+            _mainWindow.Get<Button>("denyAdviceButton").Click();
+        }
     }
 }

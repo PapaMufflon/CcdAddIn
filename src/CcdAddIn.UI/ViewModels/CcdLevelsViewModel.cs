@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using System.Windows.Threading;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using Microsoft.Practices.Prism.Commands;
@@ -37,6 +35,7 @@ namespace CcdAddIn.UI.ViewModels
                 if (x)
                 {
                     _currentLevel.Advance();
+                    OnPropertyChanged("CurrentLevel");
                     OnPropertyChanged("Principles");
                     OnPropertyChanged("Practices");
                     _logger.Trace("We advanced to level {0} and updated the principles & practices", _currentLevel.Level);

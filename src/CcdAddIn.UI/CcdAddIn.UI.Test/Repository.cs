@@ -59,13 +59,13 @@ namespace CcdAddIn.UI.Test
             var oneRetrospective = "<Repository><History><Retrospective Level=\"Red\">" +
                                    "<Item Name=\"DoNotRepeatYourself\" Value=\"50\"/>" +
                                    "<Item Name=\"KeepItSimpleStupid\" Value=\"50\"/>" +
-                                   "<Item Name=\"VorsichtVorOptimierungen\" Value=\"50\"/>" +
+                                   "<Item Name=\"BewareOptimizations\" Value=\"50\"/>" +
                                    "<Item Name=\"FavorCompositionOverInheritance\" Value=\"50\"/>" +
-                                   "<Item Name=\"Pfadfinderregel\" Value=\"60\"/>" +
+                                   "<Item Name=\"BoyscoutRule\" Value=\"60\"/>" +
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"60\"/>" +
-                                   "<Item Name=\"Versionskontrolle\" Value=\"60\"/>" +
-                                   "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"60\"/>" +
-                                   "<Item Name=\"TaeglichReflektieren\" Value=\"60\"/>" +
+                                   "<Item Name=\"VersionControl\" Value=\"60\"/>" +
+                                   "<Item Name=\"SimpleRefactorizations\" Value=\"60\"/>" +
+                                   "<Item Name=\"DailyReflection\" Value=\"60\"/>" +
                                    "</Retrospective></History></Repository>";
 
             The<IFileService>()
@@ -98,23 +98,23 @@ namespace CcdAddIn.UI.Test
             var twoRetrospectives = "<Repository><History><Retrospective Level=\"Red\">" +
                                    "<Item Name=\"DoNotRepeatYourself\" Value=\"50\"/>" +
                                    "<Item Name=\"KeepItSimpleStupid\" Value=\"50\"/>" +
-                                   "<Item Name=\"VorsichtVorOptimierungen\" Value=\"50\"/>" +
+                                   "<Item Name=\"BewareOptimizations\" Value=\"50\"/>" +
                                    "<Item Name=\"FavorCompositionOverInheritance\" Value=\"50\"/>" +
-                                   "<Item Name=\"Pfadfinderregel\" Value=\"60\"/>" +
+                                   "<Item Name=\"BoyscoutRule\" Value=\"60\"/>" +
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"60\"/>" +
-                                   "<Item Name=\"Versionskontrolle\" Value=\"60\"/>" +
-                                   "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"60\"/>" +
-                                   "<Item Name=\"TaeglichReflektieren\" Value=\"60\"/>" +
+                                   "<Item Name=\"VersionControl\" Value=\"60\"/>" +
+                                   "<Item Name=\"SimpleRefactorizations\" Value=\"60\"/>" +
+                                   "<Item Name=\"DailyReflection\" Value=\"60\"/>" +
                                    "</Retrospective><Retrospective Level=\"Red\">" +
                                    "<Item Name=\"DoNotRepeatYourself\" Value=\"1\"/>" +
                                    "<Item Name=\"KeepItSimpleStupid\" Value=\"2\"/>" +
-                                   "<Item Name=\"VorsichtVorOptimierungen\" Value=\"3\"/>" +
+                                   "<Item Name=\"BewareOptimizations\" Value=\"3\"/>" +
                                    "<Item Name=\"FavorCompositionOverInheritance\" Value=\"4\"/>" +
-                                   "<Item Name=\"Pfadfinderregel\" Value=\"5\"/>" +
+                                   "<Item Name=\"BoyscoutRule\" Value=\"5\"/>" +
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"6\"/>" +
-                                   "<Item Name=\"Versionskontrolle\" Value=\"7\"/>" +
-                                   "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"8\"/>" +
-                                   "<Item Name=\"TaeglichReflektieren\" Value=\"9\"/>" +
+                                   "<Item Name=\"VersionControl\" Value=\"7\"/>" +
+                                   "<Item Name=\"SimpleRefactorizations\" Value=\"8\"/>" +
+                                   "<Item Name=\"DailyReflection\" Value=\"9\"/>" +
                                    "</Retrospective></History></Repository>";
 
             The<IFileService>()
@@ -201,13 +201,13 @@ namespace CcdAddIn.UI.Test
             var oneRetrospective = "<Repository><History><Retrospective Level=\"Red\">" +
                                    "<Item Name=\"DoNotRepeatYourself\" Value=\"50\"/>" +
                                    "<Item Name=\"KeepItSimpleStupid\" Value=\"50\"/>" +
-                                   "<Item Name=\"VorsichtVorOptimierungen\" Value=\"50\"/>" +
+                                   "<Item Name=\"BewareOptimizations\" Value=\"50\"/>" +
                                    "<Item Name=\"FavorCompositionOverInheritance\" Value=\"50\"/>" +
-                                   "<Item Name=\"Pfadfinderregel\" Value=\"60\"/>" +
+                                   "<Item Name=\"BoyscoutRule\" Value=\"60\"/>" +
                                    "<Item Name=\"RootCauseAnalysis\" Value=\"60\"/>" +
-                                   "<Item Name=\"Versionskontrolle\" Value=\"60\"/>" +
-                                   "<Item Name=\"EinfacheRefaktorisierungen\" Value=\"60\"/>" +
-                                   "<Item Name=\"TaeglichReflektieren\" Value=\"60\"/>" +
+                                   "<Item Name=\"VersionControl\" Value=\"60\"/>" +
+                                   "<Item Name=\"SimpleRefactorizations\" Value=\"60\"/>" +
+                                   "<Item Name=\"DailyReflection\" Value=\"60\"/>" +
                                    "</Retrospective></History></Repository>";
 
             var xmlFormat = (XDocument.Load(new StringReader(oneRetrospective))).ToString();

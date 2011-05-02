@@ -25,16 +25,25 @@ namespace CcdAddIn.UI.Views
                     else
                         return new SolidColorBrush(Color.FromArgb(255, 149, 0, 4));
                 case Level.Orange:
-                    break;
+                    if ((string)parameter == "Principles")
+                        return new SolidColorBrush(Color.FromArgb(255, 242, 148, 0));
+                    else
+                        return new SolidColorBrush(Color.FromArgb(255, 234, 100, 29));
                 case Level.Yellow:
-                    break;
+                    if ((string)parameter == "Principles")
+                        return new SolidColorBrush(Color.FromArgb(255, 248, 233, 28));
+                    else
+                        return new SolidColorBrush(Color.FromArgb(255, 242, 179, 12));
                 case Level.Green:
                     if ((string)parameter == "Principles")
                         return new SolidColorBrush(Color.FromArgb(255, 87, 172, 43));
                     else
                         return new SolidColorBrush(Color.FromArgb(255, 18, 142, 46));
                 case Level.Blue:
-                    break;
+                    if ((string)parameter == "Principles")
+                        return new SolidColorBrush(Color.FromArgb(255, 46, 170, 221));
+                    else
+                        return new SolidColorBrush(Color.FromArgb(255, 14, 113, 180));
                 case Level.White:
                     break;
                 default:
