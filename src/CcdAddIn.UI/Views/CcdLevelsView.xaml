@@ -5,7 +5,7 @@
              xmlns:Resources="clr-namespace:CcdAddIn.UI.Resources">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    	<Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="1">
                     <Setter Property="Background" Value="Transparent"></Setter>
@@ -27,14 +27,18 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Padding" Value="0,4"/>
         </Style>
-    	<Views:CcdLevelToColorConverter x:Key="CcdLevelToColorConverter" />
+        <Views:CcdLevelToColorConverter x:Key="CcdLevelToColorConverter" />
         <DataTemplate x:Key="CcdItem">
             <Grid Height="23">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding NameAsString}"/>
+                <TextBlock Text="{Binding NameAsString}">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Direction="180" ShadowDepth="1" />
+                    </TextBlock.Effect>
+                </TextBlock>
                 <Slider Visibility="{Binding DataContext.EvaluationVisible,
                                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}},
                                              Converter={StaticResource BooleanToVisibilityConverter}}"
