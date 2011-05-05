@@ -24,7 +24,8 @@ namespace CcdAddIn.UI.ViewModels
             eventAggregator.GetEvent<GoToLevelEvent>().Subscribe(newLevel =>
             {
                 _logger.Trace("Change the level to {0}", newLevel);
-                if (newLevel != Level.Black)
+                if (newLevel != Level.Black &&
+                    newLevel != Level.White)
                     RetrospectiveAvailable = true;
             });
         }

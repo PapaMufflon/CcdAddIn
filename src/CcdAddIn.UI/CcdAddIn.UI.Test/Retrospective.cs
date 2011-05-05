@@ -84,6 +84,32 @@ namespace CcdAddIn.UI.Test
             It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
+        public class Given_a_retrospective_in_progress_When_advancing_to_the_white_level : WithSubject<HeaderViewModel>
+        {
+            private static GoToLevelEvent _goToLevelEvent;
+
+            Establish context = () =>
+            {
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                    .Return(new BeginRetrospectiveEvent());
+
+                _goToLevelEvent = new GoToLevelEvent();
+                The<IEventAggregator>()
+                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
+                    .Return(_goToLevelEvent);
+            };
+
+            Because of = () =>
+            {
+                Subject.BeginRetrospectiveCommand.Execute(null);
+
+                _goToLevelEvent.Publish(Level.White);
+            };
+
+            It should_not_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeFalse();
+        }
+
         public class Given_a_non_black_level_When_not_doing_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
             Establish context = () =>

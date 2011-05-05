@@ -82,7 +82,7 @@ namespace CcdAddIn.UI.Spec
         [Then(@"I should not have the possibility to do a retrospective")]
         public void ThenIShouldNotHaveThePossibilityToDoARetrospective()
         {
-            Assert.That(_mainWindow.Get<Button>("retrospectiveButton"), Is.Null);
+            Assert.That(_mainWindow.Get<Button>("retrospectiveButton").IsOffScreen, Is.True);
         }
 
         [Then(@"I should have the possibility to begin again with the red level")]
