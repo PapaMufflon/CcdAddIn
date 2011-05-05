@@ -29,7 +29,7 @@ namespace CcdAddIn.UI.Spec
             _mainWindow.Get<Button>("goToRedLevelButton").Click();
         }
 
-        [When(@"I browse through all levels")]
+        [When(@"I browse through all colored levels")]
         public void WhenIBrowseThroughAllLevels()
         {
             _mainWindow.Get<Button>("retrospectiveButton").Click();
@@ -63,6 +63,44 @@ namespace CcdAddIn.UI.Spec
         {
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
             Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.DesignAndImplementationDoNotOverlap));
+        }
+
+        [When(@"I advance to the next level")]
+        public void WhenIAdvanceToTheNextLevel()
+        {
+            _mainWindow.Get<Button>("retrospectiveButton").Click();
+            _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
+            _mainWindow.Get<Button>("denyAdviceButton").Click();
+        }
+
+        [Then(@"I should be at the white level")]
+        public void ThenIShouldBeAtTheWhiteLevel()
+        {
+            Assert.That(_mainWindow.Get<Label>("whiteLevelLabel").Text, Is.StringContaining(Resource.WhiteLevelText));
+        }
+
+        [Then(@"I should not have the possibility to do a retrospective")]
+        public void ThenIShouldNotHaveThePossibilityToDoARetrospective()
+        {
+            Assert.That(_mainWindow.Get<Button>("retrospectiveButton"), Is.Null);
+        }
+
+        [Then(@"I should have the possibility to begin again with the red level")]
+        public void ThenIShouldHaveThePossibilityToBeginAgainWithTheRedLevel()
+        {
+            Assert.That(_mainWindow.Get<Button>("restartButton"), Is.Not.Null);
+        }
+
+        [When(@"I browse through all the levels")]
+        public void WhenIBrowseThroughAllTheLevels()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"I should end at the red level again")]
+        public void ThenIShouldEndAtTheRedLevelAgain()
+        {
+            ScenarioContext.Current.Pending();
         }
     }
 }

@@ -11,12 +11,12 @@ namespace CcdAddIn.UI.ViewModels
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ChangeLevelEvent _changeLevelEvent;
+        private readonly GoToLevelEvent _goToLevelEvent;
 
         public StartViewModel(IEventAggregator eventAggregator)
         {
             _logger.Trace("Wiring events");
-            _changeLevelEvent = eventAggregator.GetEvent<ChangeLevelEvent>();
+            _goToLevelEvent = eventAggregator.GetEvent<GoToLevelEvent>();
         }
 
         public ICommand GoToRedLevelCommand
@@ -26,7 +26,7 @@ namespace CcdAddIn.UI.ViewModels
                 return new DelegateCommand(() =>
                 {
                     _logger.Trace("Change level to red");
-                    _changeLevelEvent.Publish(Level.Red);
+                    _goToLevelEvent.Publish(Level.Red);
                 });
             }
         }

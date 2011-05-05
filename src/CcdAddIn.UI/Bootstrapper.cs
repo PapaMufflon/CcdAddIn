@@ -20,6 +20,7 @@ namespace CcdAddIn.UI
 
         private const string AdviceView = "AdviceView";
         private const string CcdLevelsView = "CcdLevelsView";
+        private const string WhiteLevelView = "WhiteLevelView";
 
         protected override DependencyObject CreateShell()
         {
@@ -30,6 +31,7 @@ namespace CcdAddIn.UI
             _logger.Trace("Registering views");
             Container.RegisterType<object, CcdLevelsView>(CcdLevelsView);
             Container.RegisterType<object, AdviceView>(AdviceView);
+            Container.RegisterType<object, WhiteLevelView>(WhiteLevelView);
 
             _logger.Trace("Mapping regions");
             var regionManager = Container.Resolve<IRegionManager>();
@@ -38,9 +40,8 @@ namespace CcdAddIn.UI
 
             _logger.Trace("Wiring events");
             var eventAggregator = Container.Resolve<IEventAggregator>();
-            eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(NavigateToCcdLevelsView);
+            eventAggregator.GetEvent<GoToLevelEvent>().Subscribe(NavigateToCcdLevelsView);
             eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
-            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(NavigateBackToCcdLevelsView);
 
             _logger.Trace("Creating Shell");
             Shell = new Shell();
@@ -49,9 +50,13 @@ namespace CcdAddIn.UI
 
         private void NavigateToCcdLevelsView(Level ccdLevel)
         {
-            _logger.Trace("Navigate to CcdLevelsView");
+            _logger.Trace("Navigate to CcdLevelsView of level {0}", ccdLevel);
             var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
+            var view = ccdLevel != Level.White ?
+                       new Uri(CcdLevelsView, UriKind.Relative) :
+                       new Uri(WhiteLevelView, UriKind.Relative);
+
+            regionManager.RequestNavigate("MainRegion", view);
         }
 
         private void NavigateBackToCcdLevelsView(bool advanceToNextLevel)

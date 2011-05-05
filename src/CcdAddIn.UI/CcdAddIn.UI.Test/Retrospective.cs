@@ -14,26 +14,22 @@ namespace CcdAddIn.UI.Test
     {
         public class Given_a_non_black_level_When_doing_a_retrospective : WithSubject<HeaderViewModel>
         {
-            private static ChangeLevelEvent _changeLevelEvent;
+            private static GoToLevelEvent _goToLevelEvent;
 
             Establish context = () =>
             {
-                _changeLevelEvent = new ChangeLevelEvent();
+                _goToLevelEvent = new GoToLevelEvent();
 
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
-                    .Return(_changeLevelEvent);
+                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
+                    .Return(_goToLevelEvent);
 
                 The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                     .Return(new BeginRetrospectiveEvent());
-
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                    .Return(new EndRetrospectiveEvent());
             };
 
-            Because of = () => _changeLevelEvent.Publish(Level.Red);
+            Because of = () => _goToLevelEvent.Publish(Level.Red);
 
             It should_be_possible = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
@@ -51,12 +47,8 @@ namespace CcdAddIn.UI.Test
                     .Return(beginRetrospectiveEvent);
 
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                    .Return(new EndRetrospectiveEvent());
-
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
-                    .Return(new ChangeLevelEvent());
+                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
+                    .Return(new GoToLevelEvent());
 
                 beginRetrospectiveEvent.Subscribe(x => _raised = true);
             };
@@ -68,7 +60,7 @@ namespace CcdAddIn.UI.Test
 
         public class Given_a_retrospective_in_progress_When_the_retrospective_is_finished : WithSubject<HeaderViewModel>
         {
-            private static EndRetrospectiveEvent _endRetrospectiveEvent;
+            private static GoToLevelEvent _goToLevelEvent;
 
             Establish context = () =>
             {
@@ -76,21 +68,17 @@ namespace CcdAddIn.UI.Test
                     .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                     .Return(new BeginRetrospectiveEvent());
 
-                _endRetrospectiveEvent = new EndRetrospectiveEvent();
+                _goToLevelEvent = new GoToLevelEvent();
                 The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                    .Return(_endRetrospectiveEvent);
-
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
-                    .Return(new ChangeLevelEvent());
+                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
+                    .Return(_goToLevelEvent);
             };
 
             Because of = () =>
             {
                 Subject.BeginRetrospectiveCommand.Execute(null);
 
-                _endRetrospectiveEvent.Publish(false);
+                _goToLevelEvent.Publish(Level.Orange);
             };
 
             It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();

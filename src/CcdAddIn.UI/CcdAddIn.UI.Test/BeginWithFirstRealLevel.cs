@@ -13,7 +13,7 @@ namespace CcdAddIn.UI.Test
 
         Establish context = () =>
         {
-            var changeLevelEvent = new ChangeLevelEvent();
+            var changeLevelEvent = new GoToLevelEvent();
 
             changeLevelEvent.Subscribe(x =>
             {
@@ -21,7 +21,7 @@ namespace CcdAddIn.UI.Test
             });
             
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
+                .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
                 .Return(changeLevelEvent);
         };
 
@@ -35,8 +35,8 @@ namespace CcdAddIn.UI.Test
         Establish context = () =>
         {
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
-                .Return(new ChangeLevelEvent());
+                .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
+                .Return(new GoToLevelEvent());
 
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())

@@ -84,7 +84,7 @@
     <Compile Include="CleanCodeDeveloper\CcdLevel.cs" />
     <Compile Include="CleanCodeDeveloper\RalphWestfal.cs" />
     <Compile Include="Communication\BeginRetrospectiveEvent.cs" />
-    <Compile Include="Communication\ChangeLevelEvent.cs" />
+    <Compile Include="Communication\GoToLevelEvent.cs" />
     <Compile Include="CleanCodeDeveloper\Item.cs" />
     <Compile Include="CleanCodeDeveloper\ItemName.cs" />
     <Compile Include="CleanCodeDeveloper\ItemType.cs" />
@@ -121,6 +121,9 @@
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WhiteLevelView.xaml.cs">
+      <DependentUpon>WhiteLevelView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
@@ -148,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WhiteLevelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using CcdAddIn.UI.CleanCodeDeveloper;
@@ -18,7 +19,9 @@ namespace CcdAddIn.UI.Views
             switch ((Level)value)
             {
                 case Level.Black:
-                    break;
+                case Level.White:
+                    // do not convert these levels into a color
+                    return DependencyProperty.UnsetValue;
                 case Level.Red:
                     if ((string)parameter == "Principles")
                         return new SolidColorBrush(Color.FromArgb(255, 224, 6, 40));
@@ -44,8 +47,6 @@ namespace CcdAddIn.UI.Views
                         return new SolidColorBrush(Color.FromArgb(255, 46, 170, 221));
                     else
                         return new SolidColorBrush(Color.FromArgb(255, 14, 113, 180));
-                case Level.White:
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException("value");
             }

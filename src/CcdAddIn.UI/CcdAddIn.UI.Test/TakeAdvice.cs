@@ -221,6 +221,7 @@ namespace CcdAddIn.UI.Test
     public class Given_a_red_level_When_advancing_to_the_next_level : WithSubject<CcdLevelsViewModel>
     {
         private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
+        private static bool raised;
 
         Establish context = () =>
         {
@@ -235,11 +236,23 @@ namespace CcdAddIn.UI.Test
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
                 .Return(_endRetrospectiveEvent);
+
+            var changeLevelEvent = new GoToLevelEvent();
+            changeLevelEvent.Subscribe(x =>
+            {
+                if (x == Level.Orange)
+                    raised = true;
+            });
+
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
+                .Return(changeLevelEvent);
         };
 
         Because of = () => _endRetrospectiveEvent.Publish(true);
 
         It should_be_at_the_orange_level = () => Subject.CurrentLevel.ShouldEqual(Level.Orange);
+        It should_raise_an_change_level_event = () => raised.ShouldBeTrue();
     }
 
     public class Given_a_red_level_When_advancing : WithSubject<CcdLevel>

@@ -276,4 +276,7 @@
   <data name="YouAintGonnaNeedIt" xml:space="preserve">
     <value>You Ain´t Gonna Need It (YAGNI)</value>
   </data>
+  <data name="WhiteLevelText" xml:space="preserve">
+    <value>Du bist nun im weißen Level - gut gemacht.</value>
+  </data>
 </root>

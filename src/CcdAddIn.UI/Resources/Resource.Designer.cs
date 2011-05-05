@@ -529,6 +529,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Du bist nun im weißen Level - gut gemacht..
+        /// </summary>
+        public static string WhiteLevelText {
+            get {
+                return ResourceManager.GetString("WhiteLevelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You Ain´t Gonna Need It (YAGNI).
         /// </summary>
         public static string YouAintGonnaNeedIt {
