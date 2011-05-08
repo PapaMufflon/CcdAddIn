@@ -59,13 +59,6 @@ namespace CcdAddIn.UI
             regionManager.RequestNavigate("MainRegion", view);
         }
 
-        private void NavigateBackToCcdLevelsView(bool advanceToNextLevel)
-        {
-            _logger.Trace("Navigate to CcdLevelsView");
-            var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
-        }
-
         private void NavigateToShowAdviceView(object obj)
         {
             _logger.Trace("Navigate to AdviceView");

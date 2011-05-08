@@ -18,5 +18,7 @@ Scenario: Reach the white level
 
 Scenario: Make a grand cycle
   Given I start at the red level
-  When I browse through all the levels
+  When I browse through all colored levels
+  And I advance to the next level
+  And I restart the cycle
   Then I should end at the red level again

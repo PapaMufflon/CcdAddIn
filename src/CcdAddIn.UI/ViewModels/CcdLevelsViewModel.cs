@@ -38,7 +38,6 @@ namespace CcdAddIn.UI.ViewModels
                 {
                     _currentLevel.Advance();
 
-
                     OnPropertyChanged("CurrentLevel");
                     OnPropertyChanged("Principles");
                     OnPropertyChanged("Practices");

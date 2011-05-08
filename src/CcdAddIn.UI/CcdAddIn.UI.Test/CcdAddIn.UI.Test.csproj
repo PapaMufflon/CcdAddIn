@@ -75,6 +75,7 @@
     <Compile Include="Repository.cs" />
     <Compile Include="Retrospective.cs" />
     <Compile Include="TakeAdvice.cs" />
+    <Compile Include="WhiteLevel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,27 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace CcdAddIn.UI.Views
+﻿namespace CcdAddIn.UI.Views
 {
-    /// <summary>
-    /// Interaction logic for WhiteLevelView.xaml
-    /// </summary>
-    public partial class WhiteLevelView : UserControl
+    public partial class WhiteLevelView
     {
-        public WhiteLevelView()
+        public WhiteLevelView(WhiteLevelViewModel whiteLevelViewModel)
         {
             InitializeComponent();
+
+            Loaded += (s, e) => DataContext = whiteLevelViewModel;
         }
     }
 }

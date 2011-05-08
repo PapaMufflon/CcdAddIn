@@ -103,8 +103,12 @@ this.ScenarioSetup(scenarioInfo);
 #line 20
   testRunner.Given("I start at the red level");
 #line 21
-  testRunner.When("I browse through all the levels");
+  testRunner.When("I browse through all colored levels");
 #line 22
+  testRunner.And("I advance to the next level");
+#line 23
+  testRunner.And("I restart the cycle");
+#line 24
   testRunner.Then("I should end at the red level again");
 #line hidden
             testRunner.CollectScenarioErrors();

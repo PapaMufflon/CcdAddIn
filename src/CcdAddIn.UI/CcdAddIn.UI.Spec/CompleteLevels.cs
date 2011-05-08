@@ -30,7 +30,7 @@ namespace CcdAddIn.UI.Spec
         }
 
         [When(@"I browse through all colored levels")]
-        public void WhenIBrowseThroughAllLevels()
+        public void WhenIBrowseThroughAllColoredLevels()
         {
             _mainWindow.Get<Button>("retrospectiveButton").Click();
             _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
@@ -88,19 +88,20 @@ namespace CcdAddIn.UI.Spec
         [Then(@"I should have the possibility to begin again with the red level")]
         public void ThenIShouldHaveThePossibilityToBeginAgainWithTheRedLevel()
         {
-            Assert.That(_mainWindow.Get<Button>("restartButton"), Is.Not.Null);
+            Assert.That(_mainWindow.Get<Button>("restartButton").IsOffScreen, Is.False);
         }
 
-        [When(@"I browse through all the levels")]
-        public void WhenIBrowseThroughAllTheLevels()
+        [When(@"I restart the cycle")]
+        public void WhenIRestartTheCycle()
         {
-            ScenarioContext.Current.Pending();
+            _mainWindow.Get<Button>("restartButton").Click();
         }
 
         [Then(@"I should end at the red level again")]
         public void ThenIShouldEndAtTheRedLevelAgain()
         {
-            ScenarioContext.Current.Pending();
+            var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
+            Assert.That(firstPrinciple.Text, Is.StringContaining("Don't Repeat Yourself"));
         }
     }
 }

@@ -124,6 +124,7 @@
     <Compile Include="Views\WhiteLevelView.xaml.cs">
       <DependentUpon>WhiteLevelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\WhiteLevelViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

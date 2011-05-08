@@ -279,4 +279,7 @@
   <data name="WhiteLevelText" xml:space="preserve">
     <value>Du bist nun im weißen Level - gut gemacht.</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Zum roten Level</value>
+  </data>
 </root>
