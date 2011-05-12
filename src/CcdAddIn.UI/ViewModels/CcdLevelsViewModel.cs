@@ -17,38 +17,26 @@ namespace CcdAddIn.UI.ViewModels
 
         private CcdLevel _currentLevel;
         private ShowAdviceEvent _showAdviceEvent;
-        private GoToLevelEvent _goToLevelEvent;
 
-        public CcdLevelsViewModel(IEventAggregator eventAggregator)
+        public CcdLevelsViewModel(IEventAggregator eventAggregator, CcdLevel currentLevel)
         {
+            _currentLevel = currentLevel;
+            _currentLevel.Advanced += (s, e) =>
+            {
+                _logger.Trace("Principles and Practices have updated - tell it to the view.");
+                OnPropertyChanged("CurrentLevel");
+                OnPropertyChanged("Principles");
+                OnPropertyChanged("Practices");
+            };
+
             _logger.Trace("Wiring events");
             _showAdviceEvent = eventAggregator.GetEvent<ShowAdviceEvent>();
-            _goToLevelEvent = eventAggregator.GetEvent<GoToLevelEvent>();
             
             eventAggregator.GetEvent<BeginRetrospectiveEvent>().Subscribe(x =>
             {
                 _logger.Trace("Let's begin the retrospective - switch to evaluation-mode");
                 EvaluationVisible = true;
             });
-
-            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(shouldAdvance =>
-            {
-                _logger.Trace("Retrospective has ended with wish to advance? {0}", shouldAdvance);
-                if (shouldAdvance)
-                {
-                    _currentLevel.Advance();
-
-                    OnPropertyChanged("CurrentLevel");
-                    OnPropertyChanged("Principles");
-                    OnPropertyChanged("Practices");
-                    _logger.Trace("We advanced to level {0} and updated the principles & practices", _currentLevel.Level);
-                }
-
-                _goToLevelEvent.Publish(_currentLevel.Level);
-            });
-
-            _logger.Trace("Let's start with the red level");
-            _currentLevel = new CcdLevel(Level.Red);
         }
 
         public Level CurrentLevel

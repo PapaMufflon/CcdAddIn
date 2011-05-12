@@ -10,197 +10,256 @@ using Microsoft.Practices.Prism.Events;
 
 namespace CcdAddIn.UI.Test
 {
-    class Retrospective
+    public class Given_the_black_level_When_advancing_to_the_red_level : WithSubject<HeaderViewModel>
     {
-        public class Given_a_non_black_level_When_doing_a_retrospective : WithSubject<HeaderViewModel>
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Black);
+
+        Establish context = () =>
         {
-            private static GoToLevelEvent _goToLevelEvent;
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
 
-            Establish context = () =>
-            {
-                _goToLevelEvent = new GoToLevelEvent();
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(new EndRetrospectiveEvent());
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
-                    .Return(_goToLevelEvent);
+            Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
+        };
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(new BeginRetrospectiveEvent());
-            };
+        Because of = () => _currentLevel.Advance();
 
-            Because of = () => _goToLevelEvent.Publish(Level.Red);
-
-            It should_be_possible = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
-        }
-
-        public class Given_a_non_black_level_When_clicking_on_retrospective : WithSubject<HeaderViewModel>
+        It should_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
+    }
+    public class Given_a_non_black_level_When_doing_a_retrospective : WithSubject<HeaderViewModel>
+    {
+        Establish context = () =>
         {
-            private static bool _raised;
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
 
-            Establish context = () =>
-            {
-                var beginRetrospectiveEvent = new BeginRetrospectiveEvent();
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(new EndRetrospectiveEvent());
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(beginRetrospectiveEvent);
+            Subject = new HeaderViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
+        };
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
-                    .Return(new GoToLevelEvent());
+        Because of = () => { };
 
-                beginRetrospectiveEvent.Subscribe(x => _raised = true);
-            };
+        It should_be_possible = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
+    }
 
-            Because of = () => Subject.BeginRetrospectiveCommand.Execute(null);
+    public class Given_a_non_black_level_When_clicking_on_retrospective : WithSubject<HeaderViewModel>
+    {
+        private static bool _raised;
 
-            It should_raise_a_begin_retrospective_event = () => _raised.ShouldBeTrue();
-        }
-
-        public class Given_a_retrospective_in_progress_When_the_retrospective_is_finished : WithSubject<HeaderViewModel>
+        Establish context = () =>
         {
-            private static GoToLevelEvent _goToLevelEvent;
+            var beginRetrospectiveEvent = new BeginRetrospectiveEvent();
+            beginRetrospectiveEvent.Subscribe(x => _raised = true);
 
-            Establish context = () =>
-            {
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(new BeginRetrospectiveEvent());
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(beginRetrospectiveEvent);
 
-                _goToLevelEvent = new GoToLevelEvent();
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
-                    .Return(_goToLevelEvent);
-            };
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(new EndRetrospectiveEvent());
 
-            Because of = () =>
-            {
-                Subject.BeginRetrospectiveCommand.Execute(null);
+            Subject = new HeaderViewModel(The<IEventAggregator>(), new CcdLevel(Level.Black));
+        };
 
-                _goToLevelEvent.Publish(Level.Orange);
-            };
+        Because of = () => Subject.BeginRetrospectiveCommand.Execute(null);
 
-            It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
-        }
+        It should_raise_a_begin_retrospective_event = () => _raised.ShouldBeTrue();
+    }
 
-        public class Given_a_retrospective_in_progress_When_advancing_to_the_white_level : WithSubject<HeaderViewModel>
+    public class Given_a_retrospective_in_progress_When_advancing_to_the_white_level : WithSubject<HeaderViewModel>
+    {
+        private static CcdLevel _currentLevel;
+        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
+
+        Establish context = () =>
         {
-            private static GoToLevelEvent _goToLevelEvent;
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
 
-            Establish context = () =>
-            {
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(new BeginRetrospectiveEvent());
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(_endRetrospectiveEvent);
 
-                _goToLevelEvent = new GoToLevelEvent();
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
-                    .Return(_goToLevelEvent);
-            };
+            _currentLevel = new CcdLevel(Level.Blue);
 
-            Because of = () =>
-            {
-                Subject.BeginRetrospectiveCommand.Execute(null);
+            Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
+        };
 
-                _goToLevelEvent.Publish(Level.White);
-            };
-
-            It should_not_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeFalse();
-        }
-
-        public class Given_a_non_black_level_When_not_doing_a_retrospective : WithSubject<CcdLevelsViewModel>
+        Because of = () =>
         {
-            Establish context = () =>
-            {
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(new BeginRetrospectiveEvent());
+            Subject.BeginRetrospectiveCommand.Execute(null);
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                    .Return(new EndRetrospectiveEvent());
-            };
+            _currentLevel.Advance();
+            _endRetrospectiveEvent.Publish(null);
+        };
 
-            Because of = () => { };
+        It should_not_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeFalse();
+    }
 
-            It should_not_show_the_evaluation_controls = () => Subject.EvaluationVisible.ShouldBeFalse();
-        }
+    public class Given_a_retrospective_in_progress_When_advancing_a_level_after_ending_the_retrospective : WithSubject<HeaderViewModel>
+    {
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
+        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
 
-        public class Given_a_non_black_level_When_wanting_to_do_a_retrospective : WithSubject<CcdLevelsViewModel>
+        Establish context = () =>
         {
-            private static BeginRetrospectiveEvent _beginRetrospectiveEvent;
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
 
-            Establish context = () =>
-            {
-                _beginRetrospectiveEvent = new BeginRetrospectiveEvent();
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(_endRetrospectiveEvent);
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(_beginRetrospectiveEvent);
+            Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
+        };
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                    .Return(new EndRetrospectiveEvent());
-            };
-
-            Because of = () => _beginRetrospectiveEvent.Publish(true);
-
-            It should_switch_to_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeTrue();
-        }
-
-        public class Given_a_retrospective_in_progress_When_finishing_the_retrospective : WithSubject<CcdLevelsViewModel>
+        Because of = () =>
         {
-            private static bool _raised;
+            Subject.BeginRetrospectiveCommand.Execute(null);
+            
+            _currentLevel.Advance();
+            _endRetrospectiveEvent.Publish(null);
+        };
 
-            Establish context = () =>
-            {
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                    .Return(new BeginRetrospectiveEvent());
+        It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
+    }
 
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                    .Return(new EndRetrospectiveEvent());
+    public class Given_a_retrospective_in_progress_When_not_advancing_a_level_after_ending_the_retrospective : WithSubject<HeaderViewModel>
+    {
+        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
 
-                var showAdviceEvent = new ShowAdviceEvent();
-                showAdviceEvent.Subscribe(x => _raised = true);
-
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<ShowAdviceEvent>())
-                    .Return(showAdviceEvent);
-            };
-
-            Because of = () => Subject.RetrospectiveDoneCommand.Execute(null);
-
-            It should_stop_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeFalse();
-            It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
-        }
-
-        public class Given_a_clean_code_developer_level_When_comparing_the_items_with_the_itemNames : WithFakes
+        Establish context = () =>
         {
-            private static Dictionary<Level, List<Item>> _items = new Dictionary<Level, List<Item>>();
-            private static Dictionary<Level, List<ItemName>> _itemNames = new Dictionary<Level, List<ItemName>>();
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
 
-            Establish context = () =>
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(_endRetrospectiveEvent);
+
+            Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
+        };
+
+        Because of = () =>
+        {
+            Subject.BeginRetrospectiveCommand.Execute(null);
+
+            _endRetrospectiveEvent.Publish(null);
+        };
+
+        It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
+    }
+
+    public class Given_a_non_black_level_When_not_doing_a_retrospective : WithSubject<CcdLevelsViewModel>
+    {
+        Establish context = () =>
+        {
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
+
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(new EndRetrospectiveEvent());
+
+            Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
+        };
+
+        Because of = () => { };
+
+        It should_not_show_the_evaluation_controls = () => Subject.EvaluationVisible.ShouldBeFalse();
+    }
+
+    public class Given_a_non_black_level_When_wanting_to_do_a_retrospective : WithSubject<CcdLevelsViewModel>
+    {
+        private static BeginRetrospectiveEvent _beginRetrospectiveEvent;
+
+        Establish context = () =>
+        {
+            _beginRetrospectiveEvent = new BeginRetrospectiveEvent();
+
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(_beginRetrospectiveEvent);
+
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(new EndRetrospectiveEvent());
+
+            Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
+        };
+
+        Because of = () => _beginRetrospectiveEvent.Publish(true);
+
+        It should_switch_to_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeTrue();
+    }
+
+    public class Given_a_retrospective_in_progress_When_finishing_the_retrospective : WithSubject<CcdLevelsViewModel>
+    {
+        private static bool _raised;
+
+        Establish context = () =>
+        {
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
+                .Return(new BeginRetrospectiveEvent());
+
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
+                .Return(new EndRetrospectiveEvent());
+
+            var showAdviceEvent = new ShowAdviceEvent();
+            showAdviceEvent.Subscribe(x => _raised = true);
+
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<ShowAdviceEvent>())
+                .Return(showAdviceEvent);
+
+            Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
+        };
+
+        Because of = () => Subject.RetrospectiveDoneCommand.Execute(null);
+
+        It should_stop_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeFalse();
+        It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
+    }
+
+    public class Given_a_clean_code_developer_level_When_comparing_the_items_with_the_itemNames : WithFakes
+    {
+        private static Dictionary<Level, List<Item>> _items = new Dictionary<Level, List<Item>>();
+        private static Dictionary<Level, List<ItemName>> _itemNames = new Dictionary<Level, List<ItemName>>();
+
+        Establish context = () =>
+        {
+            foreach (Level level in Enum.GetValues(typeof(Level)))
             {
-                foreach (Level level in Enum.GetValues(typeof(Level)))
-                {
-                    _items.Add(level, ItemFactory.GetItemsFor(level));
-                    _itemNames.Add(level, ItemFactory.GetItemNamesFor(level));
-                }
-            };
+                _items.Add(level, ItemFactory.GetItemsFor(level));
+                _itemNames.Add(level, ItemFactory.GetItemNamesFor(level));
+            }
+        };
 
-            Because of = () => { };
+        Because of = () => { };
 
-            It should_have_the_same_items = () =>
+        It should_have_the_same_items = () =>
+        {
+            foreach (var key in _items.Keys)
             {
-                foreach (var key in _items.Keys)
-                {
-                    _itemNames[key].ShouldContainOnly(_items[key].Select(x => x.Name));
-                }
-            };
-        }
+                _itemNames[key].ShouldContainOnly(_items[key].Select(x => x.Name));
+            }
+        };
     }
 }

@@ -50,9 +50,6 @@ namespace CcdAddIn.UI.Views
                 default:
                     throw new ArgumentOutOfRangeException("value");
             }
-
-            _logger.Warn("Can't find a suitable color for value {0}", value);
-            throw new ArgumentException(value + " is not a valid level.");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

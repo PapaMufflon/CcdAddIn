@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NLog;
 
@@ -6,6 +7,8 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
 {
     public class CcdLevel
     {
+        public event EventHandler Advanced;
+
         public Level Level { get; private set; }
         public List<Item> Principles { get; private set; }
         public List<Item> Practices { get; private set; }
@@ -37,8 +40,11 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
             else
                 Level = Level.Red;
 
-            _logger.Trace("Advanced to new level ({0})", Level);
             LoadPrinciplesAndPractices();
+            _logger.Trace("Advanced to new level ({0})", Level);
+
+            if (Advanced != null)
+                Advanced(this, EventArgs.Empty);
         }
 
         public override bool Equals(object obj)
@@ -63,5 +69,6 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                 return result;
             }
         }
+
     }
 }

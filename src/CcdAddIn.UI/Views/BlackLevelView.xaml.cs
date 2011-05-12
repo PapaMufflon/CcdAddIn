@@ -3,17 +3,17 @@ using NLog;
 
 namespace CcdAddIn.UI.Views
 {
-    public partial class StartView
+    public partial class BlackLevelView
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public StartView(StartViewModel vm)
+        public BlackLevelView(BlackLevelViewModel vm)
         {
             InitializeComponent();
 
             Loaded += (s, e) =>
             {
-                _logger.Trace("Wiring StartViewModel to StartView");
+                _logger.Trace("Wiring BlackLevelViewModel to BlackLevelView");
                 DataContext = vm;
             };
         }
