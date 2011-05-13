@@ -11,23 +11,26 @@ namespace CcdAddIn.UI.ViewModels
     public class HeaderViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         private BeginRetrospectiveEvent _beginRetrospectiveEvent;
 
-        public HeaderViewModel(IEventAggregator eventAggregator)
+        public HeaderViewModel(IEventAggregator eventAggregator, CcdLevel currentLevel)
         {
             _logger.Trace("Wiring events");
             _beginRetrospectiveEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
 
-            eventAggregator.GetEvent<GoToLevelEvent>().Subscribe(newLevel =>
-            {
-                _logger.Trace("Change the level to {0}", newLevel);
-                if (newLevel != Level.Black &&
-                    newLevel != Level.White)
-                    RetrospectiveAvailable = true;
-            });
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(_ => DeceideIfRetrospectiveIsAvailable(currentLevel));
+            currentLevel.Advanced += (s, e) => DeceideIfRetrospectiveIsAvailable(currentLevel);
+
+            DeceideIfRetrospectiveIsAvailable(currentLevel);
+        }
+
+        private void DeceideIfRetrospectiveIsAvailable(CcdLevel currentLevel)
+        {
+            if (currentLevel.Level != Level.Black && currentLevel.Level != Level.White)
+                RetrospectiveAvailable = true;
         }
 
         public ICommand BeginRetrospectiveCommand

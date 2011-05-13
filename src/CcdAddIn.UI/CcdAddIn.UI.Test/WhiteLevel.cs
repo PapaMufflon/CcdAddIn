@@ -9,27 +9,18 @@ namespace CcdAddIn.UI.Test
 {
     public class WhiteLevel
     {
-        public class Given_the_white_level_When_RestartingTheCycle : WithSubject<WhiteLevelViewModel>
+        public class Given_the_white_level_When_restarting_the_cycle : WithSubject<WhiteLevelViewModel>
         {
-            private static bool _raised;
-            private static GoToLevelEvent _goToLevelEvent = new GoToLevelEvent();
+            private static CcdLevel _currentLevel = new CcdLevel(Level.White);
 
             Establish context = () =>
             {
-                _goToLevelEvent.Subscribe(x =>
-                {
-                    if (x == Level.Red)
-                        _raised = true;
-                });
-
-                The<IEventAggregator>()
-                    .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
-                    .Return(_goToLevelEvent);
+                Subject = new WhiteLevelViewModel(_currentLevel);
             };
 
             Because of = () => Subject.RestartCommand.Execute(null);
 
-            It should_raise_a_go_to_red_level_event = () => _raised.ShouldBeTrue();
+            It should_go_to_the_red_level = () => _currentLevel.Level.ShouldEqual(Level.Red);
         }
     }
 }

@@ -84,7 +84,6 @@
     <Compile Include="CleanCodeDeveloper\CcdLevel.cs" />
     <Compile Include="CleanCodeDeveloper\RalphWestfal.cs" />
     <Compile Include="Communication\BeginRetrospectiveEvent.cs" />
-    <Compile Include="Communication\GoToLevelEvent.cs" />
     <Compile Include="CleanCodeDeveloper\Item.cs" />
     <Compile Include="CleanCodeDeveloper\ItemName.cs" />
     <Compile Include="CleanCodeDeveloper\ItemType.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="Data\IFileService.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\Repository.cs" />
+    <Compile Include="Navigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CleanCodeDeveloper\Level.cs" />
     <Compile Include="Resources\Resource.Designer.cs">
@@ -104,7 +104,7 @@
     <Compile Include="ViewModels\CcdLevelsViewModel.cs" />
     <Compile Include="ViewModels\HeaderViewModel.cs" />
     <Compile Include="ViewModels\AdviceViewModel.cs" />
-    <Compile Include="ViewModels\StartViewModel.cs" />
+    <Compile Include="ViewModels\BlackLevelViewModel.cs" />
     <Compile Include="Views\AdviceView.xaml.cs">
       <DependentUpon>AdviceView.xaml</DependentUpon>
     </Compile>
@@ -118,8 +118,8 @@
     <Compile Include="Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StartView.xaml.cs">
-      <DependentUpon>StartView.xaml</DependentUpon>
+    <Compile Include="Views\BlackLevelView.xaml.cs">
+      <DependentUpon>BlackLevelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WhiteLevelView.xaml.cs">
       <DependentUpon>WhiteLevelView.xaml</DependentUpon>
@@ -151,7 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StartView.xaml">
+    <Page Include="Views\BlackLevelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

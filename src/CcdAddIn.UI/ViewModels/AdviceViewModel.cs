@@ -12,12 +12,15 @@ namespace CcdAddIn.UI.ViewModels
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly CcdLevel _currentLevel;
         private EndRetrospectiveEvent _endRetrospectiveEvent;
         private string _advice;
         private bool _canAdvance;
 
-        public AdviceViewModel(IEventAggregator eventAggregator, IRepository repository)
+        public AdviceViewModel(IEventAggregator eventAggregator, IRepository repository, CcdLevel currentLevel)
         {
+            _currentLevel = currentLevel;
+
             _logger.Trace("Wiring events");
             _endRetrospectiveEvent = eventAggregator.GetEvent<EndRetrospectiveEvent>();
 
@@ -36,9 +39,17 @@ namespace CcdAddIn.UI.ViewModels
                 return new DelegateCommand(() =>
                 {
                     _logger.Trace("We take the advice. So, do we want to advance? {0}", _canAdvance);
-                    _endRetrospectiveEvent.Publish(_canAdvance);   
+                    EndAdvice(CanAdvance);
                 });
             }
+        }
+
+        private void EndAdvice(bool canAdvance)
+        {
+            if (canAdvance)
+                _currentLevel.Advance();
+
+            _endRetrospectiveEvent.Publish(null);
         }
 
         public ICommand DenyAdviceCommand
@@ -48,7 +59,7 @@ namespace CcdAddIn.UI.ViewModels
                 return new DelegateCommand(() =>
                 {
                     _logger.Trace("We do not take the advice. So, do we want to advance? {0}", !_canAdvance);
-                    _endRetrospectiveEvent.Publish(!_canAdvance);
+                    EndAdvice(!CanAdvance);
                 });
             }
         }

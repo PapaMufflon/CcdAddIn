@@ -31,26 +31,26 @@ namespace CcdAddIn.UI.Test
     public class Given_an_negative_advice_When_taking_it : WithSubject<AdviceViewModel>
     {
         private static bool _raised;
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
 
         Establish context = () =>
         {
             var endRetrospectiveEvent = new EndRetrospectiveEvent();
-            endRetrospectiveEvent.Subscribe(x =>
-            {
-                if (!x)
-                    _raised = true;
-            });
+            endRetrospectiveEvent.Subscribe(x => _raised = true);
 
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
                 .Return(endRetrospectiveEvent);
 
             The<IRepository>().Retrospectives = new List<CcdLevel>();
+
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), _currentLevel);
         };
 
         Because of = () => Subject.TakeAdviceCommand.Execute(null);
 
-        It should_raise_an_end_retrospective_event_with_wish_to_not_advance = () => _raised.ShouldBeTrue();
+        It should_raise_an_end_retrospective_event = () => _raised.ShouldBeTrue();
+        It should_stay_at_the_same_level = () => _currentLevel.Level.ShouldEqual(Level.Red);
     }
 
     public class Given_21_consecutive_days_with_all_retrospectives_above_80_percent_When_asking_to_advance_to_the_next_level : WithSubject<RalfWestphal>
@@ -102,6 +102,8 @@ namespace CcdAddIn.UI.Test
             }
 
             The<IRepository>().Retrospectives = retrospectives;
+
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), new CcdLevel(Level.Red));
         };
 
         Because of = () => { };
@@ -112,7 +114,7 @@ namespace CcdAddIn.UI.Test
 
     public class Given_retrospectives_justifying_a_level_up_When_taking_an_advice : WithSubject<AdviceViewModel>
     {
-        private static bool _raised;
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
 
         Establish context = () =>
         {
@@ -133,26 +135,21 @@ namespace CcdAddIn.UI.Test
 
             The<IRepository>().Retrospectives = retrospectives;
 
-            var endRetrospectiveEvent = new EndRetrospectiveEvent();
-            endRetrospectiveEvent.Subscribe(x =>
-            {
-                if (x)
-                    _raised = true;
-            });
-
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(endRetrospectiveEvent);
+                .Return(new EndRetrospectiveEvent());
+
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), _currentLevel);
         };
 
         Because of = () => Subject.TakeAdviceCommand.Execute(null);
 
-        It should_raise_an_end_retrospective_event_with_wish_to_advance = () => _raised.ShouldBeTrue();
+        It should_advance_to_the_next_level = () => _currentLevel.Level.ShouldEqual(Level.Orange);
     }
 
     public class Given_retrospectives_not_justifying_a_level_up_When_denying_the_advice : WithSubject<AdviceViewModel>
     {
-        private static bool _raised;
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
 
         Establish context = () =>
         {
@@ -173,21 +170,16 @@ namespace CcdAddIn.UI.Test
 
             The<IRepository>().Retrospectives = retrospectives;
 
-            var endRetrospectiveEvent = new EndRetrospectiveEvent();
-            endRetrospectiveEvent.Subscribe(x =>
-            {
-                if (x)
-                    _raised = true;
-            });
-
             The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(endRetrospectiveEvent);
+                .Return(new EndRetrospectiveEvent());
+
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), _currentLevel);
         };
 
         Because of = () => Subject.DenyAdviceCommand.Execute(null);
 
-        It should_raise_an_end_retrospective_event_with_wish_to_advance = () => _raised.ShouldBeTrue();
+        It should_advance_to_the_next_level = () => _currentLevel.Level.ShouldEqual(Level.Orange);
     }
 
     public class Given_retrospectives_not_justifying_a_level_up_When_querying_for_an_advice : WithSubject<AdviceViewModel>
@@ -210,49 +202,14 @@ namespace CcdAddIn.UI.Test
             }
 
             The<IRepository>().Retrospectives = retrospectives;
+
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), new CcdLevel(Level.Red));
         };
 
         Because of = () => { };
 
         It should_be_a_negative_advice = () => Subject.Advice.ShouldEqual(Resources.Resource.NegativeAdvice);
         It should_activate_advance_to_next_level_choice = () => Subject.CanAdvance.ShouldBeFalse();
-    }
-
-    public class Given_a_red_level_When_advancing_to_the_next_level : WithSubject<CcdLevelsViewModel>
-    {
-        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
-        private static bool raised;
-
-        Establish context = () =>
-        {
-            The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<ShowAdviceEvent>())
-                .Return(new ShowAdviceEvent());
-
-            The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
-                .Return(new BeginRetrospectiveEvent());
-
-            The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(_endRetrospectiveEvent);
-
-            var changeLevelEvent = new GoToLevelEvent();
-            changeLevelEvent.Subscribe(x =>
-            {
-                if (x == Level.Orange)
-                    raised = true;
-            });
-
-            The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<GoToLevelEvent>())
-                .Return(changeLevelEvent);
-        };
-
-        Because of = () => _endRetrospectiveEvent.Publish(true);
-
-        It should_be_at_the_orange_level = () => Subject.CurrentLevel.ShouldEqual(Level.Orange);
-        It should_raise_an_change_level_event = () => raised.ShouldBeTrue();
     }
 
     public class Given_a_red_level_When_advancing : WithSubject<CcdLevel>
