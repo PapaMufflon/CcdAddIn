@@ -33,6 +33,7 @@ namespace CcdAddIn.UI
             Container.RegisterInstance(Container.Resolve<Navigator>(), new ContainerControlledLifetimeManager());
             Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IFileService, FileService>();
+            Container.RegisterInstance(Container.Resolve<PersistService>(), new ContainerControlledLifetimeManager());
         }
 
         private void RegisterViews()

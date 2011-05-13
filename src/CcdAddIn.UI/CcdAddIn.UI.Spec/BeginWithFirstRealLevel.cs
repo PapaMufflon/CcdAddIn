@@ -9,7 +9,7 @@ using Button = White.Core.UIItems.Button;
 namespace CcdAddIn.UI.Spec
 {
     [Binding]
-    public class StepDefinitions
+    public class BeginWithFirstRealLevel
     {
         private Window _mainWindow;
         private string _mainText;
