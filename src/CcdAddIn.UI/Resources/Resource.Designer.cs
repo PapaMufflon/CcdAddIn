@@ -394,6 +394,15 @@ namespace CcdAddIn.UI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zum roten Level.
+        /// </summary>
+        public static string Restart {
+            get {
+                return ResourceManager.GetString("Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retro.
         /// </summary>
         public static string Retro {
@@ -525,6 +534,15 @@ namespace CcdAddIn.UI.Resources {
         public static string WarmWelcomeMessage {
             get {
                 return ResourceManager.GetString("WarmWelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Du bist nun im weißen Level - gut gemacht..
+        /// </summary>
+        public static string WhiteLevelText {
+            get {
+                return ResourceManager.GetString("WhiteLevelText", resourceCulture);
             }
         }
         

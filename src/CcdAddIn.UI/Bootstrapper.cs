@@ -1,10 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using CcdAddIn.UI.CleanCodeDeveloper;
-using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.Data;
 using CcdAddIn.UI.Views;
-using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
@@ -18,54 +15,40 @@ namespace CcdAddIn.UI
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private const string AdviceView = "AdviceView";
-        private const string CcdLevelsView = "CcdLevelsView";
-
         protected override DependencyObject CreateShell()
         {
-            _logger.Trace("Registering types");
-            Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IFileService, FileService>();
-
-            _logger.Trace("Registering views");
-            Container.RegisterType<object, CcdLevelsView>(CcdLevelsView);
-            Container.RegisterType<object, AdviceView>(AdviceView);
-
-            _logger.Trace("Mapping regions");
-            var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("HeaderRegion", typeof(HeaderView));
-            regionManager.RegisterViewWithRegion("MainRegion", typeof(StartView));
-
-            _logger.Trace("Wiring events");
-            var eventAggregator = Container.Resolve<IEventAggregator>();
-            eventAggregator.GetEvent<ChangeLevelEvent>().Subscribe(NavigateToCcdLevelsView);
-            eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
-            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(NavigateBackToCcdLevelsView);
+            RegisterTypes();
+            RegisterViews();
+            MapRegions();
 
             _logger.Trace("Creating Shell");
             Shell = new Shell();
             return Shell;
         }
 
-        private void NavigateToCcdLevelsView(Level ccdLevel)
+        private void RegisterTypes()
         {
-            _logger.Trace("Navigate to CcdLevelsView");
-            var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
+            _logger.Trace("Registering types");
+            Container.RegisterInstance(new CcdLevel(Level.Black), new ContainerControlledLifetimeManager());
+            Container.RegisterInstance(Container.Resolve<Navigator>(), new ContainerControlledLifetimeManager());
+            Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IFileService, FileService>();
         }
 
-        private void NavigateBackToCcdLevelsView(bool advanceToNextLevel)
+        private void RegisterViews()
         {
-            _logger.Trace("Navigate to CcdLevelsView");
-            var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RequestNavigate("MainRegion", new Uri(CcdLevelsView, UriKind.Relative));
+            _logger.Trace("Registering views");
+            Container.RegisterInstance<object>(Navigator.CcdLevelsView, Container.Resolve<CcdLevelsView>());
+            Container.RegisterInstance<object>(Navigator.AdviceView, Container.Resolve<AdviceView>());
+            Container.RegisterInstance<object>(Navigator.WhiteLevelView, Container.Resolve<WhiteLevelView>());
         }
 
-        private void NavigateToShowAdviceView(object obj)
+        private void MapRegions()
         {
-            _logger.Trace("Navigate to AdviceView");
+            _logger.Trace("Mapping regions");
             var regionManager = Container.Resolve<IRegionManager>();
-            regionManager.RequestNavigate("MainRegion", new Uri(AdviceView, UriKind.Relative));
+            regionManager.RegisterViewWithRegion("HeaderRegion", typeof(HeaderView));
+            regionManager.RegisterViewWithRegion("MainRegion", typeof(BlackLevelView));
         }
     }
 }

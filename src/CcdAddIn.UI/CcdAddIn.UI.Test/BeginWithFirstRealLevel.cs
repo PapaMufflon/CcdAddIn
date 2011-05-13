@@ -7,27 +7,18 @@ using Microsoft.Practices.Prism.Events;
 
 namespace CcdAddIn.UI.Test
 {
-    public class Given_the_initial_level_is_black_when_going_to_the_red_level : WithSubject<StartViewModel>
+    public class Given_the_initial_level_is_black_when_going_to_the_red_level : WithSubject<BlackLevelViewModel>
     {
-        private static bool _raised; 
+        private static CcdLevel _currentLevel = new CcdLevel(Level.Black);
 
         Establish context = () =>
         {
-            var changeLevelEvent = new ChangeLevelEvent();
-
-            changeLevelEvent.Subscribe(x =>
-            {
-                if (x == Level.Red) _raised = true;
-            });
-            
-            The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
-                .Return(changeLevelEvent);
+            Subject = new BlackLevelViewModel(_currentLevel);
         };
 
         Because of = () => Subject.GoToRedLevelCommand.Execute(null);
 
-        It should_raise_a_change_to_red_level_event = () => _raised.ShouldBeTrue();
+        It should_change_the_current_level_to_red = () => _currentLevel.Level.ShouldEqual(Level.Red);
     }
 
     public class Given_the_initial_level_is_black_when_wanting_to_do_a_retrospective : WithSubject<HeaderViewModel>
@@ -35,16 +26,14 @@ namespace CcdAddIn.UI.Test
         Establish context = () =>
         {
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<ChangeLevelEvent>())
-                .Return(new ChangeLevelEvent());
-
-            The<IEventAggregator>()
                 .WhenToldTo(x => x.GetEvent<BeginRetrospectiveEvent>())
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
                     .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
                     .Return(new EndRetrospectiveEvent());
+
+            Subject = new HeaderViewModel(The<IEventAggregator>(), new CcdLevel(Level.Black));
         };
 
         Because of = () => { };

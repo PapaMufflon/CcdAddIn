@@ -1,22 +1,19 @@
 ﻿using System.Windows.Input;
 using CcdAddIn.UI.CleanCodeDeveloper;
-using CcdAddIn.UI.Communication;
 using Microsoft.Practices.Prism.Commands;
-using Microsoft.Practices.Prism.Events;
 using NLog;
 
 namespace CcdAddIn.UI.ViewModels
 {
-    public class StartViewModel
+    public class BlackLevelViewModel
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ChangeLevelEvent _changeLevelEvent;
+        private readonly CcdLevel _currentLevel;
 
-        public StartViewModel(IEventAggregator eventAggregator)
+        public BlackLevelViewModel(CcdLevel currentLevel)
         {
-            _logger.Trace("Wiring events");
-            _changeLevelEvent = eventAggregator.GetEvent<ChangeLevelEvent>();
+            _currentLevel = currentLevel;
         }
 
         public ICommand GoToRedLevelCommand
@@ -26,7 +23,7 @@ namespace CcdAddIn.UI.ViewModels
                 return new DelegateCommand(() =>
                 {
                     _logger.Trace("Change level to red");
-                    _changeLevelEvent.Publish(Level.Red);
+                    _currentLevel.Advance();
                 });
             }
         }

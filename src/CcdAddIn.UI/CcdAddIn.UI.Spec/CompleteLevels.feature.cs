@@ -30,8 +30,8 @@ namespace CcdAddIn.UI.Spec
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "All levels", "In order to learn everything\nAs a clean code developer\nI want to reach all levels" +
-                    "", GenerationTargetLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "All levels", "In order to learn everything\r\nAs a clean code developer\r\nI want to reach all leve" +
+                    "ls", GenerationTargetLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -61,11 +61,55 @@ namespace CcdAddIn.UI.Spec
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("I start at the red level");
+  testRunner.Given("I start at the red level");
 #line 8
- testRunner.When("I browse through all levels");
+  testRunner.When("I browse through all colored levels");
 #line 9
- testRunner.Then("I will end at the blue level");
+  testRunner.Then("I will end at the blue level");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Reach the white level")]
+        public virtual void ReachTheWhiteLevel()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Reach the white level", ((string[])(null)));
+#line 11
+this.ScenarioSetup(scenarioInfo);
+#line 12
+  testRunner.Given("I start at the red level");
+#line 13
+  testRunner.When("I browse through all colored levels");
+#line 14
+  testRunner.And("I advance to the next level");
+#line 15
+  testRunner.Then("I should be at the white level");
+#line 16
+  testRunner.And("I should not have the possibility to do a retrospective");
+#line 17
+  testRunner.And("I should have the possibility to begin again with the red level");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Make a grand cycle")]
+        public virtual void MakeAGrandCycle()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Make a grand cycle", ((string[])(null)));
+#line 19
+this.ScenarioSetup(scenarioInfo);
+#line 20
+  testRunner.Given("I start at the red level");
+#line 21
+  testRunner.When("I browse through all colored levels");
+#line 22
+  testRunner.And("I advance to the next level");
+#line 23
+  testRunner.And("I restart the cycle");
+#line 24
+  testRunner.Then("I should end at the red level again");
 #line hidden
             testRunner.CollectScenarioErrors();
         }
