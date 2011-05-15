@@ -1,1 +1,0 @@
-const string for regions & views
