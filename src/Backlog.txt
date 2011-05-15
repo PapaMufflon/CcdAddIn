@@ -1,0 +1,13 @@
+Save all retros to take them into account for the advice.
+
+New advance-a-level critera: >= 15 retros on >= 15 separate days but last date - first date < 30 days, last retro everything > 80.
+
+Beautify BlackLevelView, esp. fix double text hack.
+
+Link practices and principles to clean-code-developer.de.
+
+Beautify rest of Views, esp. make it smaller in height.
+
+Make it V1-ready, pull-request.
+
+On click on practice or principle, make accordeon-effect to show details.
