@@ -17,12 +17,18 @@ namespace CcdAddIn.UI.Data
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         private readonly IFileService _fileService;
+        private CcdLevel _currentLevel;
 
         public Repository(IFileService fileService)
         {
             _logger.Trace("Creating repository");
             _fileService = fileService;
 
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             var content = _fileService.OpenAsString(FileName);
 
             if (string.IsNullOrEmpty(content))
@@ -38,48 +44,16 @@ namespace CcdAddIn.UI.Data
                 _logger.Fatal("Unable to load repository");
                 throw new InvalidOperationException("Wrong content in repository.", e);
             }
-        }
 
-        public void SaveChanges()
-        {
-            var history = new XElement("History");
+            var lastRetrospective = Retrospectives.LastOrDefault();
 
-            _logger.Trace("Creating retrospectives");
-            foreach (var retrospective in Retrospectives)
+            if (lastRetrospective == null)
             {
-                var retrospectiveElement = new XElement("Retrospective",
-                                                        new XAttribute("Level", retrospective.Level));
-
-                foreach (var principle in retrospective.Principles)
-                {
-                    retrospectiveElement.Add(new XElement("Item",
-                                                          new XAttribute("Name", principle.Name),
-                                                          new XAttribute("Value", principle.EvaluationValue)));
-                    _logger.Trace("Converted principle {0} with value {1} to xml: {2}",
-                                  principle.Name,
-                                  principle.EvaluationValue,
-                                  retrospectiveElement.LastNode.ToString());
-                }
-
-                foreach (var practice in retrospective.Practices)
-                {
-                    retrospectiveElement.Add(new XElement("Item",
-                                                          new XAttribute("Name", practice.Name),
-                                                          new XAttribute("Value", practice.EvaluationValue)));
-                    _logger.Trace("Converted practice {0} with value {1} to xml: {2}",
-                                  practice.Name,
-                                  practice.EvaluationValue,
-                                  retrospectiveElement.LastNode.ToString());
-                }
-
-                history.Add(retrospectiveElement);
+                _currentLevel = new CcdLevel(Level.Black);
+                Retrospectives.Add(_currentLevel);
             }
-
-            var repository = new XDocument(new XElement("Repository", history));
-            var repositoryAsXml = repository.ToString();
-
-            _logger.Trace("Writing {0} as repository to {1}", repositoryAsXml, FileName);
-            _fileService.WriteTo(repositoryAsXml, FileName);
+            else
+                _currentLevel = new CcdLevel(Retrospectives.LastOrDefault().Level);
         }
 
         private void ReadOutRetrospectives(XDocument document)
@@ -142,6 +116,53 @@ namespace CcdAddIn.UI.Data
                 _logger.Trace("Found all elements, adding retrospective");
                 Retrospectives.Add(ccdLevel);
             }
+        }
+
+        public CcdLevel CurrentLevel
+        {
+            get { return _currentLevel; }
+        }
+
+        public void SaveChanges()
+        {
+            var history = new XElement("History");
+
+            _logger.Trace("Creating retrospectives");
+            foreach (var retrospective in Retrospectives)
+            {
+                var retrospectiveElement = new XElement("Retrospective",
+                                                        new XAttribute("Level", retrospective.Level));
+
+                foreach (var principle in retrospective.Principles)
+                {
+                    retrospectiveElement.Add(new XElement("Item",
+                                                          new XAttribute("Name", principle.Name),
+                                                          new XAttribute("Value", principle.EvaluationValue)));
+                    _logger.Trace("Converted principle {0} with value {1} to xml: {2}",
+                                  principle.Name,
+                                  principle.EvaluationValue,
+                                  retrospectiveElement.LastNode.ToString());
+                }
+
+                foreach (var practice in retrospective.Practices)
+                {
+                    retrospectiveElement.Add(new XElement("Item",
+                                                          new XAttribute("Name", practice.Name),
+                                                          new XAttribute("Value", practice.EvaluationValue)));
+                    _logger.Trace("Converted practice {0} with value {1} to xml: {2}",
+                                  practice.Name,
+                                  practice.EvaluationValue,
+                                  retrospectiveElement.LastNode.ToString());
+                }
+
+                history.Add(retrospectiveElement);
+            }
+
+            var repository = new XDocument(new XElement("Repository", history));
+            var repositoryAsXml = repository.ToString();
+
+            _logger.Trace("Writing {0} as repository to {1}", repositoryAsXml, FileName);
+            _fileService.WriteTo(repositoryAsXml, FileName);
         }
     }
 }

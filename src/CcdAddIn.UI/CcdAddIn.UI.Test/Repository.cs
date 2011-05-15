@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Data;
@@ -33,7 +34,8 @@ namespace CcdAddIn.UI.Test
 
         Because of = () => { };
 
-        It should_return_an_empty_list = () => Subject.Retrospectives.ShouldBeEmpty();
+        It should_begin_at_the_black_level = () => Subject.CurrentLevel.Level.ShouldEqual(Level.Black);
+        It should_only_have_the_current_level_in_the_retrospectives = () => Subject.Retrospectives.Last().ShouldEqual(Subject.CurrentLevel);
     }
 
     public class Given_a_file_with_empty_history_When_querying_the_repository : WithSubject<Repository>
@@ -49,7 +51,8 @@ namespace CcdAddIn.UI.Test
 
         Because of = () => { };
 
-        It should_return_an_empty_list = () => Subject.Retrospectives.ShouldBeEmpty();
+        It should_begin_at_the_black_level = () => Subject.CurrentLevel.Level.ShouldEqual(Level.Black);
+        It should_only_have_the_current_level_in_the_retrospectives = () => Subject.Retrospectives.Last().ShouldEqual(Subject.CurrentLevel);
     }
 
     public class Given_a_file_with_one_retrospective_When_querying_the_repository : WithSubject<Repository>
@@ -89,6 +92,7 @@ namespace CcdAddIn.UI.Test
 
             Subject.Retrospectives.ShouldContainOnly(expected);
         };
+        It should_begin_at_the_red_level = () => Subject.CurrentLevel.Level.ShouldEqual(Level.Red);
     }
 
     public class Given_a_file_with_two_retrospectives_When_querying_the_repository : WithSubject<Repository>
@@ -149,26 +153,7 @@ namespace CcdAddIn.UI.Test
 
             Subject.Retrospectives.ShouldContainOnly(expected);
         };
-    }
-
-    public class Given_no_retrospectives_When_saving_changes : WithSubject<Repository>
-    {
-        private static XDocument _emptyHistory = new XDocument(
-            new XElement("Repository",
-                         new XElement("History")));
-
-        Establish context = () =>
-        {
-            The<IFileService>()
-                .WhenToldTo(x => x.OpenAsString("repository"))
-                .Return(_emptyHistory.ToString());
-        };
-
-        Because of = () => Subject.SaveChanges();
-
-        It should_save_just_the_frame = () =>
-            The<IFileService>()
-                .WasToldTo(x => x.WriteTo(_emptyHistory.ToString(), "repository"));
+        It should_begin_at_the_red_level = () => Subject.CurrentLevel.Level.ShouldEqual(Level.Red);
     }
 
     public class Given_a_single_retrospective_When_saving_changes : WithSubject<Repository>
@@ -192,6 +177,7 @@ namespace CcdAddIn.UI.Test
             foreach (var practice in level.Practices)
                 practice.EvaluationValue = 60;
 
+            Subject.Retrospectives.Clear();
             Subject.Retrospectives.Add(level);
             Subject.SaveChanges();
         };

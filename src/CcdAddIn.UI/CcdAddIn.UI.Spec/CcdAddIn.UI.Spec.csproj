@@ -64,6 +64,12 @@
       <DependentUpon>CompleteLevels.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Restart.cs" />
+    <Compile Include="Restart.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Restart.feature</DependentUpon>
+    </Compile>
     <Compile Include="Retrospective.cs" />
     <Compile Include="Retrospective.feature.cs">
       <AutoGen>True</AutoGen>
@@ -81,6 +87,10 @@
       <LastGenOutput>CompleteLevels.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Restart.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Restart.feature.cs</LastGenOutput>
+    </None>
     <None Include="Retrospective.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Retrospective.feature.cs</LastGenOutput>

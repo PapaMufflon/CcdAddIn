@@ -16,11 +16,29 @@ namespace CcdAddIn.UI.Spec
         private Application _application;
         private Window _mainWindow;
 
+        [BeforeScenario]
+        public void BeforeScenario()
+        {
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save");
+
+            if (System.IO.File.Exists(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository"))
+                System.IO.File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save");
+
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+        }
+
         [AfterScenario(null)]
         public void AfterScenario()
         {
             if (_application != null)
                 _application.Dispose();
+
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+
+            if (System.IO.File.Exists(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save"))
+                System.IO.File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save");
         }
 
         [Given(@"I am at a non-black level")]
@@ -116,12 +134,11 @@ namespace CcdAddIn.UI.Spec
         [Given(@"I finish my retrospective with a suggestion to advance to the next level")]
         public void GivenIFinishMyRetrospectiveWithASuggestionToAdvanceToTheNextLevel()
         {
-            File.Delete(@"repository");
-            File.Copy(@"..\..\repository21perfectRetrospectives", "repository");
+            File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+            File.Copy(@"..\..\repository21perfectRetrospectives", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
 
             _application = Application.Launch(@"..\..\CcdAddIn.TestHarness\bin\Debug\CcdAddIn.TestHarness.exe");
             _mainWindow = _application.GetWindow("MainWindow");
-            _mainWindow.Get<Button>("goToRedLevelButton").Click();
             _mainWindow.Get<Button>("retrospectiveButton").Click();
             _mainWindow.Get<Button>("retrospectiveDoneButton").Click();
 
