@@ -14,11 +14,29 @@ namespace CcdAddIn.UI.Spec
         private Application _application;
         private Window _mainWindow;
 
+        [BeforeScenario]
+        public void BeforeScenario()
+        {
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save");
+
+            if (System.IO.File.Exists(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository"))
+                System.IO.File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save");
+
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+        }
+
         [AfterScenario(null)]
         public void AfterScenario()
         {
             if (_application != null)
                 _application.Dispose();
+
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+
+            if (System.IO.File.Exists(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save"))
+                System.IO.File.Copy(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save", @"..\..\CcdAddIn.TestHarness\bin\Debug\repository");
+
+            System.IO.File.Delete(@"..\..\CcdAddIn.TestHarness\bin\Debug\repository_save");
         }
 
         [Given(@"I start at the red level")]

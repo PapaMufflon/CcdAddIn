@@ -11,6 +11,7 @@ namespace CcdAddIn.UI
     {
         public const string AdviceView = "AdviceView";
         public const string CcdLevelsView = "CcdLevelsView";
+        public const string BlackLevelView = "BlackLevelView";
         public const string WhiteLevelView = "WhiteLevelView";
 
         private static Logger _logger = LogManager.GetCurrentClassLogger();
@@ -24,8 +25,8 @@ namespace CcdAddIn.UI
             _currentLevel = currentLevel;
 
             eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
-            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(o => NavigateToCcdLevelsView(null, null));
-            currentLevel.Advanced += NavigateToCcdLevelsView;
+            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(o => NavigateToCorrectCcdLevelsView());
+            currentLevel.Advanced += (s, e) => NavigateToCorrectCcdLevelsView();
         }
 
         private void NavigateToShowAdviceView(object obj)
@@ -34,14 +35,23 @@ namespace CcdAddIn.UI
             _regionManager.RequestNavigate("MainRegion", new Uri(AdviceView, UriKind.Relative));
         }
 
-        private void NavigateToCcdLevelsView(object sender, EventArgs e)
+        private void NavigateToCorrectCcdLevelsView()
         {
             _logger.Trace("Navigate to CcdLevelsView of level {0}", _currentLevel);
-            var view = _currentLevel.Level != Level.White ?
-                       new Uri(CcdLevelsView, UriKind.Relative) :
-                       new Uri(WhiteLevelView, UriKind.Relative);
+            _regionManager.RequestNavigate("MainRegion", GetCurrentCcdLevelsUri());
+        }
 
-            _regionManager.RequestNavigate("MainRegion", view);
+        public Uri GetCurrentCcdLevelsUri()
+        {
+            var viewName = CcdLevelsView;
+
+            if (_currentLevel.Level == Level.Black)
+                viewName = BlackLevelView;
+            else if (_currentLevel.Level == Level.White)
+                viewName = WhiteLevelView;
+            
+            _logger.Trace("Suitable URI to level {0} is {1}" + _currentLevel.Level, viewName);
+            return new Uri(viewName, UriKind.Relative);
         }
     }
 }

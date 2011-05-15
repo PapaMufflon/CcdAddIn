@@ -92,6 +92,7 @@
     <Compile Include="Data\FileService.cs" />
     <Compile Include="Data\IFileService.cs" />
     <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\PersistService.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
