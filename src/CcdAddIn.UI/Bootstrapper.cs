@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Data;
 using CcdAddIn.UI.Views;
 using Microsoft.Practices.Prism.Regions;
@@ -29,10 +28,13 @@ namespace CcdAddIn.UI
         private void RegisterTypes()
         {
             _logger.Trace("Registering types");
-            Container.RegisterInstance(new CcdLevel(Level.Black), new ContainerControlledLifetimeManager());
-            Container.RegisterInstance(Container.Resolve<Navigator>(), new ContainerControlledLifetimeManager());
-            Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
+
             Container.RegisterType<IFileService, FileService>();
+            Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
+            var repository = Container.Resolve<IRepository>();
+            Container.RegisterInstance(repository.CurrentLevel, new ContainerControlledLifetimeManager());
+
+            Container.RegisterInstance(Container.Resolve<Navigator>(), new ContainerControlledLifetimeManager());
             Container.RegisterInstance(Container.Resolve<PersistService>(), new ContainerControlledLifetimeManager());
         }
 
@@ -41,6 +43,7 @@ namespace CcdAddIn.UI
             _logger.Trace("Registering views");
             Container.RegisterInstance<object>(Navigator.CcdLevelsView, Container.Resolve<CcdLevelsView>());
             Container.RegisterInstance<object>(Navigator.AdviceView, Container.Resolve<AdviceView>());
+            Container.RegisterInstance<object>(Navigator.BlackLevelView, Container.Resolve<BlackLevelView>());
             Container.RegisterInstance<object>(Navigator.WhiteLevelView, Container.Resolve<WhiteLevelView>());
         }
 
@@ -49,7 +52,8 @@ namespace CcdAddIn.UI
             _logger.Trace("Mapping regions");
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("HeaderRegion", typeof(HeaderView));
-            regionManager.RegisterViewWithRegion("MainRegion", typeof(BlackLevelView));
+            regionManager.RegisterViewWithRegion("MainRegion", () =>
+                Container.Resolve<object>(Container.Resolve<Navigator>().GetCurrentCcdLevelsUri().OriginalString));
         }
     }
 }
