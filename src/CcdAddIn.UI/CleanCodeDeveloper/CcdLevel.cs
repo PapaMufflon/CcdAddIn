@@ -70,5 +70,23 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
             }
         }
 
+        public CcdLevel Clone()
+        {
+            var clone = new CcdLevel(Level);
+
+            for (int index = 0; index < Principles.Count; index++)
+            {
+                var principle = Principles[index];
+                clone.Principles[index].EvaluationValue = principle.EvaluationValue;
+            }
+
+            for (int index = 0; index < Practices.Count; index++)
+            {
+                var practice = Practices[index];
+                clone.Practices[index].EvaluationValue = practice.EvaluationValue;
+            }
+
+            return clone;
+        }
     }
 }

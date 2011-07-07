@@ -3,11 +3,11 @@ using NLog;
 
 namespace CcdAddIn.UI.CleanCodeDeveloper
 {
-    public class RalfWestphal
+    public class RalfWestphal : IRalfWestphal
     {
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
-        public static bool ShouldAdvance(List<CcdLevel> retrospectives)
+        public bool ShouldAdvance(List<CcdLevel> retrospectives)
         {
             var advice = true;
 

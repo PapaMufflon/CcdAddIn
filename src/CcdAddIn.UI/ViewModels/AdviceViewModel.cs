@@ -4,28 +4,41 @@ using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.Data;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Regions;
 using NLog;
 
 namespace CcdAddIn.UI.ViewModels
 {
-    public class AdviceViewModel
+    public class AdviceViewModel : INavigationAware
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
+        private readonly IRepository _repository;
+        private readonly IRalfWestphal _ralfWestphal;
         private readonly CcdLevel _currentLevel;
-        private EndRetrospectiveEvent _endRetrospectiveEvent;
+        private AdviceGivenEvent _adviceGivenEvent;
         private string _advice;
         private bool _canAdvance;
 
-        public AdviceViewModel(IEventAggregator eventAggregator, IRepository repository, CcdLevel currentLevel)
+        public AdviceViewModel(IEventAggregator eventAggregator,
+                               IRepository repository,
+                               IRalfWestphal ralfWestphal,
+                               CcdLevel currentLevel)
         {
+            _repository = repository;
+            _ralfWestphal = ralfWestphal;
             _currentLevel = currentLevel;
 
             _logger.Trace("Wiring events");
-            _endRetrospectiveEvent = eventAggregator.GetEvent<EndRetrospectiveEvent>();
+            _adviceGivenEvent = eventAggregator.GetEvent<AdviceGivenEvent>();
 
+            QueryRalfWestphal();
+        }
+
+        private void QueryRalfWestphal()
+        {
             _logger.Trace("Querying Ralf Westphal - should advance?");
-            var shouldAdvance = RalfWestphal.ShouldAdvance(repository.Retrospectives);
+            var shouldAdvance = _ralfWestphal.ShouldAdvance(_repository.Retrospectives);
 
             _advice = shouldAdvance ? Resources.Resource.PositiveAdvice : Resources.Resource.NegativeAdvice;
             _canAdvance = shouldAdvance;
@@ -49,7 +62,7 @@ namespace CcdAddIn.UI.ViewModels
             if (canAdvance)
                 _currentLevel.Advance();
 
-            _endRetrospectiveEvent.Publish(null);
+            _adviceGivenEvent.Publish(null);
         }
 
         public ICommand DenyAdviceCommand
@@ -80,6 +93,21 @@ namespace CcdAddIn.UI.ViewModels
             {
                 _canAdvance = value;
             }
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            QueryRalfWestphal();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return navigationContext.Uri.OriginalString == Navigator.AdviceView;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            // nothing to do
         }
     }
 }

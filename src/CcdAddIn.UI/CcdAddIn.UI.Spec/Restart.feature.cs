@@ -30,8 +30,8 @@ namespace CcdAddIn.UI.Spec
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Restart", "In order to keep progress of my path to enlightenment\nAs a clean code developer\nI" +
-                    " want to continue from where I stopped last time", GenerationTargetLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Restart", "In order to keep progress of my path to enlightenment\r\nAs a clean code developer\r" +
+                    "\nI want to continue from where I stopped last time", GenerationTargetLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -61,11 +61,34 @@ namespace CcdAddIn.UI.Spec
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("I am at the red level");
+  testRunner.Given("I am at the red level");
 #line 8
- testRunner.When("restarting the application");
+  testRunner.When("restarting the application");
 #line 9
- testRunner.Then("I am still at the red level");
+  testRunner.Then("I am still at the red level");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Keep past retrospectives")]
+        public virtual void KeepPastRetrospectives()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Keep past retrospectives", ((string[])(null)));
+#line 11
+this.ScenarioSetup(scenarioInfo);
+#line 12
+  testRunner.Given("I am at the red level");
+#line 13
+  testRunner.And("I have done nearly enough retrospectives to advance a level");
+#line 14
+  testRunner.And("doing the next to last retrospective for advancing a level");
+#line 15
+  testRunner.When("restarting the application");
+#line 16
+  testRunner.And("doing the last retrospective for advancing a level");
+#line 17
+  testRunner.Then("I should get an advice to advance to the next level");
 #line hidden
             testRunner.CollectScenarioErrors();
         }

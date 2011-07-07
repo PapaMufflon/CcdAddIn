@@ -25,7 +25,7 @@ namespace CcdAddIn.UI
             _currentLevel = currentLevel;
 
             eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
-            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(o => NavigateToCorrectCcdLevelsView());
+            eventAggregator.GetEvent<AdviceGivenEvent>().Subscribe(o => NavigateToCorrectCcdLevelsView());
             currentLevel.Advanced += (s, e) => NavigateToCorrectCcdLevelsView();
         }
 

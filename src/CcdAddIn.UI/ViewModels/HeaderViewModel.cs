@@ -21,7 +21,7 @@ namespace CcdAddIn.UI.ViewModels
             _logger.Trace("Wiring events");
             _beginRetrospectiveEvent = eventAggregator.GetEvent<BeginRetrospectiveEvent>();
 
-            eventAggregator.GetEvent<EndRetrospectiveEvent>().Subscribe(_ => DeceideIfRetrospectiveIsAvailable(currentLevel));
+            eventAggregator.GetEvent<AdviceGivenEvent>().Subscribe(_ => DeceideIfRetrospectiveIsAvailable(currentLevel));
             currentLevel.Advanced += (s, e) => DeceideIfRetrospectiveIsAvailable(currentLevel);
 
             DeceideIfRetrospectiveIsAvailable(currentLevel);

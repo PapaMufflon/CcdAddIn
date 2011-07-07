@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Data;
 using CcdAddIn.UI.Views;
 using Microsoft.Practices.Prism.Regions;
@@ -31,18 +32,23 @@ namespace CcdAddIn.UI
 
             Container.RegisterType<IFileService, FileService>();
             Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
-            var repository = Container.Resolve<IRepository>();
-            Container.RegisterInstance(repository.CurrentLevel, new ContainerControlledLifetimeManager());
+
+            var repository = Container.Resolve<IRepository>() as Repository;
+            if (repository != null)
+                Container.RegisterInstance(repository.CurrentLevel, new ContainerControlledLifetimeManager());
+            else
+                _logger.Fatal("Cannot resolve repository.");
 
             Container.RegisterInstance(Container.Resolve<Navigator>(), new ContainerControlledLifetimeManager());
             Container.RegisterInstance(Container.Resolve<PersistService>(), new ContainerControlledLifetimeManager());
+            Container.RegisterInstance<IRalfWestphal>(Container.Resolve<RalfWestphal>(), new ContainerControlledLifetimeManager());
         }
 
         private void RegisterViews()
         {
             _logger.Trace("Registering views");
             Container.RegisterInstance<object>(Navigator.CcdLevelsView, Container.Resolve<CcdLevelsView>());
-            Container.RegisterInstance<object>(Navigator.AdviceView, Container.Resolve<AdviceView>());
+            Container.RegisterType<object, AdviceView>(Navigator.AdviceView);
             Container.RegisterInstance<object>(Navigator.BlackLevelView, Container.Resolve<BlackLevelView>());
             Container.RegisterInstance<object>(Navigator.WhiteLevelView, Container.Resolve<WhiteLevelView>());
         }

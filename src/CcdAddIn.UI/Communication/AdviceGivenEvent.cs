@@ -2,7 +2,7 @@
 
 namespace CcdAddIn.UI.Communication
 {
-    public class EndRetrospectiveEvent : CompositePresentationEvent<object>
+    public class AdviceGivenEvent : CompositePresentationEvent<object>
     {
     }
 }

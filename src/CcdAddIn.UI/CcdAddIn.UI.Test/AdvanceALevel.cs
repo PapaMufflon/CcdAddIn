@@ -1,6 +1,5 @@
 ﻿using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
-using CcdAddIn.UI.Data;
 using CcdAddIn.UI.ViewModels;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -23,20 +22,6 @@ namespace CcdAddIn.UI.Test
         It should_raise_an_advanced_event = () => _raised.ShouldBeTrue();
     }
 
-    public class Given_a_black_level_When_advancing_to_the_next_level2 : WithSubject<PersistService>
-    {
-        private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
-
-        Establish context = () =>
-        {
-            Subject = new PersistService(The<IRepository>(), _currentLevel);
-        };
-
-        Because of = () => _currentLevel.Advance();
-
-        It should_persist_the_progress = () => The<IRepository>().WasToldTo(x => x.SaveChanges());
-    }
-
     public class Given_a_red_level_When_advancing_to_the_next_level : WithSubject<CcdLevelsViewModel>
     {
         private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
@@ -50,8 +35,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             Subject = new CcdLevelsViewModel(The<IEventAggregator>(), _currentLevel);
             Subject.PropertyChanged += (s, e) =>

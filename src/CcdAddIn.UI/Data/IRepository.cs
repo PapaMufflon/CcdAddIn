@@ -6,7 +6,7 @@ namespace CcdAddIn.UI.Data
     public interface IRepository
     {
         List<CcdLevel> Retrospectives { get; set; }
-        CcdLevel CurrentLevel { get; }
+        //CcdLevel CurrentLevel { get; }
 
         void SaveChanges();
     }

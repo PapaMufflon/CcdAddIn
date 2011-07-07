@@ -45,15 +45,12 @@ namespace CcdAddIn.UI.Data
                 throw new InvalidOperationException("Wrong content in repository.", e);
             }
 
-            var lastRetrospective = Retrospectives.LastOrDefault();
+            var lastRetrospective = Retrospectives.FirstOrDefault();
 
             if (lastRetrospective == null)
-            {
                 _currentLevel = new CcdLevel(Level.Black);
-                Retrospectives.Add(_currentLevel);
-            }
             else
-                _currentLevel = new CcdLevel(Retrospectives.LastOrDefault().Level);
+                _currentLevel = lastRetrospective.Clone();
         }
 
         private void ReadOutRetrospectives(XDocument document)
@@ -128,7 +125,7 @@ namespace CcdAddIn.UI.Data
             var history = new XElement("History");
 
             _logger.Trace("Creating retrospectives");
-            foreach (var retrospective in Retrospectives)
+            foreach (var retrospective in (new List<CcdLevel> { _currentLevel }).Concat(Retrospectives))
             {
                 var retrospectiveElement = new XElement("Retrospective",
                                                         new XAttribute("Level", retrospective.Level));
@@ -165,4 +162,4 @@ namespace CcdAddIn.UI.Data
             _fileService.WriteTo(repositoryAsXml, FileName);
         }
     }
-}
+}                       

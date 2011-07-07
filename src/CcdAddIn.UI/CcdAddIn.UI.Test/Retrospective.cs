@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
+using CcdAddIn.UI.Data;
 using CcdAddIn.UI.ViewModels;
 using Machine.Fakes;
 using Machine.Specifications;
@@ -21,8 +22,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
         };
@@ -40,8 +41,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             Subject = new HeaderViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
         };
@@ -65,8 +66,8 @@ namespace CcdAddIn.UI.Test
                 .Return(beginRetrospectiveEvent);
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             Subject = new HeaderViewModel(The<IEventAggregator>(), new CcdLevel(Level.Black));
         };
@@ -79,7 +80,7 @@ namespace CcdAddIn.UI.Test
     public class Given_a_retrospective_in_progress_When_advancing_to_the_white_level : WithSubject<HeaderViewModel>
     {
         private static CcdLevel _currentLevel;
-        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
+        private static AdviceGivenEvent _adviceGivenEvent = new AdviceGivenEvent();
 
         Establish context = () =>
         {
@@ -88,8 +89,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(_endRetrospectiveEvent);
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(_adviceGivenEvent);
 
             _currentLevel = new CcdLevel(Level.Blue);
 
@@ -101,7 +102,7 @@ namespace CcdAddIn.UI.Test
             Subject.BeginRetrospectiveCommand.Execute(null);
 
             _currentLevel.Advance();
-            _endRetrospectiveEvent.Publish(null);
+            _adviceGivenEvent.Publish(null);
         };
 
         It should_not_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeFalse();
@@ -110,7 +111,7 @@ namespace CcdAddIn.UI.Test
     public class Given_a_retrospective_in_progress_When_advancing_a_level_after_ending_the_retrospective : WithSubject<HeaderViewModel>
     {
         private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
-        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
+        private static AdviceGivenEvent _adviceGivenEvent = new AdviceGivenEvent();
 
         Establish context = () =>
         {
@@ -119,8 +120,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(_endRetrospectiveEvent);
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(_adviceGivenEvent);
 
             Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
         };
@@ -130,7 +131,7 @@ namespace CcdAddIn.UI.Test
             Subject.BeginRetrospectiveCommand.Execute(null);
             
             _currentLevel.Advance();
-            _endRetrospectiveEvent.Publish(null);
+            _adviceGivenEvent.Publish(null);
         };
 
         It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
@@ -138,7 +139,7 @@ namespace CcdAddIn.UI.Test
 
     public class Given_a_retrospective_in_progress_When_not_advancing_a_level_after_ending_the_retrospective : WithSubject<HeaderViewModel>
     {
-        private static EndRetrospectiveEvent _endRetrospectiveEvent = new EndRetrospectiveEvent();
+        private static AdviceGivenEvent _adviceGivenEvent = new AdviceGivenEvent();
         private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
 
         Establish context = () =>
@@ -148,8 +149,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(_endRetrospectiveEvent);
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(_adviceGivenEvent);
 
             Subject = new HeaderViewModel(The<IEventAggregator>(), _currentLevel);
         };
@@ -158,7 +159,7 @@ namespace CcdAddIn.UI.Test
         {
             Subject.BeginRetrospectiveCommand.Execute(null);
 
-            _endRetrospectiveEvent.Publish(null);
+            _adviceGivenEvent.Publish(null);
         };
 
         It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
@@ -173,8 +174,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
         };
@@ -197,8 +198,8 @@ namespace CcdAddIn.UI.Test
                 .Return(_beginRetrospectiveEvent);
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
         };
@@ -219,8 +220,8 @@ namespace CcdAddIn.UI.Test
                 .Return(new BeginRetrospectiveEvent());
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
             var showAdviceEvent = new ShowAdviceEvent();
             showAdviceEvent.Subscribe(x => _raised = true);
@@ -261,5 +262,23 @@ namespace CcdAddIn.UI.Test
                 _itemNames[key].ShouldContainOnly(_items[key].Select(x => x.Name));
             }
         };
+    }
+
+    public class Given_a_retrospective_in_progress_When_finishing_the_retrospective2 : WithSubject<PersistService>
+    {
+        private static AdviceGivenEvent _adviceGivenEvent = new AdviceGivenEvent();
+
+        Establish context = () =>
+        {
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(_adviceGivenEvent);
+
+            Subject = new PersistService(The<IRepository>(), The<IEventAggregator>(), new CcdLevel(Level.Black));
+        };
+
+        Because of = () => _adviceGivenEvent.Publish(null);
+
+        It should_persist_the_progress = () => The<IRepository>().WasToldTo(x => x.SaveChanges());
     }
 }

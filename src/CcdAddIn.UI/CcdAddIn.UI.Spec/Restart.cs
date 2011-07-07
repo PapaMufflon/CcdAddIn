@@ -3,6 +3,7 @@ using NUnit.Framework;
 using TechTalk.SpecFlow;
 using White.Core;
 using White.Core.UIItems;
+using White.Core.UIItems.Finders;
 using White.Core.UIItems.ListBoxItems;
 using White.Core.UIItems.WindowItems;
 
@@ -63,6 +64,35 @@ namespace CcdAddIn.UI.Spec
         {
             var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
             Assert.That(firstPrinciple.Text, Is.StringContaining(Resource.DoNotRepeatYourself));
+        }
+
+        [Given(@"I have done nearly enough retrospectives to advance a level")]
+        public void GivenIHaveDoneNearlyEnoughRetrospectivesToAdvanceALevel()
+        {
+            _mainWindow.Get<Button>("retrospectiveButton").Click();
+            var firstPrinciple = _mainWindow.Get<ListBox>("principlesListView").Items[0];
+            var slider = firstPrinciple.GetElement(SearchCriteria.ByControlType(typeof(WPFSlider)));
+            
+            // how to slide slider to value 100?
+            ScenarioContext.Current.Pending();
+        }
+
+        [Given(@"doing the next to last retrospective for advancing a level")]
+        public void GivenDoingTheNextToLastRetrospectiveForAdvancingALevel()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"doing the last retrospective for advancing a level")]
+        public void WhenDoingTheLastRetrospectiveForAdvancingALevel()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [Then(@"I should get an advice to advance to the next level")]
+        public void ThenIShouldGetAnAdviceToAdvanceToTheNextLevel()
+        {
+            ScenarioContext.Current.Pending();
         }
     }
 }

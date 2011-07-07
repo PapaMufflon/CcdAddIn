@@ -42,7 +42,7 @@
                 <Slider Visibility="{Binding DataContext.EvaluationVisible,
                                              RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}},
                                              Converter={StaticResource BooleanToVisibilityConverter}}"
-                        Value="{Binding RetrospectiveValue}"
+                        Value="{Binding EvaluationValue}"
                         Minimum="0" Maximum="100"
                         Grid.Column="1"
                         Width="90"/>

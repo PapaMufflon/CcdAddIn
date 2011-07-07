@@ -22,10 +22,26 @@ namespace CcdAddIn.UI.Test
                 new CcdLevel(Level.Red)
             };
 
-            _shouldAdvance = RalfWestphal.ShouldAdvance(retrospectives);
+            _shouldAdvance = Subject.ShouldAdvance(retrospectives);
         };
 
         It should_be_false = () => _shouldAdvance.ShouldBeFalse();
+    }
+
+    public class Given_a_wish_to_take_an_advice_When_navigating_to_it : WithSubject<AdviceViewModel>
+    {
+        Establish context = () =>
+        {
+            The<IEventAggregator>()
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
+
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), The<IRalfWestphal>(), new CcdLevel(Level.Black));
+        };
+
+        Because of = () => Subject.OnNavigatedTo(null);
+
+        It should_requery_Ralf_Westphal = () => The<IRalfWestphal>().WasToldTo(x => x.ShouldAdvance(null));
     }
 
     public class Given_an_negative_advice_When_taking_it : WithSubject<AdviceViewModel>
@@ -35,16 +51,16 @@ namespace CcdAddIn.UI.Test
 
         Establish context = () =>
         {
-            var endRetrospectiveEvent = new EndRetrospectiveEvent();
-            endRetrospectiveEvent.Subscribe(x => _raised = true);
+            var adviceGivenEvent = new AdviceGivenEvent();
+            adviceGivenEvent.Subscribe(x => _raised = true);
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(endRetrospectiveEvent);
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(adviceGivenEvent);
 
             The<IRepository>().Retrospectives = new List<CcdLevel>();
 
-            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), _currentLevel);
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), The<IRalfWestphal>(), _currentLevel);
         };
 
         Because of = () => Subject.TakeAdviceCommand.Execute(null);
@@ -76,7 +92,7 @@ namespace CcdAddIn.UI.Test
                 retrospectives.Add(level);
             }
 
-            _shouldAdvance = RalfWestphal.ShouldAdvance(retrospectives);
+            _shouldAdvance = Subject.ShouldAdvance(retrospectives);
         };
 
         It should_be_true = () => _shouldAdvance.ShouldBeTrue();
@@ -86,24 +102,11 @@ namespace CcdAddIn.UI.Test
     {
         Establish context = () =>
         {
-            var retrospectives = new List<CcdLevel>();
+            The<IRalfWestphal>()
+                .WhenToldTo(x => x.ShouldAdvance(null))
+                .Return(true);
 
-            for (int i = 0; i < 21; i++)
-            {
-                var level = new CcdLevel(Level.Red);
-
-                foreach (var practice in level.Practices)
-                    practice.EvaluationValue = 90;
-
-                foreach (var principle in level.Principles)
-                    principle.EvaluationValue = 90;
-
-                retrospectives.Add(level);
-            }
-
-            The<IRepository>().Retrospectives = retrospectives;
-
-            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), new CcdLevel(Level.Red));
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), The<IRalfWestphal>(), new CcdLevel(Level.Red));
         };
 
         Because of = () => { };
@@ -118,28 +121,15 @@ namespace CcdAddIn.UI.Test
 
         Establish context = () =>
         {
-            var retrospectives = new List<CcdLevel>();
-
-            for (int i = 0; i < 21; i++)
-            {
-                var level = new CcdLevel(Level.Red);
-
-                foreach (var practice in level.Practices)
-                    practice.EvaluationValue = 90;
-
-                foreach (var principle in level.Principles)
-                    principle.EvaluationValue = 90;
-
-                retrospectives.Add(level);
-            }
-
-            The<IRepository>().Retrospectives = retrospectives;
+            The<IRalfWestphal>()
+                .WhenToldTo(x => x.ShouldAdvance(null))
+                .Return(true);
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
-            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), _currentLevel);
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), The<IRalfWestphal>(), _currentLevel);
         };
 
         Because of = () => Subject.TakeAdviceCommand.Execute(null);
@@ -171,10 +161,10 @@ namespace CcdAddIn.UI.Test
             The<IRepository>().Retrospectives = retrospectives;
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<EndRetrospectiveEvent>())
-                .Return(new EndRetrospectiveEvent());
+                .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
+                .Return(new AdviceGivenEvent());
 
-            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), _currentLevel);
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), The<IRalfWestphal>(), _currentLevel);
         };
 
         Because of = () => Subject.DenyAdviceCommand.Execute(null);
@@ -203,7 +193,7 @@ namespace CcdAddIn.UI.Test
 
             The<IRepository>().Retrospectives = retrospectives;
 
-            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), new CcdLevel(Level.Red));
+            Subject = new AdviceViewModel(The<IEventAggregator>(), The<IRepository>(), The<IRalfWestphal>(), new CcdLevel(Level.Red));
         };
 
         Because of = () => { };
