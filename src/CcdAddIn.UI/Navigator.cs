@@ -24,7 +24,7 @@ namespace CcdAddIn.UI
             _regionManager = regionManager;
             _currentLevel = currentLevel;
 
-            eventAggregator.GetEvent<ShowAdviceEvent>().Subscribe(NavigateToShowAdviceView);
+            eventAggregator.GetEvent<RetrospectiveDoneEvent>().Subscribe(NavigateToShowAdviceView);
             eventAggregator.GetEvent<AdviceGivenEvent>().Subscribe(o => NavigateToCorrectCcdLevelsView());
             currentLevel.Advanced += (s, e) => NavigateToCorrectCcdLevelsView();
         }

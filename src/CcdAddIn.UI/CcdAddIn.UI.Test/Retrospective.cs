@@ -223,12 +223,12 @@ namespace CcdAddIn.UI.Test
                 .WhenToldTo(x => x.GetEvent<AdviceGivenEvent>())
                 .Return(new AdviceGivenEvent());
 
-            var showAdviceEvent = new ShowAdviceEvent();
-            showAdviceEvent.Subscribe(x => _raised = true);
+            var retrospectiveDoneEvent = new RetrospectiveDoneEvent();
+            retrospectiveDoneEvent.Subscribe(x => _raised = true);
 
             The<IEventAggregator>()
-                .WhenToldTo(x => x.GetEvent<ShowAdviceEvent>())
-                .Return(showAdviceEvent);
+                .WhenToldTo(x => x.GetEvent<RetrospectiveDoneEvent>())
+                .Return(retrospectiveDoneEvent);
 
             Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
         };

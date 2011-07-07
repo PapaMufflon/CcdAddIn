@@ -16,7 +16,7 @@ namespace CcdAddIn.UI.ViewModels
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         private CcdLevel _currentLevel;
-        private ShowAdviceEvent _showAdviceEvent;
+        private RetrospectiveDoneEvent _retrospectiveDoneEvent;
 
         public CcdLevelsViewModel(IEventAggregator eventAggregator, CcdLevel currentLevel)
         {
@@ -30,7 +30,7 @@ namespace CcdAddIn.UI.ViewModels
             };
 
             _logger.Trace("Wiring events");
-            _showAdviceEvent = eventAggregator.GetEvent<ShowAdviceEvent>();
+            _retrospectiveDoneEvent = eventAggregator.GetEvent<RetrospectiveDoneEvent>();
             
             eventAggregator.GetEvent<BeginRetrospectiveEvent>().Subscribe(x =>
             {
@@ -72,7 +72,7 @@ namespace CcdAddIn.UI.ViewModels
                 return new DelegateCommand(() =>
                 {
                     _logger.Trace("We're done with the retrospective. Let's show the advice.");
-                    _showAdviceEvent.Publish(null);
+                    _retrospectiveDoneEvent.Publish(null);
                     EvaluationVisible = false;
                 });
             }
