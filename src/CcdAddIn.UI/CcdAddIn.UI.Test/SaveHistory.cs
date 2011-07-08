@@ -86,6 +86,78 @@ namespace CcdAddIn.UI.Test
             };
         }
 
+        public class Given_an_empty_history_When_saving_changes_twice : WithSubject<Repository>
+        {
+            Establish context = () =>
+            {
+                var emptyHistory = "<Repository><History /></Repository>";
+
+                The<IFileService>()
+                    .WhenToldTo(x => x.OpenAsString("repository"))
+                    .Return(emptyHistory);
+            };
+
+            private Because of = () =>
+            {
+                Subject.SaveChanges();
+                Subject.SaveChanges();
+            };
+
+            It should_save_two_retrospectives = () =>
+            {
+                var twoRetrospectives = "<Repository><History><Retrospective Level=\"Black\" />" +
+                                        "<Retrospective Level=\"Black\" />" +
+                                        "</History></Repository>";
+
+                var xmlFormat = (XDocument.Load(new StringReader(twoRetrospectives))).ToString();
+                The<IFileService>()
+                    .WasToldTo(x => x.WriteTo(xmlFormat, "repository"));
+            };
+        }
+
+        public class Given_an_empty_history_When_saving_changes_twice_with_a_modified_level : WithSubject<Repository>
+        {
+            Establish context = () =>
+            {
+                var emptyHistory = "<Repository><History /></Repository>";
+
+                The<IFileService>()
+                    .WhenToldTo(x => x.OpenAsString("repository"))
+                    .Return(emptyHistory);
+            };
+
+            private Because of = () =>
+            {
+                var level = Subject.CurrentLevel;
+                Subject.SaveChanges();
+
+                level.Advance();
+                level.Principles[0].EvaluationValue = 50;
+                Subject.SaveChanges();
+            };
+
+            It should_save_the_two_retrospectives_in_correct_order = () =>
+            {
+                var twoRetrospectives = "<Repository><History><Retrospective Level=\"Red\">" +
+                                       "<Item Name=\"DoNotRepeatYourself\" Value=\"50\"/>" +
+                                       "<Item Name=\"KeepItSimpleStupid\" Value=\"0\"/>" +
+                                       "<Item Name=\"BewareOptimizations\" Value=\"0\"/>" +
+                                       "<Item Name=\"FavorCompositionOverInheritance\" Value=\"0\"/>" +
+                                       "<Item Name=\"BoyscoutRule\" Value=\"0\"/>" +
+                                       "<Item Name=\"RootCauseAnalysis\" Value=\"0\"/>" +
+                                       "<Item Name=\"VersionControl\" Value=\"0\"/>" +
+                                       "<Item Name=\"SimpleRefactorizations\" Value=\"0\"/>" +
+                                       "<Item Name=\"DailyReflection\" Value=\"0\"/>" +
+                                       "</Retrospective>" +
+                                       "<Retrospective Level=\"Black\" />" +
+                                        "</History></Repository>";
+
+                var xmlFormat = (XDocument.Load(new StringReader(twoRetrospectives))).ToString();
+                The<IFileService>()
+                    .WasToldTo(x => x.WriteTo(xmlFormat, "repository"));
+            };
+        }
+
         public class Given_a_CcdLevel_When_comparing_it_with_another : WithSubject<CcdLevel>
         {
             Establish context = () =>

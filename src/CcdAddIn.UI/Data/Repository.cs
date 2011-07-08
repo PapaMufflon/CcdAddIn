@@ -122,10 +122,12 @@ namespace CcdAddIn.UI.Data
 
         public void SaveChanges()
         {
-            var history = new XElement("History");
+            Retrospectives.Insert(0, _currentLevel.Clone());
 
+            var history = new XElement("History");
+            
             _logger.Trace("Creating retrospectives");
-            foreach (var retrospective in (new List<CcdLevel> { _currentLevel }).Concat(Retrospectives))
+            foreach (var retrospective in Retrospectives)
             {
                 var retrospectiveElement = new XElement("Retrospective",
                                                         new XAttribute("Level", retrospective.Level));
