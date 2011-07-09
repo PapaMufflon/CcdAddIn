@@ -83,7 +83,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="CleanCodeDeveloper\CcdLevel.cs" />
     <Compile Include="CleanCodeDeveloper\IRalfWestphal.cs" />
-    <Compile Include="CleanCodeDeveloper\RalphWestfal.cs" />
+    <Compile Include="CleanCodeDeveloper\RalfWestphal.cs" />
     <Compile Include="Communication\BeginRetrospectiveEvent.cs" />
     <Compile Include="CleanCodeDeveloper\Item.cs" />
     <Compile Include="CleanCodeDeveloper\ItemName.cs" />
