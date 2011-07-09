@@ -9,6 +9,7 @@ namespace CcdAddIn.UI.Test.ViewModels
 {
     class CcdLevelsViewModelSpecs
     {
+        [Subject(typeof(CcdLevelsViewModel))]
         public class Given_a_non_black_level_When_not_doing_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
             Establish context = () =>
@@ -29,6 +30,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_not_show_the_evaluation_controls = () => Subject.EvaluationVisible.ShouldBeFalse();
         }
 
+        [Subject(typeof(CcdLevelsViewModel))]
         public class Given_a_non_black_level_When_wanting_to_do_a_retrospective : WithSubject<CcdLevelsViewModel>
         {
             private static BeginRetrospectiveEvent _beginRetrospectiveEvent;
@@ -53,6 +55,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_switch_to_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeTrue();
         }
 
+        [Subject(typeof(CcdLevelsViewModel))]
         public class Given_a_retrospective_in_progress_When_finishing_the_retrospective : WithSubject<CcdLevelsViewModel>
         {
             private static bool _raised;
@@ -83,6 +86,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
         }
 
+        [Subject(typeof(CcdLevelsViewModel))]
         public class Given_a_red_level_When_advancing_to_the_next_level : WithSubject<CcdLevelsViewModel>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.Red);

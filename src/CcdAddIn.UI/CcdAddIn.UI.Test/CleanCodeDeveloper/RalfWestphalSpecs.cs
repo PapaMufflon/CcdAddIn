@@ -7,6 +7,7 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
 {
     class RalfWestphalSpecs
     {
+        [Subject(typeof(RalfWestphal))]
         public class Given_a_first_start_When_asking_to_advance_to_the_next_level : WithSubject<RalfWestphal>
         {
             private static bool _shouldAdvance;
@@ -16,9 +17,9 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
             Because of = () =>
             {
                 var retrospectives = new List<CcdLevel>
-            {
-                new CcdLevel(Level.Red)
-            };
+                {
+                    new CcdLevel(Level.Red)
+                };
 
                 _shouldAdvance = Subject.ShouldAdvance(retrospectives);
             };
@@ -26,6 +27,7 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
             It should_be_false = () => _shouldAdvance.ShouldBeFalse();
         }
 
+        [Subject(typeof(RalfWestphal))]
         public class Given_21_consecutive_days_with_all_retrospectives_above_80_percent_When_asking_to_advance_to_the_next_level : WithSubject<RalfWestphal>
         {
             private static bool _shouldAdvance;

@@ -7,6 +7,7 @@ namespace CcdAddIn.UI.Test.ViewModels
 {
     class WhiteLevelViewModelSpecs
     {
+        [Subject(typeof(WhiteLevelViewModel))]
         public class Given_the_white_level_When_restarting_the_cycle : WithSubject<WhiteLevelViewModel>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.White);

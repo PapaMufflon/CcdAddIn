@@ -11,6 +11,7 @@ namespace CcdAddIn.UI.Test.ViewModels
 {
     class AdviceViewModelSpecs
     {
+        [Subject(typeof(AdviceViewModel))]
         public class Given_a_wish_to_take_an_advice_When_navigating_to_it : WithSubject<AdviceViewModel>
         {
             Establish context = () =>
@@ -27,6 +28,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_requery_Ralf_Westphal = () => The<IRalfWestphal>().WasToldTo(x => x.ShouldAdvance(null));
         }
 
+        [Subject(typeof(AdviceViewModel))]
         public class Given_an_negative_advice_When_taking_it : WithSubject<AdviceViewModel>
         {
             private static bool _raised;
@@ -52,6 +54,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_stay_at_the_same_level = () => _currentLevel.Level.ShouldEqual(Level.Red);
         }
 
+        [Subject(typeof(AdviceViewModel))]
         public class Given_retrospectives_justifying_a_level_up_When_querying_for_advice : WithSubject<AdviceViewModel>
         {
             Establish context = () =>
@@ -69,6 +72,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_activate_stay_at_same_level_choice = () => Subject.CanAdvance.ShouldBeTrue();
         }
 
+        [Subject(typeof(AdviceViewModel))]
         public class Given_retrospectives_justifying_a_level_up_When_taking_an_advice : WithSubject<AdviceViewModel>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
@@ -91,6 +95,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_advance_to_the_next_level = () => _currentLevel.Level.ShouldEqual(Level.Orange);
         }
 
+        [Subject(typeof(AdviceViewModel))]
         public class Given_retrospectives_not_justifying_a_level_up_When_denying_the_advice : WithSubject<AdviceViewModel>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
@@ -126,6 +131,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_advance_to_the_next_level = () => _currentLevel.Level.ShouldEqual(Level.Orange);
         }
 
+        [Subject(typeof(AdviceViewModel))]
         public class Given_retrospectives_not_justifying_a_level_up_When_querying_for_an_advice : WithSubject<AdviceViewModel>
         {
             Establish context = () =>

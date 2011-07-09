@@ -9,6 +9,7 @@ namespace CcdAddIn.UI.Test.Data
 {
     class PersistServiceSpecs
     {
+        [Subject(typeof(PersistService))]
         public class Given_a_retrospective_in_progress_When_finishing_the_retrospective2 : WithSubject<PersistService>
         {
             private static AdviceGivenEvent _adviceGivenEvent = new AdviceGivenEvent();
@@ -27,6 +28,7 @@ namespace CcdAddIn.UI.Test.Data
             It should_persist_the_progress = () => The<IRepository>().WasToldTo(x => x.SaveChanges());
         }
 
+        [Subject(typeof(PersistService))]
         public class Given_a_black_level_When_advancing_to_the_next_one : WithSubject<PersistService>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.Black);

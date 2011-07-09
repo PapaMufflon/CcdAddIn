@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CcdAddIn.UI.CleanCodeDeveloper;
+﻿using CcdAddIn.UI.CleanCodeDeveloper;
 using Machine.Fakes;
 using Machine.Specifications;
-using Machine.Specifications.Model;
 
 namespace CcdAddIn.UI.Test.CleanCodeDeveloper
 {
     class CcdLevelSpecs
     {
+        [Subject(typeof(CcdLevel))]
         public class Given_a_CcdLevel_When_comparing_it_with_another : WithSubject<CcdLevel>
         {
             Establish context = () =>
@@ -40,6 +36,7 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
             };
         }
 
+        [Subject(typeof(CcdLevel))]
         public class Given_a_red_level_When_advancing : WithSubject<CcdLevel>
         {
             Establish context = () => Subject = new CcdLevel(Level.Red);
@@ -50,6 +47,7 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
             It should_provide_the_corresponding_principles = () => Subject.Principles[0].NameAsString.ShouldEqual(Resources.Resource.SingleLevelOfAbstraction);
         }
 
+        [Subject(typeof(CcdLevel))]
         public class Given_a_black_level_When_advancing_to_the_next_level : WithSubject<CcdLevel>
         {
             private static bool _raised;
@@ -65,6 +63,7 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
             It should_raise_an_advanced_event = () => _raised.ShouldBeTrue();
         }
 
+        [Subject(typeof(CcdLevel))]
         public class Given_a_CcdLevel_When_Cloning_it : WithSubject<CcdLevel>
         {
             private static CcdLevel _clonedLevel;

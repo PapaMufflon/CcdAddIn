@@ -9,6 +9,7 @@ namespace CcdAddIn.UI.Test.CleanCodeDeveloper
 {
     class ItemFactorySpecs
     {
+        [Subject(typeof(ItemFactory))]
         public class Given_a_clean_code_developer_level_When_comparing_the_items_with_the_itemNames : WithFakes
         {
             private static Dictionary<Level, List<Item>> _items = new Dictionary<Level, List<Item>>();

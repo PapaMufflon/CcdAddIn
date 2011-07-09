@@ -9,6 +9,7 @@ namespace CcdAddIn.UI.Test.ViewModels
 {
     class HeaderViewModelSpecs
     {
+        [Subject(typeof(HeaderViewModel))]
         public class Given_the_black_level_When_advancing_to_the_red_level : WithSubject<HeaderViewModel>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.Black);
@@ -31,6 +32,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
+        [Subject(typeof(HeaderViewModel))]
         public class Given_a_non_black_level_When_doing_a_retrospective : WithSubject<HeaderViewModel>
         {
             Establish context = () =>
@@ -51,6 +53,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_be_possible = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
+        [Subject(typeof(HeaderViewModel))]
         public class Given_a_non_black_level_When_clicking_on_retrospective : WithSubject<HeaderViewModel>
         {
             private static bool _raised;
@@ -76,6 +79,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_raise_a_begin_retrospective_event = () => _raised.ShouldBeTrue();
         }
 
+        [Subject(typeof(HeaderViewModel))]
         public class Given_a_retrospective_in_progress_When_advancing_to_the_white_level : WithSubject<HeaderViewModel>
         {
             private static CcdLevel _currentLevel;
@@ -107,6 +111,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_not_be_possible_to_do_a_retrospective = () => Subject.RetrospectiveAvailable.ShouldBeFalse();
         }
 
+        [Subject(typeof(HeaderViewModel))]
         public class Given_a_retrospective_in_progress_When_advancing_a_level_after_ending_the_retrospective : WithSubject<HeaderViewModel>
         {
             private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
@@ -136,6 +141,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
+        [Subject(typeof(HeaderViewModel))]
         public class Given_a_retrospective_in_progress_When_not_advancing_a_level_after_ending_the_retrospective : WithSubject<HeaderViewModel>
         {
             private static AdviceGivenEvent _adviceGivenEvent = new AdviceGivenEvent();
@@ -164,6 +170,7 @@ namespace CcdAddIn.UI.Test.ViewModels
             It should_show_the_begin_retrospective_command_again = () => Subject.RetrospectiveAvailable.ShouldBeTrue();
         }
 
+        [Subject(typeof(HeaderViewModel))]
         public class Given_the_initial_level_is_black_when_wanting_to_do_a_retrospective : WithSubject<HeaderViewModel>
         {
             Establish context = () =>

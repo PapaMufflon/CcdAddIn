@@ -12,6 +12,7 @@ namespace CcdAddIn.UI.Test.Data
 {
     class RepositorySpecs
     {
+        [Subject(typeof(Repository))]
         public class Given_the_current_retrospective_When_saving_changes : WithSubject<Repository>
         {
             Establish context = () =>
@@ -36,6 +37,7 @@ namespace CcdAddIn.UI.Test.Data
             };
         }
 
+        [Subject(typeof(Repository))]
         public class Given_an_loaded_retrospective_and_a_current_one_When_saving_changes : WithSubject<Repository>
         {
             Establish context = () =>
@@ -89,6 +91,7 @@ namespace CcdAddIn.UI.Test.Data
             };
         }
 
+        [Subject(typeof(Repository))]
         public class Given_an_empty_history_When_saving_changes_twice : WithSubject<Repository>
         {
             Establish context = () =>
@@ -118,6 +121,7 @@ namespace CcdAddIn.UI.Test.Data
             };
         }
 
+        [Subject(typeof(Repository))]
         public class Given_an_empty_history_When_saving_changes_twice_with_a_modified_level : WithSubject<Repository>
         {
             Establish context = () =>
@@ -161,6 +165,7 @@ namespace CcdAddIn.UI.Test.Data
             };
         }
 
+        [Subject(typeof(Repository))]
         public class Given_a_file_with_wrong_content_When_creating_the_repository
         {
             private static IFileService _fileService;
@@ -171,6 +176,7 @@ namespace CcdAddIn.UI.Test.Data
             It should_throw_an_exception = () => Catch.Exception(() => new Repository(_fileService)).ShouldBeOfType(typeof(InvalidOperationException));
         }
 
+        [Subject(typeof(Repository))]
         public class Given_a_file_without_history_When_querying_the_repository : WithSubject<Repository>
         {
             Establish context = () =>
@@ -188,6 +194,7 @@ namespace CcdAddIn.UI.Test.Data
             It should_have_no_retrospectives = () => Subject.Retrospectives.Count.ShouldEqual(0);
         }
 
+        [Subject(typeof(Repository))]
         public class Given_a_file_with_empty_history_When_querying_the_repository : WithSubject<Repository>
         {
             Establish context = () =>
@@ -205,6 +212,7 @@ namespace CcdAddIn.UI.Test.Data
             It should_have_no_retrospectives = () => Subject.Retrospectives.Count.ShouldEqual(0);
         }
 
+        [Subject(typeof(Repository))]
         public class Given_a_file_with_one_retrospective_When_querying_the_repository : WithSubject<Repository>
         {
             Establish context = () =>
@@ -245,6 +253,7 @@ namespace CcdAddIn.UI.Test.Data
             It should_begin_at_the_red_level = () => Subject.CurrentLevel.Level.ShouldEqual(Level.Red);
         }
 
+        [Subject(typeof(Repository))]
         public class Given_a_file_with_two_retrospectives_When_querying_the_repository : WithSubject<Repository>
         {
             Establish context = () =>
