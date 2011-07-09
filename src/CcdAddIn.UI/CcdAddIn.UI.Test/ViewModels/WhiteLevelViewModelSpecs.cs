@@ -1,13 +1,11 @@
 ﻿using CcdAddIn.UI.CleanCodeDeveloper;
-using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.Views;
 using Machine.Fakes;
 using Machine.Specifications;
-using Microsoft.Practices.Prism.Events;
 
-namespace CcdAddIn.UI.Test
+namespace CcdAddIn.UI.Test.ViewModels
 {
-    public class WhiteLevel
+    class WhiteLevelViewModelSpecs
     {
         public class Given_the_white_level_When_restarting_the_cycle : WithSubject<WhiteLevelViewModel>
         {

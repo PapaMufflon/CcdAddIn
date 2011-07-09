@@ -70,15 +70,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvanceALevel.cs" />
-    <Compile Include="BeginWithFirstRealLevel.cs" />
-    <Compile Include="LoadHistory.cs" />
+    <Compile Include="CleanCodeDeveloper\CcdLevelSpecs.cs" />
+    <Compile Include="CleanCodeDeveloper\ItemFactorySpecs.cs" />
+    <Compile Include="CleanCodeDeveloper\RalfWestphalSpecs.cs" />
+    <Compile Include="Data\PersistServiceSpecs.cs" />
+    <Compile Include="Data\RepositorySpecs.cs" />
     <Compile Include="Navigation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaveHistory.cs" />
-    <Compile Include="Retrospective.cs" />
-    <Compile Include="TakeAdvice.cs" />
-    <Compile Include="WhiteLevel.cs" />
+    <Compile Include="ViewModels\AdviceViewModelSpecs.cs" />
+    <Compile Include="ViewModels\BlackLevelViewModelSpecs.cs" />
+    <Compile Include="ViewModels\CcdLevelsViewModelSpecs.cs" />
+    <Compile Include="ViewModels\HeaderViewModelSpecs.cs" />
+    <Compile Include="ViewModels\WhiteLevelViewModelSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
