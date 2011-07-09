@@ -6,7 +6,7 @@ using White.Core.UIItems;
 using White.Core.UIItems.ListBoxItems;
 using White.Core.UIItems.WindowItems;
 
-namespace CcdAddIn.UI.Spec
+namespace CcdAddIn.UI.Features
 {
     [Binding]
     public class CompleteLevels
