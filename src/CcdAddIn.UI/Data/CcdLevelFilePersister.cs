@@ -18,7 +18,7 @@ namespace CcdAddIn.UI.Data
 
         public void Save(List<CcdLevel> objectToBeSaved)
         {
-            var stream = _fileService.OpenAsStream(FileName);// File.Open(FileName, FileMode.Create);
+            var stream = _fileService.OpenAsStream(FileName);
             var serializer = new BinaryFormatter();
 
             serializer.Serialize(stream, objectToBeSaved);
@@ -28,7 +28,7 @@ namespace CcdAddIn.UI.Data
 
         public List<CcdLevel> Load()
         {
-            var stream = _fileService.OpenAsStream(FileName);// File.Open(FileName, FileMode.Open);
+            var stream = _fileService.OpenAsStream(FileName);
             var serializer = new BinaryFormatter();
 
             try
