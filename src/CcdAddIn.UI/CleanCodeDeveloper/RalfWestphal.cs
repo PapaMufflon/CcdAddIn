@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NLog;
 
 namespace CcdAddIn.UI.CleanCodeDeveloper
@@ -17,7 +18,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
                 return false;
             }
 
-            foreach (var level in retrospectives)
+            foreach (var level in retrospectives.Take(21))
             {
                 foreach (var practice in level.Practices)
                 {
