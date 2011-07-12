@@ -5,6 +5,7 @@ using NLog;
 
 namespace CcdAddIn.UI.CleanCodeDeveloper
 {
+    [Serializable]
     public class CcdLevel
     {
         public event EventHandler Advanced;
@@ -23,6 +24,9 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
 
             LoadPrinciplesAndPractices();
         }
+
+        // for de/serializing
+        private CcdLevel() {}
 
         private void LoadPrinciplesAndPractices()
         {

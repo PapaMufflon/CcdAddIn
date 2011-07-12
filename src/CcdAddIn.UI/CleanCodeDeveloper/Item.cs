@@ -1,5 +1,8 @@
-﻿namespace CcdAddIn.UI.CleanCodeDeveloper
+﻿using System;
+
+namespace CcdAddIn.UI.CleanCodeDeveloper
 {
+    [Serializable]
     public class Item
     {
         public ItemName Name { get; private set; }
@@ -11,6 +14,9 @@
             Name = name;
             ItemType = type;
         }
+
+        // for de/serializing
+        private Item() {}
 
         public string NameAsString { get { return Name.ToCorrectString(); } }
 

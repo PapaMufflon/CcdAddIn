@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Data;
 using CcdAddIn.UI.Views;
@@ -31,6 +32,7 @@ namespace CcdAddIn.UI
             _logger.Trace("Registering types");
 
             Container.RegisterType<IFileService, FileService>();
+            Container.RegisterType<IPersister<List<CcdLevel>>, CcdLevelFilePersister>();
             Container.RegisterType<IRepository, Repository>(new ContainerControlledLifetimeManager());
 
             var repository = Container.Resolve<IRepository>() as Repository;

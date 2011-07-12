@@ -73,6 +73,7 @@
     <Compile Include="CleanCodeDeveloper\CcdLevelSpecs.cs" />
     <Compile Include="CleanCodeDeveloper\ItemFactorySpecs.cs" />
     <Compile Include="CleanCodeDeveloper\RalfWestphalSpecs.cs" />
+    <Compile Include="Data\CcdLevelFilePersisterSpecs.cs" />
     <Compile Include="Data\PersistServiceSpecs.cs" />
     <Compile Include="Data\RepositorySpecs.cs" />
     <Compile Include="Navigation.cs" />
