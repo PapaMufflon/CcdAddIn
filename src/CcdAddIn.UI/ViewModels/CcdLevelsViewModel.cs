@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 using CcdAddIn.UI.CleanCodeDeveloper;
@@ -71,7 +72,9 @@ namespace CcdAddIn.UI.ViewModels
             {
                 return new DelegateCommand(() =>
                 {
-                    _logger.Trace("We're done with the retrospective. Let's show the advice.");
+                    _currentLevel.TimeOfRetrospective = DateTime.Now;
+
+                    _logger.Trace("We're done with the retrospective.");
                     _retrospectiveDoneEvent.Publish(null);
                     EvaluationVisible = false;
                 });

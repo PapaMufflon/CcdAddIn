@@ -10,6 +10,7 @@ namespace CcdAddIn.UI.CleanCodeDeveloper
     {
         public event EventHandler Advanced;
 
+        public DateTime TimeOfRetrospective { get; set; }
         public Level Level { get; private set; }
         public List<Item> Principles { get; private set; }
         public List<Item> Practices { get; private set; }

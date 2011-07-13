@@ -60,6 +60,7 @@ namespace CcdAddIn.UI.Specs.ViewModels
         public class Given_a_retrospective_in_progress_When_finishing_the_retrospective : WithSubject<CcdLevelsViewModel>
         {
             private static bool _raised;
+            private static CcdLevel _currentLevel = new CcdLevel(Level.Red);
 
             Establish context = () =>
             {
@@ -78,13 +79,14 @@ namespace CcdAddIn.UI.Specs.ViewModels
                     .WhenToldTo(x => x.GetEvent<RetrospectiveDoneEvent>())
                     .Return(retrospectiveDoneEvent);
 
-                Subject = new CcdLevelsViewModel(The<IEventAggregator>(), new CcdLevel(Level.Red));
+                Subject = new CcdLevelsViewModel(The<IEventAggregator>(), _currentLevel);
             };
 
             Because of = () => Subject.RetrospectiveDoneCommand.Execute(null);
 
             It should_stop_retrospective_mode = () => Subject.EvaluationVisible.ShouldBeFalse();
             It should_raise_a_show_advice_event = () => _raised.ShouldBeTrue();
+            It should_set_the_timestamp_of_the_retrospective = () => DateTime.Now.Subtract(_currentLevel.TimeOfRetrospective).TotalSeconds.ShouldBeCloseTo(1, 1);
         }
 
         [Subject(typeof(CcdLevelsViewModel))]
