@@ -8,8 +8,8 @@
     <ProjectGuid>{711E2A01-6179-4926-A16F-0B4B42CEE54F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CcdAddIn.UI.Test</RootNamespace>
-    <AssemblyName>CcdAddIn.UI.Test</AssemblyName>
+    <RootNamespace>CcdAddIn.UI.Specs</RootNamespace>
+    <AssemblyName>CcdAddIn.UI.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

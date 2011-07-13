@@ -10,11 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.UI", "CcdAddIn.UI\CcdAddIn.UI.csproj", "{45F291E7-962A-4529-B30B-19642C865BAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.UI.Features", "CcdAddIn.UI\CcdAddIn.UI.Spec\CcdAddIn.UI.Features.csproj", "{D209CC62-3CA9-4E7C-AF83-C1A9D7EB65E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.UI.Features", "CcdAddIn.UI\CcdAddIn.UI.Features\CcdAddIn.UI.Features.csproj", "{D209CC62-3CA9-4E7C-AF83-C1A9D7EB65E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.UI.Test", "CcdAddIn.UI\CcdAddIn.UI.Test\CcdAddIn.UI.Test.csproj", "{711E2A01-6179-4926-A16F-0B4B42CEE54F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.UI.Specs", "CcdAddIn.UI\CcdAddIn.UI.Specs\CcdAddIn.UI.Specs.csproj", "{711E2A01-6179-4926-A16F-0B4B42CEE54F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.TestHarness", "CcdAddIn.UI\CcdAddIn.UI.Spec\CcdAddIn.TestHarness\CcdAddIn.TestHarness.csproj", "{348A8F78-A526-401F-B7CB-8B6B0803C91E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CcdAddIn.TestHarness", "CcdAddIn.UI\CcdAddIn.UI.Features\CcdAddIn.TestHarness\CcdAddIn.TestHarness.csproj", "{348A8F78-A526-401F-B7CB-8B6B0803C91E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

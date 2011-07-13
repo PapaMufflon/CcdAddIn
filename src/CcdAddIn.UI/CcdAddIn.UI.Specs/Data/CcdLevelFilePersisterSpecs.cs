@@ -5,7 +5,7 @@ using CcdAddIn.UI.Data;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace CcdAddIn.UI.Test.Data
+namespace CcdAddIn.UI.Specs.Data
 {
     class CcdLevelFilePersisterSpecs
     {

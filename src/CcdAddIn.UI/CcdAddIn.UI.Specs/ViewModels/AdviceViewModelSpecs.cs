@@ -7,7 +7,7 @@ using Machine.Fakes;
 using Machine.Specifications;
 using Microsoft.Practices.Prism.Events;
 
-namespace CcdAddIn.UI.Test.ViewModels
+namespace CcdAddIn.UI.Specs.ViewModels
 {
     class AdviceViewModelSpecs
     {

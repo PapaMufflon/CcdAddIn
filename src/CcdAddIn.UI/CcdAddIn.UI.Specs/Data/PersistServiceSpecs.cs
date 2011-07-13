@@ -5,7 +5,7 @@ using Machine.Fakes;
 using Machine.Specifications;
 using Microsoft.Practices.Prism.Events;
 
-namespace CcdAddIn.UI.Test.Data
+namespace CcdAddIn.UI.Specs.Data
 {
     class PersistServiceSpecs
     {

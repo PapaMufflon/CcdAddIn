@@ -3,7 +3,7 @@ using CcdAddIn.UI.ViewModels;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace CcdAddIn.UI.Test.ViewModels
+namespace CcdAddIn.UI.Specs.ViewModels
 {
     class BlackLevelViewModelSpecs
     {

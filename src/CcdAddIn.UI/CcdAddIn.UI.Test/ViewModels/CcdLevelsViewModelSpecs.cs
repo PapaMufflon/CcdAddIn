@@ -1,11 +1,12 @@
-﻿using CcdAddIn.UI.CleanCodeDeveloper;
+﻿using System;
+using CcdAddIn.UI.CleanCodeDeveloper;
 using CcdAddIn.UI.Communication;
 using CcdAddIn.UI.ViewModels;
 using Machine.Fakes;
 using Machine.Specifications;
 using Microsoft.Practices.Prism.Events;
 
-namespace CcdAddIn.UI.Test.ViewModels
+namespace CcdAddIn.UI.Specs.ViewModels
 {
     class CcdLevelsViewModelSpecs
     {

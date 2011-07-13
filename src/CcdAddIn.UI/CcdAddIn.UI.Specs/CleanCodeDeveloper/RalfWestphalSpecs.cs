@@ -3,7 +3,7 @@ using CcdAddIn.UI.CleanCodeDeveloper;
 using Machine.Fakes;
 using Machine.Specifications;
 
-namespace CcdAddIn.UI.Test.CleanCodeDeveloper
+namespace CcdAddIn.UI.Specs.CleanCodeDeveloper
 {
     class RalfWestphalSpecs
     {
