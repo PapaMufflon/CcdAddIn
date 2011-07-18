@@ -1,4 +1,4 @@
-﻿Feature: All levels
+﻿Feature: Complete levels
   In order to learn everything
   As a clean code developer
   I want to reach all levels
